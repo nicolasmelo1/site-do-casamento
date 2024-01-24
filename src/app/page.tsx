@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { specialPersons, presents } from "../constants";
+import { specialPersons } from "../constants";
 import Presents from "../components/Presents";
 
 type HomeProps = {
@@ -8,12 +8,7 @@ type HomeProps = {
   };
 };
 
-export default function Home(props: HomeProps) {
-  const checkout =
-    typeof props.searchParams.checkout === "string"
-      ? props.searchParams.checkout
-      : undefined;
-
+export default function Home() {
   return (
     <main className="flex flex-col overflow-scroll w-full">
       <div className="flex flex-col justify-center items-center">
@@ -223,7 +218,7 @@ export default function Home(props: HomeProps) {
           src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
         ></iframe>
       </div>
-      <Presents checkout={checkout} />
+      <Presents />
     </main>
   );
 }

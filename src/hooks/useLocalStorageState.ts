@@ -1,19 +1,29 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useCallback } from "react";
 
 export default function useLocalStorageState<TValue>(
   key: string,
   defaultValue?: TValue
 ) {
-  const [state, setState] = useState<TValue>(() => {
-    if (typeof window === "undefined" || typeof JSON === "undefined")
-      return typeof defaultValue === "function" ? defaultValue() : defaultValue;
+  const isWindowAndJSONAvailable =
+    typeof window !== "undefined" && typeof JSON !== "undefined";
 
-    const valueInLocalStorage = window.localStorage.getItem(key);
-    const isValidValueInLocalStorage =
-      [undefined, null, ""].includes(valueInLocalStorage) === false;
-    if (isValidValueInLocalStorage)
-      return JSON.parse(valueInLocalStorage as string);
+  const [state, setState] = useState<TValue>(() => {
+    if (isWindowAndJSONAvailable) {
+      const valueInLocalStorage = window.localStorage.getItem(key);
+
+      const isValidValueInLocalStorage =
+        [undefined, null, ""].includes(valueInLocalStorage) === false;
+      console.log(
+        "valueInLocalStorage",
+        valueInLocalStorage,
+        JSON.parse(valueInLocalStorage as string)
+      );
+      if (isValidValueInLocalStorage)
+        return JSON.parse(valueInLocalStorage as string);
+    }
+
     return typeof defaultValue === "function" ? defaultValue() : defaultValue;
   });
 

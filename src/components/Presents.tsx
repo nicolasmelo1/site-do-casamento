@@ -2,11 +2,11 @@
 import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { presents } from "../constants";
+import { CHECKOUT_QUERY_PARAM, presents } from "../constants";
 import Checkout from "./Checkout";
 import { useLocalStorageState } from "../hooks";
 
-export default function Presents(props: { checkout: string | undefined }) {
+export default function Presents() {
   const router = useRouter();
   const [presentsIndexes, setPresentIndexes] = useLocalStorageState(
     "presentIndexes",
@@ -24,21 +24,22 @@ export default function Presents(props: { checkout: string | undefined }) {
               new Set([...presentsIndexes, index])
             );
             setPresentIndexes(newPresentIndexes);
-            router.push(`?checkout=${newPresentIndexes.join(",")}`);
+            const newSearchParams = new URLSearchParams([
+              [CHECKOUT_QUERY_PARAM, newPresentIndexes.join(",")],
+            ]);
+            router.push(`?${newSearchParams.toString()}`);
           }}
         >
           {present.title}
         </button>
       ))}
-      {props.checkout ? (
-        <Checkout
-          onRemovePresent={(presentIndex) =>
-            setPresentIndexes(
-              presentsIndexes?.filter((index) => index !== presentIndex)
-            )
-          }
-        />
-      ) : null}
+      <Checkout
+        onRemovePresent={async (presentIndex) =>
+          setPresentIndexes(
+            presentsIndexes?.filter((index) => index !== presentIndex)
+          )
+        }
+      />
     </Fragment>
   );
 }
