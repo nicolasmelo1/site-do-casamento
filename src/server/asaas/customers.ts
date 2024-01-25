@@ -1,6 +1,6 @@
 import { callAsaasApi } from "./utils";
 
-export async function filterCustomerForResponse(
+async function filterCustomerForResponse(
   response: Response,
   cpfCnpjOrName: "cpfCnpj" | "name",
   cpfCnpjOrNameValue: string
@@ -13,14 +13,22 @@ export async function filterCustomerForResponse(
   return [false, undefined];
 }
 
+/**
+ * Tries to find a customer by cpfCnpj or name. We use the listing because that's the only way we can search for he data, but it should be a single result.
+ *
+ * @param name The customer name to search for if by cpf/cnpj we don't find anything.
+ * @param cpfCnpj The customer cpfCnpj to search for.
+ *
+ * @returns The customer id if found, undefined otherwise.
+ */
 async function tryToFindCustomer(name: string, cpfCnpj: string) {
   const cpfCnpjSearchParams = new URLSearchParams([["cpfCnpj", cpfCnpj]]);
   const nameSearchParams = new URLSearchParams([["name", name]]);
-
   const responseForCPfCnpj = await callAsaasApi(
     `/v3/customers?${cpfCnpjSearchParams.toString()}`,
     "GET"
   );
+
   const [isValidFromCpfCnpj, customerIdFromCpfCnpj] =
     await filterCustomerForResponse(responseForCPfCnpj, "cpfCnpj", cpfCnpj);
   if (isValidFromCpfCnpj) return customerIdFromCpfCnpj;
@@ -43,11 +51,18 @@ async function tryToFindCustomer(name: string, cpfCnpj: string) {
   return undefined;
 }
 
-export async function createCustomer(name: string, cpfCnpj: string) {
+async function createCustomer(name: string, cpfCnpj: string) {
   const response = await callAsaasApi("/v3/customers", "POST", {
     name,
     cpfCnpj,
   });
   const customer = await response.json();
-  return customer.data.id;
+  return customer.id;
+}
+
+export default async function customerFlow(name: string, cpfCnpj: string) {
+  const customerId = await tryToFindCustomer(name, cpfCnpj);
+
+  if (customerId) return customerId;
+  return await createCustomer(name, cpfCnpj);
 }
