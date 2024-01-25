@@ -4,6 +4,7 @@ import Link from "next/link";
 import { presents } from "../../constants";
 
 export default function Summary(props: {
+  cookies: string;
   checkout: number[];
   onRemovePresent: (index: number) => void;
   onGoToAccount: () => void;

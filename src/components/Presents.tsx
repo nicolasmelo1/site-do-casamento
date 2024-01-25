@@ -1,14 +1,16 @@
 "use client";
-import { Fragment, useState } from "react";
+
+import { Fragment } from "react";
 import { useRouter } from "next/navigation";
 
 import { CHECKOUT_QUERY_PARAM, presents } from "../constants";
 import Checkout from "./Checkout";
-import { useLocalStorageState } from "../hooks";
+import { useCookieStorageState } from "../hooks";
 
-export default function Presents() {
+export default function Presents(props: { cookies: string }) {
   const router = useRouter();
-  const [presentsIndexes, setPresentIndexes] = useLocalStorageState(
+  const [presentsIndexes, setPresentIndexes] = useCookieStorageState(
+    props.cookies,
     "presentIndexes",
     [] as number[]
   );
@@ -34,6 +36,7 @@ export default function Presents() {
         </button>
       ))}
       <Checkout
+        cookies={props.cookies}
         onRemovePresent={async (presentIndex) =>
           setPresentIndexes(
             presentsIndexes?.filter((index) => index !== presentIndex)

@@ -10,6 +10,7 @@ import Summary from "./Summary";
 import Account from "./Account";
 
 export default function Checkout(props: {
+  cookies: string;
   onRemovePresent: (index: number) => void;
 }) {
   const router = useRouter();
@@ -53,9 +54,10 @@ export default function Checkout(props: {
   return isValidCheckout || isValidConfirm ? (
     <div className="flex justify-center items-center absolute top-0 right-0 left-0 bottom-0 bg-black bg-opacity-40 z-10 overflow-hidden">
       {isValidConfirm ? (
-        <Account checkout={checkout} />
+        <Account cookies={props.cookies} checkout={checkout} />
       ) : isValidCheckout ? (
         <Summary
+          cookies={props.cookies}
           checkout={checkoutSplitNumbers}
           onRemovePresent={onRemovePresent}
           onGoToAccount={onGoToAccount}

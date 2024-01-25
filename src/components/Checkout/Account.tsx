@@ -1,30 +1,36 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 import { CHECKOUT_QUERY_PARAM } from "../../constants";
-import { useHasMounted, useLocalStorageState } from "../../hooks";
+import { useCookieStorageState } from "../../hooks";
 import { strings } from "../../constants";
 import { isValidCNPJ, isValidCPF } from "../../utils";
 import { handlePayment } from "../../app/actions";
 
-export default function Account(props: { checkout: string }) {
-  const [hasTriedToSubmit, setHasTriedToSubmit] = useLocalStorageState(
+export default function Account(props: { cookies: string; checkout: string }) {
+  const [hasTriedToSubmit, setHasTriedToSubmit] = useCookieStorageState(
+    props.cookies,
     "hasTriedToSubmit",
     false
   );
-  const [encodedPix, setEncodedPix] = useLocalStorageState<string>(
+  const [encodedPix, setEncodedPix] = useCookieStorageState<string>(
+    props.cookies,
     "encodedPix",
     "" as string
   );
-  const [name, setName] = useLocalStorageState("username", "" as string);
-  const [cpfCnpj, setCpfCnpj] = useLocalStorageState(
+  const [name, setName] = useCookieStorageState(
+    props.cookies,
+    "username",
+    "" as string
+  );
+  const [cpfCnpj, setCpfCnpj] = useCookieStorageState(
+    props.cookies,
     "checkoutCpfCnpj",
     "" as string
   );
-  const hasMounted = useHasMounted();
 
   const validationErrors = useMemo(() => {
     const nameExistValidation = typeof name === "string" && name.length > 0;
@@ -66,18 +72,22 @@ export default function Account(props: { checkout: string }) {
   ]);
 
   const shouldRenderForm = encodedPix.length <= 0;
-
   return (
     <div className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl h-96 bg-blue-100">
       <div className="flex w-full h-full justify-between flex-col items-stretch">
         <div className="flex flex-col justify-center items-center w-full h-full">
-          {shouldRenderForm === false && encodedPix ? (
-            <Image
-              src={`data:image/png;base64, ${encodedPix}`}
-              alt="QR Code"
-              width={150}
-              height={256}
-            />
+          {shouldRenderForm === false && encodedPix && false ? (
+            <div className="flex flex-col justify-center items-center">
+              <p className="text-center">
+                Fico lisongeado, mas vc precisa pagar essa conta primeiro.
+              </p>
+              <Image
+                src={`data:image/png;base64, ${encodedPix}`}
+                alt="QR Code"
+                width={150}
+                height={256}
+              />
+            </div>
           ) : (
             <Fragment>
               <div className="flex flex-col justify-start items-start w-full pr-6 pl-6">
@@ -89,7 +99,7 @@ export default function Account(props: { checkout: string }) {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                {typeof validationErrors.name === "string" && hasMounted ? (
+                {typeof validationErrors.name === "string" ? (
                   <p className="text-sm text-red-400">
                     {validationErrors.name}
                   </p>
@@ -104,7 +114,7 @@ export default function Account(props: { checkout: string }) {
                   value={cpfCnpj}
                   onChange={(e) => setCpfCnpj(e.target.value)}
                 />
-                {typeof validationErrors.cpfCnpj === "string" && hasMounted ? (
+                {typeof validationErrors.cpfCnpj === "string" ? (
                   <p className="text-sm text-red-400">
                     {validationErrors.cpfCnpj}
                   </p>

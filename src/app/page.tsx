@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { specialPersons } from "../constants";
 import Presents from "../components/Presents";
+import { cookies } from "next/headers";
 
 type HomeProps = {
   searchParams: {
@@ -218,7 +219,7 @@ export default function Home() {
           src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
         ></iframe>
       </div>
-      <Presents />
+      <Presents cookies={cookies().toString()} />
     </main>
   );
 }
