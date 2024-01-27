@@ -5,7 +5,8 @@ async function createANewPayment(
   customer: string,
   billingType: BillingTypes,
   value: number,
-  description: string
+  description: string,
+  redirectUrl?: string
 ) {
   const today = new Date();
   const dueDate = new Date(
@@ -15,12 +16,22 @@ async function createANewPayment(
   )
     .toISOString()
     .split("T")[0];
+
+  console.log(
+    redirectUrl ? { successUrl: redirectUrl, autoRedirect: true } : undefined
+  );
   const response = await callAsaasApi("/v3/payments", "POST", {
     customer,
     billingType,
     value,
     dueDate,
     description,
+    callback: redirectUrl
+      ? {
+          successUrl: redirectUrl.replace("http://", "https://"),
+          autoRedirect: true,
+        }
+      : undefined,
   });
   const payment = await response.json();
   return payment;
@@ -59,15 +70,14 @@ async function getPixDataFromPaymentId(
   if (billingType !== "PIX") return {};
   const qrCodeResponse = await getPixQrCode(paymentId);
   return {
-    copyAndPaste: qrCodeResponse.qrCodeUrl,
+    copyAndPaste: qrCodeResponse.payload,
     base64Encoded: qrCodeResponse.encodedImage,
-    pixDueDate: qrCodeResponse.pixDueDate,
+    pixDueDate: qrCodeResponse.expirationDate,
   };
 }
 
 async function getDefaultValueFromPayment(
   payment: PaymentListingResponse["data"][number],
-  billingType: BillingTypes,
   isPendingOnNewPayment = false
 ) {
   if (payment.deleted) return undefined;
@@ -78,7 +88,9 @@ async function getDefaultValueFromPayment(
     value: payment.value,
     customerId: payment.customer,
     dueDate: payment.dueDate,
-    pix: await getPixDataFromPaymentId(billingType, payment.id),
+    invoiceUrl: payment.invoiceUrl,
+    billingType: payment.billingType,
+    pix: await getPixDataFromPaymentId(payment.billingType, payment.id),
   };
 }
 
@@ -102,8 +114,7 @@ export async function cancelPaymentFlow(paymentId: string, why?: string) {
   const payment = await getPaymentFromId(paymentId);
   if (typeof payment === "undefined") return;
 
-  const isPendingPix =
-    payment.status === "PENDING" && payment.billingType === "PIX";
+  const isPendingPix = payment.status === "PENDING";
   const isConfirmedOrReceivedCreditCard =
     ["RECEIVED", "CONFIRMED"].includes(payment.status) &&
     payment.billingType === "CREDIT_CARD";
@@ -121,7 +132,7 @@ export async function getPaymentDataFromPaymentId(paymentId: string) {
   if (typeof payment === "undefined") return undefined;
   if (payment.deleted) return undefined;
 
-  return getDefaultValueFromPayment(payment, payment.billingType);
+  return getDefaultValueFromPayment(payment);
 }
 
 /**
@@ -144,7 +155,7 @@ export async function getPendingPayment(paymentId?: string) {
   if (payment.status !== "PENDING") return undefined;
   if (payment.deleted) return undefined;
 
-  return getDefaultValueFromPayment(payment, payment.billingType);
+  return getDefaultValueFromPayment(payment);
 }
 
 /**
@@ -162,23 +173,21 @@ export async function paymentFlow(
   customer: string,
   billingType: BillingTypes,
   value: number,
-  description: string
+  description: string,
+  redirectUrl?: string
 ) {
   const existingPendingPayment = await pendingPaymentsForCustomer(customer);
 
   if (existingPendingPayment)
-    return getDefaultValueFromPayment(
-      existingPendingPayment,
-      billingType,
-      true
-    );
+    return getDefaultValueFromPayment(existingPendingPayment, true);
 
   const payment = await createANewPayment(
     customer,
     billingType,
     value,
-    description
+    description,
+    redirectUrl
   );
 
-  return getDefaultValueFromPayment(payment, billingType);
+  return getDefaultValueFromPayment(payment);
 }

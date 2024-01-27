@@ -115,7 +115,6 @@ export default function cookies(cookiesString: string) {
   function setCookieOnClient(keyToDelete?: string) {
     if (typeof document === "undefined") return;
     for (const cookie of Array.from(toString(keyToDelete))) {
-      console.log(cookie);
       document.cookie = cookie;
     }
   }

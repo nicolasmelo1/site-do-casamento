@@ -101,8 +101,12 @@ export default function Checkout(props: {
   /**
    * Used to handle and submit the payment. It will create a new payment on ASAAS and redirect the user to the payment page.
    */
-  function onPay(name: string, cpfCnpj: string) {
-    handlePayment(name, cpfCnpj, 10).then((paymentData) => {
+  function onPay(
+    name: string,
+    cpfCnpj: string,
+    paymentType: "PIX" | "CREDIT_CARD"
+  ) {
+    handlePayment(name, cpfCnpj, paymentType, 10).then((paymentData) => {
       if (paymentData === undefined) return;
       setPaymentId(paymentData?.paymentId);
       setCustomerId(paymentData?.customerId);
@@ -130,7 +134,7 @@ export default function Checkout(props: {
 
   return isValidCheckout || isValidConfirm || isValidPayment ? (
     <div className="flex justify-center items-center absolute top-0 right-0 left-0 bottom-0 bg-black bg-opacity-40 z-10 overflow-hidden">
-      <div className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl h-96 bg-blue-100">
+      <div className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen max-h-[50vh] bg-blue-100 p-6">
         {isValidPayment && paymentData ? (
           <Payment
             isNewPayment={isNewPayment}

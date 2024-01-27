@@ -8,6 +8,8 @@ const strings = {
     "Sepa que não é um CPF ou CNPJ válido. CPF tem 11 digitos e CNPJ tem 14. Tenta de novo?",
   checkoutCpfCnpjValidationDigitError:
     "Não é válido, ta tentando passar a perna na gente??? Deus ta vendo",
+  checkoutPaymentTypeValidationNonExistingError:
+    "Selecione uma forma de pagamento?",
 };
 
 export default strings;

@@ -72,6 +72,8 @@ export type Payments = {
   pixTransaction: string;
   /** Determina se a cobrança foi removida */
   deleted: boolean;
+  /** URL da fatura */
+  invoiceUrl: string;
 };
 
 export type PaymentListingResponse = ListingResponse<Payments>;
