@@ -20,18 +20,28 @@ async function createANewPayment(
   console.log(
     redirectUrl ? { successUrl: redirectUrl, autoRedirect: true } : undefined
   );
+
+  const searchParamForRedirectUrl = redirectUrl
+    ? new URLSearchParams([
+        [process.env.DEV_REDIRECT_URI_QUERY_PARAM as string, redirectUrl],
+      ]).toString()
+    : "";
+  const urlToRedirectTo = redirectUrl
+    ? process.env.NODE_ENV === "development"
+      ? `${process.env.DEV_REDIRECT_URI}?${searchParamForRedirectUrl}`
+      : redirectUrl
+    : undefined;
+  const callback = urlToRedirectTo
+    ? { successUrl: urlToRedirectTo, autoRedirect: true }
+    : undefined;
+
   const response = await callAsaasApi("/v3/payments", "POST", {
     customer,
     billingType,
     value,
     dueDate,
     description,
-    callback: redirectUrl
-      ? {
-          successUrl: redirectUrl.replace("http://", "https://"),
-          autoRedirect: true,
-        }
-      : undefined,
+    callback: callback,
   });
   const payment = await response.json();
   return payment;
