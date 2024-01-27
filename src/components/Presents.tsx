@@ -7,11 +7,11 @@ import { CHECKOUT_QUERY_PARAM, presents } from "../constants";
 import Checkout from "./Checkout";
 import { useCookieStorageState } from "../hooks";
 
-import type { firstRenderFlow } from "../server/asaas/payments";
+import type { getPendingPayment } from "../server/asaas/payments";
 
 export default function Presents(props: {
   cookies: string;
-  paymentData: Awaited<ReturnType<typeof firstRenderFlow>>;
+  paymentData: Awaited<ReturnType<typeof getPendingPayment>>;
 }) {
   const router = useRouter();
   const [presentsIndexes, setPresentIndexes] = useCookieStorageState(
