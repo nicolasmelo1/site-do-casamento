@@ -5,3 +5,9 @@ export { default as strings } from "./strings";
 export const CHECKOUT_QUERY_PARAM = "checkout";
 export const CHECKOUT_CONFIRMATION_QUERY_PARAM = "confirm";
 export const CHECKOUT_CONFIRMATION_QUERY_PARAM_VALUE = "true";
+
+export const CHECKOUT_PAYMENT_QUERY_PARAM = "payment";
+export const CHECKOUT_REMOVE_PAYMENT = "dismiss-payment";
+
+export const COOKIES_BILLING_CURRENT_PAYMENT_ID = "billingCurrentPaymentId";
+export const COOKIES_BILLING_CUSTOMER_ID = "billingCustomerId";

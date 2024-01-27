@@ -25,7 +25,8 @@ export default function useCookieStorageState<TValue>(
   const setState = useCallback(
     (value: TValue) => {
       _setState(value);
-      cookie.set(key, JSON.stringify(value));
+      if (value === undefined || value === null) cookie.delete(key);
+      else cookie.set(key, JSON.stringify(value));
     },
     [_setState, key, cookie]
   );

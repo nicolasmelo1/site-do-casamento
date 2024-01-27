@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { presents } from "../../constants";
 
+import { Fragment } from "react";
+
 export default function Summary(props: {
   cookies: string;
   checkout: number[];
@@ -10,7 +12,7 @@ export default function Summary(props: {
   onGoToAccount: () => void;
 }) {
   return (
-    <div className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl h-96 bg-blue-100">
+    <Fragment>
       <div className="flex w-full h-full justify-between flex-col items-stretch">
         <div className="flex flex-col justify-center items-center w-full h-full">
           {props.checkout?.map((presentIndex) => (
@@ -44,6 +46,6 @@ export default function Summary(props: {
           </button>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }

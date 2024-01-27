@@ -10,12 +10,15 @@ const savedCookies = new Map<
   }
 >();
 
-export default function cookies(cookiesString?: string) {
+/**
+ * Gets the cookie from anywhere, either on the server or the client. It is set to run on the client by default though since it uses the `document` API.
+ * But you can pass the initial data from anywhere. I think it's a better approach than setting the cookies directly on the server. Seems a lot better.
+ *
+ * @param cookiesString - The cookies string to parse. It can be the `document.cookie` or the `req.headers.cookie` or anything else.
+ */
+export default function cookies(cookiesString: string) {
   function parseCookie() {
-    if (typeof document === "undefined") return;
-    if (!document.cookie && !cookiesString) return;
-
-    const cookiesToParse = cookiesString || document.cookie;
+    const cookiesToParse = cookiesString;
     const cookiesToParseArray = cookiesToParse.split("; ");
     let currentCookie = undefined;
     while (cookiesToParseArray.length > 0) {
@@ -91,19 +94,30 @@ export default function cookies(cookiesString?: string) {
     }
   }
 
-  function toString() {
-    return Array.from(savedCookies.entries())
-      .map(
-        ([key, value]) =>
-          `${key}=${value.value}${
-            value.expires ? `; expires=${value.expires}` : ""
-          }${value.maxAge ? `; max-age=${value.maxAge}` : ""}${
-            value.secure ? `; secure` : ""
-          }${value.path ? `; path=${value.path}` : ""}${
-            value.samesite ? `; samesite=${value.samesite}` : ""
-          }`
-      )
-      .join("; ");
+  function* toString(keyToRemove?: string) {
+    for (const [key, value] of Array.from(savedCookies.entries())) {
+      yield `${key}=${value.value}${
+        value.expires || key === keyToRemove
+          ? `; expires=${
+              key === keyToRemove
+                ? `Thu, 01 Jan 1970 00:00:00 GMT`
+                : value.expires
+            }`
+          : ""
+      }${value.maxAge ? `; max-age=${value.maxAge}` : ""}${
+        value.secure ? `; secure` : ""
+      }${value.path ? `; path=${value.path}` : ""}${
+        value.samesite ? `; samesite=${value.samesite}` : ""
+      };`;
+    }
+  }
+
+  function setCookieOnClient(keyToDelete?: string) {
+    if (typeof document === "undefined") return;
+    for (const cookie of Array.from(toString(keyToDelete))) {
+      console.log(cookie);
+      document.cookie = cookie;
+    }
   }
 
   parseCookie();
@@ -116,30 +130,26 @@ export default function cookies(cookiesString?: string) {
       decoded.value = decodeURIComponent(decoded.value);
       return decoded;
     },
-    set(key: string, value: string) {
+    set(
+      key: string,
+      value: string,
+      options: Omit<Parameters<typeof savedCookies.set>[1], "value"> = {}
+    ) {
       const encoded = encodeURIComponent(value);
       const existingCookie = savedCookies.get(key);
-      if (existingCookie) existingCookie.value = encoded;
-      else savedCookies.set(key, { value: encoded });
-
-      for (const [savedCookieKey, value] of Array.from(
-        savedCookies.entries()
-      )) {
-        document.cookie = `${savedCookieKey}=${value.value}`;
-      }
+      if (existingCookie) {
+        existingCookie.value = encoded;
+        for (const [optionKey, optionValue] of Object.entries(options))
+          (existingCookie as any)[optionKey] = optionValue;
+      } else savedCookies.set(key, { ...options, value: encoded });
+      setCookieOnClient();
     },
     has(key: string) {
       return savedCookies.has(key);
     },
     delete(key: string) {
       savedCookies.delete(key);
-      for (const [savedCookieKey, value] of Array.from(
-        savedCookies.entries()
-      )) {
-        if (key === savedCookieKey)
-          document.cookie = `${savedCookieKey}=${value}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-        else document.cookie = `${savedCookieKey}=${value}`;
-      }
+      setCookieOnClient(key);
     },
     toString,
   };

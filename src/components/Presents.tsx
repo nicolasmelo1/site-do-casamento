@@ -7,7 +7,12 @@ import { CHECKOUT_QUERY_PARAM, presents } from "../constants";
 import Checkout from "./Checkout";
 import { useCookieStorageState } from "../hooks";
 
-export default function Presents(props: { cookies: string }) {
+import type { firstRenderFlow } from "../server/asaas/payments";
+
+export default function Presents(props: {
+  cookies: string;
+  paymentData: Awaited<ReturnType<typeof firstRenderFlow>>;
+}) {
   const router = useRouter();
   const [presentsIndexes, setPresentIndexes] = useCookieStorageState(
     props.cookies,
@@ -37,6 +42,7 @@ export default function Presents(props: { cookies: string }) {
       ))}
       <Checkout
         cookies={props.cookies}
+        paymentData={props.paymentData}
         onRemovePresent={async (presentIndex) =>
           setPresentIndexes(
             presentsIndexes?.filter((index) => index !== presentIndex)

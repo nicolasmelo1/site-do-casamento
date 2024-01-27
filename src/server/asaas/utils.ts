@@ -1,4 +1,8 @@
-export function callAsaasApi(url: string, method: "POST" | "GET", body?: any) {
+export function callAsaasApi(
+  url: string,
+  method: "POST" | "GET" | "DELETE",
+  body?: any
+) {
   const fetchInit: Parameters<typeof fetch>[1] = {
     headers: {
       "Content-Type": "application/json",

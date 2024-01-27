@@ -1,15 +1,57 @@
 import Image from "next/image";
-import { specialPersons } from "../constants";
-import Presents from "../components/Presents";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-type HomeProps = {
-  searchParams: {
-    checkout?: string;
-  };
-};
+import {
+  COOKIES_BILLING_CURRENT_PAYMENT_ID,
+  CHECKOUT_PAYMENT_QUERY_PARAM,
+  specialPersons,
+  CHECKOUT_REMOVE_PAYMENT,
+} from "../constants";
+import Presents from "../components/Presents";
+import {
+  getPaymentDataFromPaymentId,
+  getPendingPayment,
+} from "../server/asaas/payments";
 
-export default function Home() {
+async function getPaymentData(searchParams: { payment?: string }) {
+  const cookiesInitialized = cookies();
+  let paymentData = await getPendingPayment(
+    cookiesInitialized
+      .get(COOKIES_BILLING_CURRENT_PAYMENT_ID)
+      ?.value.replace(/^"/g, "")
+      .replace(/"$/g, "")
+  );
+  const dismissPayment = cookiesInitialized.get(CHECKOUT_REMOVE_PAYMENT);
+
+  const hasPendingPaymentAndPageIsNotPaymentPage =
+    typeof paymentData === "object" &&
+    paymentData !== undefined &&
+    searchParams?.payment !== paymentData?.paymentId &&
+    dismissPayment === undefined;
+
+  if (hasPendingPaymentAndPageIsNotPaymentPage) {
+    const newUrlSearchParams = new URLSearchParams([
+      [CHECKOUT_PAYMENT_QUERY_PARAM, paymentData?.paymentId as string],
+    ]);
+    redirect(`?${newUrlSearchParams.toString()}`);
+  }
+
+  const isPaymentPageAndDoesNotHavePendingPayment =
+    paymentData === undefined && searchParams?.payment !== undefined;
+  if (isPaymentPageAndDoesNotHavePendingPayment)
+    paymentData = await getPaymentDataFromPaymentId(
+      searchParams.payment as string
+    );
+
+  return paymentData;
+}
+
+export default async function Home(props: {
+  searchParams: { payment?: string };
+}) {
+  const paymentData = await getPaymentData(props.searchParams);
+
   return (
     <main className="flex flex-col overflow-scroll w-full">
       <div className="flex flex-col justify-center items-center">
@@ -219,7 +261,7 @@ export default function Home() {
           src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
         ></iframe>
       </div>
-      <Presents cookies={cookies().toString()} />
+      <Presents cookies={cookies().toString()} paymentData={paymentData} />
     </main>
   );
 }
