@@ -7,9 +7,13 @@ import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url || "");
-  const callbackToRedirectTo = url.searchParams.get("url") as
-    | string
-    | undefined;
+  const callbackToRedirectTo = url.searchParams.get(
+    process.env.DEV_REDIRECT_URI_QUERY_PARAM as string
+  ) as string | undefined;
+
+  const headers = callbackToRedirectTo
+    ? { Location: callbackToRedirectTo }
+    : undefined;
 
   return new Response(
     callbackToRedirectTo
@@ -17,11 +21,7 @@ export async function GET(request: NextRequest) {
       : "No url to redirect, set the 'url' query param to redirect to",
     {
       status: 301,
-      headers: callbackToRedirectTo
-        ? {
-            Location: callbackToRedirectTo,
-          }
-        : undefined,
+      headers,
     }
   );
 }
