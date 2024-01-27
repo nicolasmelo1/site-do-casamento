@@ -17,10 +17,6 @@ async function createANewPayment(
     .toISOString()
     .split("T")[0];
 
-  console.log(
-    redirectUrl ? { successUrl: redirectUrl, autoRedirect: true } : undefined
-  );
-
   const searchParamForRedirectUrl = redirectUrl
     ? new URLSearchParams([
         [process.env.DEV_REDIRECT_URI_QUERY_PARAM as string, redirectUrl],
@@ -34,7 +30,7 @@ async function createANewPayment(
   const callback = urlToRedirectTo
     ? { successUrl: urlToRedirectTo, autoRedirect: true }
     : undefined;
-
+  console.log("callback", callback);
   const response = await callAsaasApi("/v3/payments", "POST", {
     customer,
     billingType,
@@ -44,6 +40,7 @@ async function createANewPayment(
     callback: callback,
   });
   const payment = await response.json();
+  console.log("payment", payment);
   return payment;
 }
 
