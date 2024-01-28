@@ -1,2 +1,3 @@
 export { default as useCookieStorageState } from "./useCookieStorageState";
 export { default as useHasMounted } from "./useHasMounted";
+export { default as useClickOutsideOfElement } from "./useClickOutsideOfElement";

@@ -16,7 +16,7 @@ import Summary from "./Summary";
 import Account from "./Account";
 import Payment from "./Payment";
 import { cancelPayment, handlePayment } from "../../app/actions";
-import { useCookieStorageState } from "../../hooks";
+import { useClickOutsideOfElement, useCookieStorageState } from "../../hooks";
 import cookiesBuilder from "../../utils/cookies";
 import type { getPendingPayment } from "../../server/asaas/payments";
 
@@ -42,6 +42,9 @@ export default function Checkout(props: {
   );
   const router = useRouter();
   const searchParams = useSearchParams();
+  const clickOutsideRef = useClickOutsideOfElement<HTMLDivElement>(() => {
+    onDismiss();
+  });
   const checkout = searchParams.get(CHECKOUT_QUERY_PARAM) || "";
   const confirm = searchParams.get(CHECKOUT_CONFIRMATION_QUERY_PARAM);
   const payment = searchParams.get(CHECKOUT_PAYMENT_QUERY_PARAM);
@@ -112,6 +115,10 @@ export default function Checkout(props: {
       setCustomerId(paymentData?.customerId);
       setPaymentData(paymentData);
       setIsNewPayment(true);
+
+      if (typeof window !== "undefined")
+        window.open(paymentData.invoiceUrl, "_blank");
+
       const newSearchParamsArray = [];
       for (const [key, value] of Array.from(searchParams.entries())) {
         if (key === CHECKOUT_PAYMENT_QUERY_PARAM) continue;
@@ -128,13 +135,16 @@ export default function Checkout(props: {
 
   function onDismiss() {
     cookie.set(CHECKOUT_REMOVE_PAYMENT, "", { maxAge: 10 });
-    setPaymentData(undefined);
     router.push("/");
+    setPaymentData(undefined);
   }
 
   return isValidCheckout || isValidConfirm || isValidPayment ? (
     <div className="flex justify-center items-center absolute top-0 right-0 left-0 bottom-0 bg-black bg-opacity-40 z-10 overflow-hidden">
-      <div className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen max-h-[50vh] bg-blue-100 p-6">
+      <div
+        ref={clickOutsideRef}
+        className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[50vh] bg-red-400 p-6 rounded-2xl"
+      >
         {isValidPayment && paymentData ? (
           <Payment
             isNewPayment={isNewPayment}

@@ -1,7 +1,8 @@
 import { Fragment } from "react";
-import Image from "next/image";
 
 import type { getPendingPayment } from "../../server/asaas/payments";
+import { displayDate, displayValueInCurrency } from "../../utils";
+import { strings } from "../../constants";
 
 export default function Payment(props: {
   onCancel: () => void;
@@ -11,64 +12,77 @@ export default function Payment(props: {
 }) {
   return (
     <Fragment>
-      <div className="flex flex-col justify-center items-center h-full">
+      <div className="flex flex-col justify-between items-center h-full">
         {props.paymentData?.isPendingOnNewPayment === true ? (
           <p className="text-center">
-            Ficamos lisongeados, mas vc tem outro pagamento em aberto.
+            {strings.checkoutPaymentExistingPaymentOnNewPaymentError}
           </p>
         ) : props.isNewPayment === false ? (
           <p className="text-center">
-            Você tem um pagamento pendente, por favor, pague-o ou cancele.
+            {strings.checkoutPaymentExistingPaymentOnFirstRenderError}
           </p>
         ) : null}
-
-        {/* <iframe title={"payment slip"} src={props.paymentData?.invoiceUrl} /> */}
-        {/* <Image
-          src={`data:image/png;base64, ${props.paymentData?.pix.base64Encoded}`}
-          alt="QR Code"
-          width={150}
-          height={256}
-        />*/}
-        {props.paymentData?.billingType === "PIX" ? (
+        {props.paymentData ? (
           <a
             href={props.paymentData.invoiceUrl}
-            className="flex flex-row w-full justify-between items-center pt-2 pb-2 pr-6 pl-6 border-black border-2 rounded-md"
+            className="flex flex-row w-full justify-between items-center pt-2 pb-2 pr-6 pl-6 border-red-300 border-2 rounded-md"
             target="_blank"
           >
-            <p className="text-center text-2xl">{"Pix"}</p>
-            <p>Abrir</p>
-          </a>
-        ) : props.paymentData?.billingType === "CREDIT_CARD" ? (
-          <a
-            href={props.paymentData.invoiceUrl}
-            className="flex flex-row w-full justify-between items-center pt-2 pb-2 pr-6 pl-6 border-black border-2 rounded-md"
-            target="_blank"
-          >
-            <p className="text-center text-2xl">{"Cartão de Crédito"}</p>
-            <p>Abrir</p>
+            <div className="flex flex-col">
+              <p className="text-start text-2xl">
+                {props.paymentData.billingType === "PIX"
+                  ? strings.checkoutPaymentCardPixTitle
+                  : props.paymentData.billingType === "CREDIT_CARD"
+                  ? strings.checkoutPaymentCardCreditCardTitle
+                  : ""}
+              </p>
+              <span className="flex flex-row mt-3">
+                <p className="text-red-200 mr-2">
+                  {strings.checkoutPaymentCardValueLabel}
+                </p>
+                <p className="font-bold">
+                  {displayValueInCurrency(props.paymentData.value)}
+                </p>
+              </span>
+              <span className="flex flex-row mt-1">
+                <p className="text-red-200 mr-2">
+                  {strings.checkoutPaymentCardDueDateLabel}
+                </p>
+                <p className="font-bold">
+                  {displayDate(new Date(props.paymentData.dueDate))}
+                </p>
+              </span>
+            </div>
+            <p className="text-white">
+              {strings.checkoutPaymentCardClickToPayLabel}
+            </p>
           </a>
         ) : null}
-        {props.paymentData?.paymentId &&
-        props.paymentData?.paymentId.length > 0 ? (
+        <div className="flex md:flex-col md:w-full flex-row justify-between items-center w-full">
+          {props.paymentData?.paymentId &&
+          props.paymentData?.paymentId.length > 0 ? (
+            <button
+              type="button"
+              className="md:w-full cursor-pointer text-white text-bold pt-2 pb-2 pr-4 pl-4 rounded-xl font-semibold border-white border-2 w-1/3 text-center hover:bg-red-300"
+              onClick={(e) => {
+                e.preventDefault();
+                props.onCancel();
+              }}
+            >
+              {strings.checkoutPaymentCancelButton}
+            </button>
+          ) : null}
           <button
             type="button"
+            className="md:w-full md:mt-3 cursor-pointer bg-white text-red-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/3 h-full hover:bg-red-100"
             onClick={(e) => {
               e.preventDefault();
-              props.onCancel();
+              props.onDismiss();
             }}
           >
-            Cancelar
+            {strings.checkoutPaymentPayLaterButton}
           </button>
-        ) : null}
-        <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            props.onDismiss();
-          }}
-        >
-          Fechar
-        </button>
+        </div>
       </div>
     </Fragment>
   );

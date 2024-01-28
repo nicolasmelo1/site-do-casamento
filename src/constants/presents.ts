@@ -1,14 +1,14 @@
 const presents = [
   {
-    title: "Present 1",
-    description: "Description 1",
-    imageUrl: "Image 1",
+    title: "Panelas",
+    description: "Panela veia que faz comida boa",
+    imageUrl: "/presents/jogo-de-panela.webp",
     value: 100.25,
   },
   {
-    title: "Present 2",
-    description: "Description 2",
-    imageUrl: "Image 1",
+    title: "Viagens",
+    description: "Então viaja de avião mó princesa mó pressão",
+    imageUrl: "/presents/viagem-de-aviao.jpeg",
     value: 75.67,
   },
 ];
