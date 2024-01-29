@@ -4,13 +4,9 @@ import seed from "./seed";
 function attachProxyToExecute(target: any) {
   return new Proxy(target, {
     get(target, prop) {
-      console.log("getting prop", prop);
       const existingValue = (target as any)[prop];
       if (prop === "execute") {
-        console.log("calling execute");
         return async (...args: any[]) => {
-          console.log("calling seed");
-
           await seed();
           return (target as any)[prop](...args);
         };

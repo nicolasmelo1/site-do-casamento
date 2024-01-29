@@ -8,6 +8,10 @@ import {
   specialPersons,
   CHECKOUT_REMOVE_PAYMENT,
   COOKIES_USERNAME,
+  COOKIES_CPF_CNPJ,
+  WEDDING_DATE,
+  CONFIRMATION_CONFIRMATION_QUERY_PARAM,
+  CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
 } from "../constants";
 import Presents from "../components/Presents";
 import {
@@ -15,6 +19,7 @@ import {
   getPendingPayment,
 } from "../server/asaas/payments";
 import { db } from "../lib";
+import Confirmation from "../components/Confirmation";
 
 async function getPaymentData(searchParams: { payment?: string }) {
   const cookiesInitialized = cookies();
@@ -49,18 +54,55 @@ async function getPaymentData(searchParams: { payment?: string }) {
   return paymentData;
 }
 
-/*async function isAlreadyGoing(searchParams: { going?: string }) {
+function monthDiff(dateFrom: Date, dateTo: Date) {
+  return (
+    dateTo.getMonth() -
+    dateFrom.getMonth() +
+    12 * (dateTo.getFullYear() - dateFrom.getFullYear())
+  );
+}
+
+async function isAlreadyGoing(searchParams: { going?: string }) {
+  const today = new Date();
   const cookiesInitialized = cookies();
-  const name = cookiesInitialized.get(COOKIES_USERNAME)?.value;
   const cpfCnpj = cookiesInitialized.get(COOKIES_CPF_CNPJ)?.value;
-  const guest = await db.selectFrom('guests').selectAll().where((eb) => eb.and([eb("name", "ilike", )]))
-}*/
+  const guests = await db
+    .selectFrom("guests")
+    .selectAll()
+    .where("cpfCnpj", "=", cpfCnpj)
+    .limit(1)
+    .execute();
+
+  const hasUserConfirmed = guests.length > 0;
+  const diffInMonthsFromToday = monthDiff(today, WEDDING_DATE);
+
+  const shouldRedirectToConfirmationPage =
+    hasUserConfirmed === false &&
+    diffInMonthsFromToday <= 3 &&
+    diffInMonthsFromToday >= 0 &&
+    searchParams?.going !== CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE;
+
+  if (shouldRedirectToConfirmationPage) {
+    const newUrlSearchParams = new URLSearchParams([
+      [
+        CONFIRMATION_CONFIRMATION_QUERY_PARAM,
+        CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
+      ],
+    ]);
+    redirect(`?${newUrlSearchParams.toString()}`);
+  }
+
+  return hasUserConfirmed;
+}
 
 export default async function Home(props: {
-  searchParams: { payment?: string };
+  searchParams: { payment?: string; going?: string };
 }) {
-  const paymentData = await getPaymentData(props.searchParams);
-  const guests = await db.selectFrom("guests").execute();
+  const [paymentData, hasUserConfirmed] = await Promise.all([
+    getPaymentData(props.searchParams),
+    isAlreadyGoing(props.searchParams),
+  ]);
+
   return (
     <main className="flex flex-col overflow-scroll w-full">
       <div className="flex flex-col justify-center items-center">
@@ -270,6 +312,7 @@ export default async function Home(props: {
           src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
         ></iframe>
       </div>
+      <Confirmation cookies={cookies().toString()} />
       <Presents cookies={cookies().toString()} paymentData={paymentData} />
     </main>
   );

@@ -33,6 +33,7 @@ const strings = {
   checkoutPaymentCardPixTitle: "Pix",
   checkoutPaymentCancelButton: "Cancelar o pagamento",
   checkoutPaymentPayLaterButton: "Pagar depois",
+  confirmationNameLabel: "Qual o seu nome?",
 };
 
 export default strings;
