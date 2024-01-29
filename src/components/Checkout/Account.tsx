@@ -3,10 +3,15 @@
 import { Fragment, useMemo, useState } from "react";
 import Link from "next/link";
 
-import { CHECKOUT_QUERY_PARAM } from "../../constants";
+import {
+  CHECKOUT_QUERY_PARAM,
+  COOKIES_CPF_CNPJ,
+  COOKIES_USERNAME,
+} from "../../constants";
 import { useCookieStorageState } from "../../hooks";
 import { strings } from "../../constants";
 import { isValidCNPJ, isValidCPF } from "../../utils";
+import { formatterOfCpfCnpj } from "../../utils/cpf-cnpj";
 
 export default function Account(props: {
   cookies: string;
@@ -24,12 +29,12 @@ export default function Account(props: {
   );
   const [name, setName] = useCookieStorageState(
     props.cookies,
-    "username",
+    COOKIES_USERNAME,
     "" as string
   );
   const [cpfCnpj, setCpfCnpj] = useCookieStorageState(
     props.cookies,
-    "checkoutCpfCnpj",
+    COOKIES_CPF_CNPJ,
     "" as string
   );
   const [paymentType, setPaymentType] = useCookieStorageState<
@@ -59,6 +64,7 @@ export default function Account(props: {
         name.split(" ").every((value) => value !== "")
       : true;
 
+    console.log(cpfCnpj);
     const cleanedCpfCnpj =
       typeof cpfCnpj === "string" ? cpfCnpj.replace(/[\.\-\/]/g, "") : "";
     const cpfCnpjExistValidation =
@@ -137,8 +143,11 @@ export default function Account(props: {
                 className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md"
                 id="cpfCnpj"
                 type="text"
-                value={cpfCnpj}
-                onChange={(e) => setCpfCnpj(e.target.value)}
+                value={formatterOfCpfCnpj(cpfCnpj)}
+                onChange={(e) => {
+                  console.log(e.target.value.replace(/\D/g, ""));
+                  setCpfCnpj(e.target.value.replace(/\D/g, ""));
+                }}
               />
               {typeof validationErrors.cpfCnpj === "string" ? (
                 <p className="text-sm text-red-200">

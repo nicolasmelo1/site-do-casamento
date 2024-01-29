@@ -102,3 +102,31 @@ function matchNumbers(value: string | number | number[] = "") {
   const match = value.toString().match(/\d/g);
   return Array.isArray(match) ? match.map(Number) : [];
 }
+
+export function formatterOfCpfCnpj(value: string) {
+  if (value.length === 11)
+    return value.replace(
+      /(\d{3})(\d{3})(\d{3})(\d{2})/g,
+      (match, ...values) => {
+        const firstPart = values[0] + ".";
+        const secondPart = values[1] + ".";
+        const thirdPart = values[2] + "-" + values[3];
+
+        return firstPart + secondPart + thirdPart;
+      }
+    );
+  else if (value.length === 14)
+    return value.replace(
+      /(\d{2})(\d{3})(\d{3})(0001)(\d{2})/g,
+      (match, ...values) => {
+        const firstPart = values[0] + ".";
+        const secondPart = values[1] + ".";
+        const thirdPart = values[2] + "/";
+        const fourthPart = values[3] + "-";
+        const fifthPart = values[4];
+
+        return firstPart + secondPart + thirdPart + fourthPart + fifthPart;
+      }
+    );
+  else return value;
+}

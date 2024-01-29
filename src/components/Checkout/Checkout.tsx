@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 
 import {
   CHECKOUT_CONFIRMATION_QUERY_PARAM,
@@ -18,6 +18,8 @@ import Payment from "./Payment";
 import { cancelPayment, handlePayment } from "../../app/actions";
 import { useClickOutsideOfElement, useCookieStorageState } from "../../hooks";
 import cookiesBuilder from "../../utils/cookies";
+import { Modal } from "../Utils";
+
 import type { getPendingPayment } from "../../server/asaas/payments";
 
 export default function Checkout(props: {
@@ -140,11 +142,11 @@ export default function Checkout(props: {
   }
 
   return isValidCheckout || isValidConfirm || isValidPayment ? (
-    <div className="flex justify-center items-center absolute top-0 right-0 left-0 bottom-0 bg-black bg-opacity-40 z-10 overflow-hidden">
-      <div
-        ref={clickOutsideRef}
-        className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[50vh] bg-red-400 p-6 rounded-2xl"
-      >
+    <Modal
+      className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[50vh] bg-red-400 p-6 rounded-2xl"
+      onClose={onDismiss}
+    >
+      <Fragment>
         {isValidPayment && paymentData ? (
           <Payment
             isNewPayment={isNewPayment}
@@ -162,7 +164,7 @@ export default function Checkout(props: {
             onGoToAccount={onGoToAccount}
           />
         ) : null}
-      </div>
-    </div>
+      </Fragment>
+    </Modal>
   ) : null;
 }

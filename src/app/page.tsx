@@ -7,12 +7,14 @@ import {
   CHECKOUT_PAYMENT_QUERY_PARAM,
   specialPersons,
   CHECKOUT_REMOVE_PAYMENT,
+  COOKIES_USERNAME,
 } from "../constants";
 import Presents from "../components/Presents";
 import {
   getPaymentDataFromPaymentId,
   getPendingPayment,
 } from "../server/asaas/payments";
+import { db } from "../lib";
 
 async function getPaymentData(searchParams: { payment?: string }) {
   const cookiesInitialized = cookies();
@@ -47,11 +49,18 @@ async function getPaymentData(searchParams: { payment?: string }) {
   return paymentData;
 }
 
+/*async function isAlreadyGoing(searchParams: { going?: string }) {
+  const cookiesInitialized = cookies();
+  const name = cookiesInitialized.get(COOKIES_USERNAME)?.value;
+  const cpfCnpj = cookiesInitialized.get(COOKIES_CPF_CNPJ)?.value;
+  const guest = await db.selectFrom('guests').selectAll().where((eb) => eb.and([eb("name", "ilike", )]))
+}*/
+
 export default async function Home(props: {
   searchParams: { payment?: string };
 }) {
   const paymentData = await getPaymentData(props.searchParams);
-
+  const guests = await db.selectFrom("guests").execute();
   return (
     <main className="flex flex-col overflow-scroll w-full">
       <div className="flex flex-col justify-center items-center">
