@@ -1,3 +1,4 @@
-export { isValidCPF, isValidCNPJ } from "./cpf-cnpj";
+export { isValidCPF, isValidCNPJ, formatterOfCpfCnpj } from "./cpf-cnpj";
 export { default as cookies } from "./cookies";
 export { displayValueInCurrency, displayDate } from "./localize";
+export { formatterOfPhone } from "./phone";

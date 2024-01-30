@@ -33,7 +33,10 @@ const strings = {
   checkoutPaymentCardPixTitle: "Pix",
   checkoutPaymentCancelButton: "Cancelar o pagamento",
   checkoutPaymentPayLaterButton: "Pagar depois",
+  confirmationTitle: "Confirme sua presença no evento do ano!",
   confirmationNameLabel: "Qual o seu nome?",
+  confirmationCpfCnpjLabel: "CPF ou CNPJ (Só o número)",
+  confirmationPhoneLabel: "Número de celular (Só o número com DDD)",
 };
 
 export default strings;

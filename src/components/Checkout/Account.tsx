@@ -145,7 +145,6 @@ export default function Account(props: {
                 type="text"
                 value={formatterOfCpfCnpj(cpfCnpj)}
                 onChange={(e) => {
-                  console.log(e.target.value.replace(/\D/g, ""));
                   setCpfCnpj(e.target.value.replace(/\D/g, ""));
                 }}
               />

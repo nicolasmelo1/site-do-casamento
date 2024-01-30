@@ -19,3 +19,4 @@ export const CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE = "true";
 
 export const COOKIES_USERNAME = "username";
 export const COOKIES_CPF_CNPJ = "cpf-cnpj";
+export const COOKIES_PHONE = "phone";

@@ -23,7 +23,7 @@ export default function Summary(props: {
           <div className="flex flex-col w-full overflow-auto p-2 h-full mt-3 mb-3">
             {props.checkout?.map((presentIndex, index) => (
               <div
-                className="flex flex-col w-full items-center justify-start"
+                className="flex flex-col w-full items-center justify-start select-none"
                 key={presents[presentIndex].title}
               >
                 <div className="flex flex-row items-center justify-between w-full">

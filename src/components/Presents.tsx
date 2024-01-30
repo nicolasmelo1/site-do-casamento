@@ -28,7 +28,7 @@ export default function Presents(props: {
         {presents.map((present, index) => (
           <button
             className="flex flex-col justify-center items-center p-2 m-2 border-2 border-red-400 rounded-3xl 
-            w-[23vw] h-[23vw] max-w-[384px] max-h-[384px] min-w-[320px] min-h-[320px] hover:bg-red-50 hover:shadow-gray-400 hover:shadow-inner"
+            w-[23vw] h-[23vw] max-w-[384px] max-h-[384px] min-w-[320px] min-h-[320px] hover:bg-red-50 hover:shadow-gray-400 hover:shadow-inner select-none"
             title={present.title}
             type={"button"}
             key={index}
