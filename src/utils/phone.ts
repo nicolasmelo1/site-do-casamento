@@ -4,8 +4,7 @@ export function formatterOfPhone(value: string) {
 
   const maxLength =
     valueWithoutNonDigits.length > 11 ? 11 : valueWithoutNonDigits.length;
-  for (let i = 0; i < valueWithoutNonDigits.length; i++) {
-    console.log(i, formattedValue);
+  for (let i = 0; i < maxLength; i++) {
     if (i === 0) formattedValue += `(${valueWithoutNonDigits[i]}`;
     else if (i === 1 && valueWithoutNonDigits[i + 1] !== undefined)
       formattedValue += `${valueWithoutNonDigits[i]}) `;

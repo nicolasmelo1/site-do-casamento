@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
 
 import {
@@ -8,9 +8,8 @@ import {
   COOKIES_CPF_CNPJ,
   COOKIES_USERNAME,
 } from "../../constants";
-import { useCookieStorageState } from "../../hooks";
+import { useCookieStorageState, useValidation } from "../../hooks";
 import { strings } from "../../constants";
-import { isValidCNPJ, isValidCPF } from "../../utils";
 import { formatterOfCpfCnpj } from "../../utils/cpf-cnpj";
 
 export default function Account(props: {
@@ -19,14 +18,10 @@ export default function Account(props: {
   onPay: (
     name: string,
     cpfCnpj: string,
-    paymentType: "CREDIT_CARD" | "PIX"
+    paymentType: "CREDIT_CARD" | "PIX",
+    message?: string
   ) => void;
 }) {
-  const [hasTriedToSubmit, setHasTriedToSubmit] = useCookieStorageState(
-    props.cookies,
-    "hasTriedToSubmit",
-    false
-  );
   const [name, setName] = useCookieStorageState(
     props.cookies,
     COOKIES_USERNAME,
@@ -40,77 +35,21 @@ export default function Account(props: {
   const [paymentType, setPaymentType] = useCookieStorageState<
     "PIX" | "CREDIT_CARD" | undefined
   >(props.cookies, "checkoutPaymentType", undefined);
-
-  const validationErrors = useMemo(() => {
-    return getValidationErrors();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name, cpfCnpj, paymentType, getValidationErrors, hasTriedToSubmit]);
+  const [message, setMessage] = useState("");
 
   const urlToGoBack = new URLSearchParams([
     [CHECKOUT_QUERY_PARAM, props.checkout],
   ]);
 
-  /**
-   * This function is used to validate the form and return the validation errors for each field of the form. Really easy to use.
-   *
-   * @param force If true, the function will return the validation errors even if the user has not tried to submit the form yet.
-   *
-   * @returns An object with the validation errors for each field of the form and a boolean that indicates if the form is valid to submit.
-   */
-  function getValidationErrors(force: boolean = false) {
-    const nameExistValidation = typeof name === "string" && name.length > 0;
-    const fullNameValidation = nameExistValidation
-      ? name.split(" ").length > 1 &&
-        name.split(" ").every((value) => value !== "")
-      : true;
-
-    console.log(cpfCnpj);
-    const cleanedCpfCnpj =
-      typeof cpfCnpj === "string" ? cpfCnpj.replace(/[\.\-\/]/g, "") : "";
-    const cpfCnpjExistValidation =
-      typeof cpfCnpj === "string" && cpfCnpj.length > 0;
-    const cpfCnpjLengthValidation =
-      (cpfCnpjExistValidation && cleanedCpfCnpj.length === 11) ||
-      cleanedCpfCnpj.length === 14;
-    const cpfCnpjValidation =
-      cpfCnpjLengthValidation &&
-      ((cleanedCpfCnpj.length === 11 ? isValidCPF(cleanedCpfCnpj) : false) ||
-        (cleanedCpfCnpj.length === 14 ? isValidCNPJ(cleanedCpfCnpj) : false));
-
-    const paymentTypeExistValidation =
-      typeof paymentType === "string" &&
-      paymentType.length > 0 &&
-      (paymentType === "PIX" || paymentType === "CREDIT_CARD");
-    const paymentTypeValidation = {
-      name:
-        nameExistValidation === false &&
-        (force === true || hasTriedToSubmit === true)
-          ? strings.checkoutNameValidationNonExistingError
-          : fullNameValidation === false
-          ? strings.checkoutNameValidationFullNameError
-          : undefined,
-      cpfCnpj:
-        cpfCnpjExistValidation === false &&
-        (force === true || hasTriedToSubmit === true)
-          ? strings.checkoutCpfCnpjValidationNonExistingError
-          : cpfCnpjLengthValidation === false
-          ? strings.checkoutCpfCnpjValidationLengthError
-          : cpfCnpjValidation === false
-          ? strings.checkoutCpfCnpjValidationDigitError
-          : undefined,
-      paymentType:
-        paymentTypeExistValidation === false &&
-        (force === true || hasTriedToSubmit === true)
-          ? strings.checkoutPaymentTypeValidationNonExistingError
-          : undefined,
-    };
-    return {
-      ...paymentTypeValidation,
-      isValidToSubmit: Object.values(paymentTypeValidation).every(
-        (value) => value === undefined
-      ),
-    };
-  }
+  const { setHasTriedToSubmit, validation } = useValidation(
+    props.cookies,
+    {
+      name: name,
+      cpfCnpj: cpfCnpj,
+      paymentType: paymentType,
+    },
+    "checkoutTriedToSubmit"
+  );
 
   return (
     <Fragment>
@@ -123,6 +62,7 @@ export default function Account(props: {
             <div className="flex flex-col justify-start items-start w-full">
               <label htmlFor="name" className="text-gray-100 font-semibold">
                 {strings.checkoutAccountNameLabel}
+                <span className="text-red-800">*</span>
               </label>
               <input
                 className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md"
@@ -131,13 +71,14 @@ export default function Account(props: {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              {typeof validationErrors.name === "string" ? (
-                <p className="text-sm text-red-200">{validationErrors.name}</p>
+              {typeof validation.name === "string" ? (
+                <p className="text-sm text-red-200">{validation.name}</p>
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full pt-6">
               <label htmlFor="cpfCnpj" className="text-gray-100 font-semibold">
                 {strings.checkoutAccountCpfCnpjLabel}
+                <span className="text-red-800">*</span>
               </label>
               <input
                 className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md"
@@ -148,15 +89,14 @@ export default function Account(props: {
                   setCpfCnpj(e.target.value.replace(/\D/g, ""));
                 }}
               />
-              {typeof validationErrors.cpfCnpj === "string" ? (
-                <p className="text-sm text-red-200">
-                  {validationErrors.cpfCnpj}
-                </p>
+              {typeof validation.cpfCnpj === "string" ? (
+                <p className="text-sm text-red-200">{validation.cpfCnpj}</p>
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full pt-6">
               <label htmlFor="type" className="text-gray-100 font-semibold">
                 {strings.checkoutAccountPaymentTypeLabel}
+                <span className="text-red-800">*</span>
               </label>
               <select
                 className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md"
@@ -175,6 +115,18 @@ export default function Account(props: {
                 </option>
               </select>
             </div>
+            <div className="flex flex-col justify-start items-start w-full pt-6">
+              <label htmlFor="message" className="text-gray-100 font-semibold">
+                {strings.checkoutAccountMessageLabel}
+              </label>
+              <textarea
+                className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md resize-none"
+                id="message"
+                rows={3}
+                value={message}
+                onChange={(e) => setMessage(e.target.value as any)}
+              />
+            </div>
           </div>
           <div className="flex md:flex-col md:w-full flex-row justify-between items-center w-full">
             <Link
@@ -189,24 +141,15 @@ export default function Account(props: {
             <button
               type="submit"
               className={`md:w-full md:mt-3 cursor-pointer bg-white text-red-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/3 h-full hover:bg-red-100 ${
-                validationErrors.name !== undefined ||
-                validationErrors.cpfCnpj !== undefined ||
-                paymentType === undefined
-                  ? "bg-opacity-50"
-                  : ""
+                validation.isValidToSubmit() === false ? "bg-opacity-50" : ""
               }`}
-              disabled={
-                validationErrors.name !== undefined ||
-                validationErrors.cpfCnpj !== undefined ||
-                paymentType === undefined
-              }
+              disabled={validation.isValidToSubmit() === false}
               onClick={(e) => {
                 e.preventDefault();
                 setHasTriedToSubmit(true);
-                const validationErrors = getValidationErrors(true);
-                if (validationErrors.isValidToSubmit === false) return;
+                if (validation.isValidToSubmit() === false) return;
 
-                props.onPay(name, cpfCnpj, paymentType as any);
+                props.onPay(name, cpfCnpj, paymentType as any, message);
               }}
             >
               {strings.checkoutAccountPaymentConfirmButton}

@@ -25,7 +25,7 @@ export default function Payment(props: {
         {props.paymentData ? (
           <a
             href={props.paymentData.invoiceUrl}
-            className="flex flex-row w-full justify-between items-center pt-2 pb-2 pr-6 pl-6 border-red-300 border-2 rounded-md"
+            className="flex flex-row w-full justify-between items-center pt-2 pb-2 pr-6 pl-6 border-red-300 border-2 rounded-md md:flex-col"
             target="_blank"
           >
             <div className="flex flex-col">
@@ -53,7 +53,7 @@ export default function Payment(props: {
                 </p>
               </span>
             </div>
-            <p className="text-white">
+            <p className="text-white md:mt-4">
               {strings.checkoutPaymentCardClickToPayLabel}
             </p>
           </a>

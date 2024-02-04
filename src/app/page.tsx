@@ -30,6 +30,7 @@ async function getPaymentData(searchParams: { payment?: string }) {
       .replace(/"$/g, "")
   );
   const dismissPayment = cookiesInitialized.get(CHECKOUT_REMOVE_PAYMENT);
+  console.log(dismissPayment);
 
   const hasPendingPaymentAndPageIsNotPaymentPage =
     typeof paymentData === "object" &&

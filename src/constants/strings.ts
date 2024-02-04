@@ -1,21 +1,22 @@
 const strings = {
-  checkoutNameValidationNonExistingError:
-    "Vc tem que falar o seu nome pra gente",
-  checkoutNameValidationFullNameError: "É o nome completo, foi mal :/",
-  checkoutCpfCnpjValidationNonExistingError:
+  nameValidationNonExistingError: "Vc tem que falar o seu nome pra gente",
+  nameValidationFullNameError: "É o nome completo, foi mal :/",
+  cpfCnpjValidationNonExistingError:
     "Qual o seu CPF ou CNPJ? Fica tranquilo que a gente só usa pra comprar o presente mesmo",
-  checkoutCpfCnpjValidationLengthError:
+  cpfCnpjValidationLengthError:
     "Sepa que não é um CPF ou CNPJ válido. CPF tem 11 digitos e CNPJ tem 14. Tenta de novo?",
-  checkoutCpfCnpjValidationDigitError:
+  cpfCnpjValidationDigitError:
     "Não é válido, ta tentando passar a perna na gente??? Deus ta vendo",
-  checkoutPaymentTypeValidationNonExistingError:
-    "Selecione uma forma de pagamento?",
+  paymentTypeValidationNonExistingError: "Selecione uma forma de pagamento?",
+  phoneValidationNonExistingError: "Qual o seu telefone?",
+  phoneValidationNotValidError: "O número tem que ter o DDD",
   checkoutSummaryGoBackButton: "Amo muito os dois quero gastar mais 🤑",
   checkoutSummaryGoToAccountButton: "É mais do que eles merecem, finalizar 😜",
   checkoutAccountTitle: "Dados de pagamento pra gente roubar",
   checkoutAccountNameLabel: "Seu nome completo",
   checkoutAccountCpfCnpjLabel: "CPF ou CNPJ",
   checkoutAccountPaymentTypeLabel: "Como você quer pagar?",
+  checkoutAccountMessageLabel: "Deixa uma mensagem para os dois pombinhos 🕊️",
   checkoutAccountPaymentTypePlaceholderLabel:
     "Selecione uma forma de pagamento",
   checkoutAccountPaymentTypePixOptionLabel: "Pix",
@@ -37,6 +38,7 @@ const strings = {
   confirmationNameLabel: "Qual o seu nome?",
   confirmationCpfCnpjLabel: "CPF ou CNPJ (Só o número)",
   confirmationPhoneLabel: "Número de celular (Só o número com DDD)",
+  confirmationConfirmButtonLabel: "Confirmar presença",
 };
 
 export default strings;

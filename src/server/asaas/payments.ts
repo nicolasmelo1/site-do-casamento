@@ -30,7 +30,7 @@ async function createANewPayment(
   const callback = urlToRedirectTo
     ? { successUrl: urlToRedirectTo, autoRedirect: true }
     : undefined;
-  console.log("callback", callback);
+
   const response = await callAsaasApi("/v3/payments", "POST", {
     customer,
     billingType,
@@ -40,7 +40,6 @@ async function createANewPayment(
     callback: callback,
   });
   const payment = await response.json();
-  console.log("payment", payment);
   return payment;
 }
 

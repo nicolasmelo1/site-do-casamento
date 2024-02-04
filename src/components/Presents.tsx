@@ -2,13 +2,13 @@
 
 import { Fragment } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { CHECKOUT_QUERY_PARAM, presents } from "../constants";
 import Checkout from "./Checkout";
 import { useCookieStorageState } from "../hooks";
 
 import type { getPendingPayment } from "../server/asaas/payments";
-import Image from "next/image";
 import { displayValueInCurrency } from "../utils";
 
 export default function Presents(props: {

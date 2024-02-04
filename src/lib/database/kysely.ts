@@ -18,6 +18,8 @@ interface Guests {
   email?: string;
   phone?: string;
   instagramUserId?: string;
+  isGoing: boolean;
+  numberOfPeople?: number;
   // You can specify a different type for each operation (select, insert and
   // update) using the `ColumnType<SelectType, InsertType, UpdateType>`
   // wrapper. Here we define a column `createdAt` that is selected as
@@ -26,9 +28,16 @@ interface Guests {
   createdAt: ColumnType<Date, string | undefined, never>;
 }
 
+interface GuestsPresents {
+  id: Generated<number>;
+  guestId: number;
+  message: string;
+}
+
 // Keys of this interface are table names.
 export interface Database {
   guests: Guests;
+  guests_presents: GuestsPresents;
 }
 
 function getKyselyInstance() {

@@ -11,6 +11,7 @@ import {
   CHECKOUT_REMOVE_PAYMENT,
   COOKIES_BILLING_CURRENT_PAYMENT_ID,
   COOKIES_BILLING_CUSTOMER_ID,
+  presents,
 } from "../../constants";
 import Summary from "./Summary";
 import Account from "./Account";
@@ -109,30 +110,38 @@ export default function Checkout(props: {
   function onPay(
     name: string,
     cpfCnpj: string,
-    paymentType: "PIX" | "CREDIT_CARD"
+    paymentType: "PIX" | "CREDIT_CARD",
+    message?: string
   ) {
-    handlePayment(name, cpfCnpj, paymentType, 10).then((paymentData) => {
-      if (paymentData === undefined) return;
-      setPaymentId(paymentData?.paymentId);
-      setCustomerId(paymentData?.customerId);
-      setPaymentData(paymentData);
-      setIsNewPayment(true);
+    const sumOfCheckout = checkoutSplitNumbers.reduce(
+      (accumulator, checkoutIndex) =>
+        accumulator + presents[checkoutIndex].value,
+      0
+    );
+    handlePayment(name, cpfCnpj, paymentType, message, sumOfCheckout).then(
+      (paymentData) => {
+        if (paymentData === undefined) return;
+        setPaymentId(paymentData?.paymentId);
+        setCustomerId(paymentData?.customerId);
+        setPaymentData(paymentData);
+        setIsNewPayment(true);
 
-      if (typeof window !== "undefined")
-        window.open(paymentData.invoiceUrl, "_blank");
+        if (typeof window !== "undefined")
+          window.open(paymentData.invoiceUrl, "_blank");
 
-      const newSearchParamsArray = [];
-      for (const [key, value] of Array.from(searchParams.entries())) {
-        if (key === CHECKOUT_PAYMENT_QUERY_PARAM) continue;
-        newSearchParamsArray.push([key, value]);
+        const newSearchParamsArray = [];
+        for (const [key, value] of Array.from(searchParams.entries())) {
+          if (key === CHECKOUT_PAYMENT_QUERY_PARAM) continue;
+          newSearchParamsArray.push([key, value]);
+        }
+        newSearchParamsArray.push([
+          CHECKOUT_PAYMENT_QUERY_PARAM,
+          paymentData?.paymentId,
+        ]);
+        const newSearchParams = new URLSearchParams(newSearchParamsArray);
+        router.push(`?${newSearchParams.toString()}`);
       }
-      newSearchParamsArray.push([
-        CHECKOUT_PAYMENT_QUERY_PARAM,
-        paymentData?.paymentId,
-      ]);
-      const newSearchParams = new URLSearchParams(newSearchParamsArray);
-      router.push(`?${newSearchParams.toString()}`);
-    });
+    );
   }
 
   function onDismiss() {
@@ -143,7 +152,7 @@ export default function Checkout(props: {
 
   return isValidCheckout || isValidConfirm || isValidPayment ? (
     <Modal
-      className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[50vh] bg-red-400 p-6 rounded-2xl"
+      className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[55vh] bg-red-400 p-6 rounded-2xl"
       onClose={onDismiss}
     >
       <Fragment>

@@ -104,29 +104,33 @@ function matchNumbers(value: string | number | number[] = "") {
 }
 
 export function formatterOfCpfCnpj(value: string) {
-  if (value.length === 11)
-    return value.replace(
-      /(\d{3})(\d{3})(\d{3})(\d{2})/g,
-      (match, ...values) => {
-        const firstPart = values[0] + ".";
-        const secondPart = values[1] + ".";
-        const thirdPart = values[2] + "-" + values[3];
+  let formattedValue = "";
+  let valueWithoutNonDigits = value.replace(/\D/g, "");
 
-        return firstPart + secondPart + thirdPart;
-      }
-    );
-  else if (value.length === 14)
-    return value.replace(
-      /(\d{2})(\d{3})(\d{3})(0001)(\d{2})/g,
-      (match, ...values) => {
-        const firstPart = values[0] + ".";
-        const secondPart = values[1] + ".";
-        const thirdPart = values[2] + "/";
-        const fourthPart = values[3] + "-";
-        const fifthPart = values[4];
+  const maxLength =
+    valueWithoutNonDigits.length >= 14 ? 14 : valueWithoutNonDigits.length;
 
-        return firstPart + secondPart + thirdPart + fourthPart + fifthPart;
-      }
-    );
-  else return value;
+  if (valueWithoutNonDigits.length <= 11) {
+    for (let i = 0; i < maxLength; i++) {
+      if (i === 3) formattedValue += `.${valueWithoutNonDigits[i]}`;
+      else if (i === 6 && valueWithoutNonDigits[i - 1] !== undefined)
+        formattedValue += `.${valueWithoutNonDigits[i]}`;
+      else if (i === 9 && valueWithoutNonDigits[i - 1] !== undefined)
+        formattedValue += `-${valueWithoutNonDigits[i]}`;
+      else formattedValue += valueWithoutNonDigits[i];
+    }
+    return formattedValue;
+  } else {
+    for (let i = 0; i < maxLength; i++) {
+      if (i === 2) formattedValue += `.${valueWithoutNonDigits[i]}`;
+      else if (i === 5 && valueWithoutNonDigits[i - 1] !== undefined)
+        formattedValue += `.${valueWithoutNonDigits[i]}`;
+      else if (i === 8 && valueWithoutNonDigits[i - 1] !== undefined)
+        formattedValue += `/${valueWithoutNonDigits[i]}`;
+      else if (i === 12 && valueWithoutNonDigits[i - 1] !== undefined)
+        formattedValue += `-${valueWithoutNonDigits[i]}`;
+      else formattedValue += valueWithoutNonDigits[i];
+    }
+    return formattedValue;
+  }
 }
