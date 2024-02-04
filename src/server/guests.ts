@@ -1,11 +1,6 @@
 import { db } from "../lib";
 
-export default async function createOrUpdateGuest(
-  name: string,
-  cpfCnpj: string,
-  phone: string | undefined,
-  isGoing: boolean | undefined = true
-) {
+export async function getGuest(cpfCnpj: string, phone: string | undefined) {
   const existingGuests = await db
     .selectFrom("guests")
     .selectAll()
@@ -13,8 +8,17 @@ export default async function createOrUpdateGuest(
       eb.or([eb("cpfCnpj", "=", cpfCnpj), eb("phone", "=", phone)])
     )
     .execute();
-  const existingGuest =
-    existingGuests.length > 0 ? existingGuests[0] : undefined;
+
+  return existingGuests.length > 0 ? existingGuests[0] : undefined;
+}
+
+export async function createOrUpdateGuest(
+  name: string,
+  cpfCnpj: string,
+  phone: string | undefined,
+  isGoing: boolean | undefined = true
+) {
+  const existingGuest = await getGuest(cpfCnpj, phone);
   let existingGuestId = existingGuest?.id;
   if (typeof existingGuest?.id === "number") {
     const dataToSet: {

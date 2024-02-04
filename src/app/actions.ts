@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import processPayment from "../server/asaas";
 import { cancelPaymentFlow } from "../server/asaas/payments";
 import { db } from "../lib";
-import createOrUpdateGuest from "../server/create-or-update-guest";
+import { createOrUpdateGuest } from "../server";
 
 export async function handlePayment(
   name: string,

@@ -39,6 +39,10 @@ const strings = {
   confirmationCpfCnpjLabel: "CPF ou CNPJ (Só o número)",
   confirmationPhoneLabel: "Número de celular (Só o número com DDD)",
   confirmationConfirmButtonLabel: "Confirmar presença",
+  confirmationConfirmButtonWhenConfirmedLabel:
+    "Você já confirmou, quer cancelar?",
+  confirmationConfirmButtonWhenNotConfirmedLabel:
+    "Você disse que não iria, quer alterar? Espero que mude de decisão mesmo 🔫",
 };
 
 export default strings;

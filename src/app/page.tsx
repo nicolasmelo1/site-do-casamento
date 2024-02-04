@@ -12,6 +12,7 @@ import {
   WEDDING_DATE,
   CONFIRMATION_CONFIRMATION_QUERY_PARAM,
   CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
+  COOKIES_PHONE,
 } from "../constants";
 import Presents from "../components/Presents";
 import {
@@ -20,6 +21,54 @@ import {
 } from "../server/asaas/payments";
 import { db } from "../lib";
 import Confirmation from "../components/Confirmation";
+import { getGuest } from "../server";
+
+function monthDiff(dateFrom: Date, dateTo: Date) {
+  return (
+    dateTo.getMonth() -
+    dateFrom.getMonth() +
+    12 * (dateTo.getFullYear() - dateFrom.getFullYear())
+  );
+}
+
+async function hasConfirmedOrNotPresence(searchParams: {
+  going?: string;
+}): Promise<boolean | undefined> {
+  const today = new Date();
+  const cookiesInitialized = cookies();
+  const cpfCnpj = cookiesInitialized.get(COOKIES_CPF_CNPJ);
+  const phone = cookiesInitialized.get(COOKIES_PHONE);
+
+  const guestData = await getGuest(
+    cpfCnpj?.value as string,
+    phone?.value as string
+  );
+
+  const diffInMonthsFromToday = monthDiff(today, WEDDING_DATE);
+  const shouldRedirectToConfirmationPage =
+    typeof guestData?.isGoing !== "boolean" &&
+    diffInMonthsFromToday <= 3 &&
+    diffInMonthsFromToday >= 0 &&
+    searchParams?.going !== CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE;
+
+  if (shouldRedirectToConfirmationPage) {
+    const newUrlSearchParams = new URLSearchParams([
+      [
+        CONFIRMATION_CONFIRMATION_QUERY_PARAM,
+        CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
+      ],
+    ]);
+    redirect(`?${newUrlSearchParams.toString()}`);
+  }
+
+  if (cpfCnpj?.value || phone?.value) {
+    const guestData = await getGuest(
+      cpfCnpj?.value.replace(/^"/g, "").replace(/"$/g, "") as string,
+      phone?.value.replace(/^"/g, "").replace(/"$/g, "") as string
+    );
+    return guestData?.isGoing;
+  } else return undefined;
+}
 
 async function getPaymentData(searchParams: { payment?: string }) {
   const cookiesInitialized = cookies();
@@ -54,53 +103,12 @@ async function getPaymentData(searchParams: { payment?: string }) {
   return paymentData;
 }
 
-function monthDiff(dateFrom: Date, dateTo: Date) {
-  return (
-    dateTo.getMonth() -
-    dateFrom.getMonth() +
-    12 * (dateTo.getFullYear() - dateFrom.getFullYear())
-  );
-}
-
-async function isAlreadyGoing(searchParams: { going?: string }) {
-  const today = new Date();
-  const cookiesInitialized = cookies();
-  const cpfCnpj = cookiesInitialized.get(COOKIES_CPF_CNPJ)?.value;
-  const guests = await db
-    .selectFrom("guests")
-    .selectAll()
-    .where("cpfCnpj", "=", cpfCnpj)
-    .limit(1)
-    .execute();
-
-  const hasUserConfirmed = guests.length > 0;
-  const diffInMonthsFromToday = monthDiff(today, WEDDING_DATE);
-
-  const shouldRedirectToConfirmationPage =
-    hasUserConfirmed === false &&
-    diffInMonthsFromToday <= 3 &&
-    diffInMonthsFromToday >= 0 &&
-    searchParams?.going !== CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE;
-
-  if (shouldRedirectToConfirmationPage) {
-    const newUrlSearchParams = new URLSearchParams([
-      [
-        CONFIRMATION_CONFIRMATION_QUERY_PARAM,
-        CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
-      ],
-    ]);
-    redirect(`?${newUrlSearchParams.toString()}`);
-  }
-
-  return hasUserConfirmed;
-}
-
 export default async function Home(props: {
   searchParams: { payment?: string; going?: string };
 }) {
-  const [paymentData, hasUserConfirmed] = await Promise.all([
+  const [paymentData, hasConfirmedPresenceOrNot] = await Promise.all([
     getPaymentData(props.searchParams),
-    isAlreadyGoing(props.searchParams),
+    hasConfirmedOrNotPresence(props.searchParams),
   ]);
 
   return (
@@ -312,7 +320,10 @@ export default async function Home(props: {
           src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
         ></iframe>
       </div>
-      <Confirmation cookies={cookies().toString()} />
+      <Confirmation
+        cookies={cookies().toString()}
+        hasConfirmedOrNotPresence={hasConfirmedPresenceOrNot}
+      />
       <Presents cookies={cookies().toString()} paymentData={paymentData} />
     </main>
   );

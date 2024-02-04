@@ -18,7 +18,10 @@ import { formatterOfCpfCnpj } from "../utils/cpf-cnpj";
 import { formatterOfPhone } from "../utils";
 import { confirmPresence } from "../app/actions";
 
-export default function Confirmation(props: { cookies: string }) {
+export default function Confirmation(props: {
+  cookies: string;
+  hasConfirmedOrNotPresence: boolean | undefined;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isNotGoingTimes, setIsNotGoingTimes] = useState<number | undefined>(
@@ -63,21 +66,27 @@ export default function Confirmation(props: { cookies: string }) {
 
   return (
     <Fragment>
-      <button
-        type="button"
-        className="flex flex-row justify-center items-center w-full h-full"
-        onClick={() => {
-          const newSearchParams = new URLSearchParams([
-            [
-              CONFIRMATION_CONFIRMATION_QUERY_PARAM,
-              CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
-            ],
-          ]);
-          router.push(`?${newSearchParams.toString()}`);
-        }}
-      >
-        {strings.confirmationConfirmButtonLabel}
-      </button>
+      <div className="flex flex-row justify-center items-center w-full h-full mt-12 mb-12">
+        <button
+          type="button"
+          className="flex flex-row justify-center font-semibold text-white items-center max-w-96 h-full bg-red-400 p-3 rounded-2xl hover:bg-red-300"
+          onClick={() => {
+            const newSearchParams = new URLSearchParams([
+              [
+                CONFIRMATION_CONFIRMATION_QUERY_PARAM,
+                CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
+              ],
+            ]);
+            router.push(`?${newSearchParams.toString()}`);
+          }}
+        >
+          {props.hasConfirmedOrNotPresence === undefined
+            ? strings.confirmationConfirmButtonLabel
+            : props.hasConfirmedOrNotPresence === true
+            ? strings.confirmationConfirmButtonWhenConfirmedLabel
+            : strings.confirmationConfirmButtonWhenNotConfirmedLabel}
+        </button>
+      </div>
       {searchParams.has(CONFIRMATION_CONFIRMATION_QUERY_PARAM) ? (
         <Modal
           className="flex flex-col justify-between w-6/12 min-w-96 max-w-4xl min-h-96 h-screen md:max-h-[60vh] max-h-[50vh] bg-white p-6 rounded-2xl"
