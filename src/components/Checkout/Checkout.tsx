@@ -45,7 +45,7 @@ export default function Checkout(props: {
   );
   const router = useRouter();
   const searchParams = useSearchParams();
-  const clickOutsideRef = useClickOutsideOfElement<HTMLDivElement>(() => {
+  useClickOutsideOfElement<HTMLDivElement>(() => {
     onDismiss();
   });
   const checkout = searchParams.get(CHECKOUT_QUERY_PARAM) || "";

@@ -6,8 +6,8 @@ import {
   COOKIES_BILLING_CURRENT_PAYMENT_ID,
   CHECKOUT_PAYMENT_QUERY_PARAM,
   specialPersons,
+  sections,
   CHECKOUT_REMOVE_PAYMENT,
-  COOKIES_USERNAME,
   COOKIES_CPF_CNPJ,
   WEDDING_DATE,
   CONFIRMATION_CONFIRMATION_QUERY_PARAM,
@@ -19,9 +19,10 @@ import {
   getPaymentDataFromPaymentId,
   getPendingPayment,
 } from "../server/asaas/payments";
-import { db } from "../lib";
 import Confirmation from "../components/Confirmation";
+import Navigation from "../components/Navigation";
 import { getGuest } from "../server";
+import Section from "../components/Section";
 
 function monthDiff(dateFrom: Date, dateTo: Date) {
   return (
@@ -113,10 +114,8 @@ export default async function Home(props: {
 
   return (
     <main className="flex flex-col overflow-scroll w-full">
+      <Navigation sections={sections} />
       <div className="flex flex-col justify-center items-center">
-        <h1 className="flex w-full justify-center text-2xlr">
-          Nicolas e Viviane
-        </h1>
         <div className="flex w-full relative h-96">
           <Image
             fill={true}
@@ -126,13 +125,18 @@ export default async function Home(props: {
             alt="Picture of the author"
             className="w-full h-auto"
           />
-          L
         </div>
       </div>
+      <Section
+        hasConfirmedOrNotPresence={hasConfirmedPresenceOrNot}
+        paymentData={paymentData}
+        cookies={cookies().toString()}
+      />
+      {/*
       <div className="flex justify-center items-center w-full p-6">
         <div className="flex flex-col justify-center items-center min-w-96 max-w-lg">
           <h1 className="flex w-full justify-center text-4xl">O Casal</h1>
-          <p className="flex w-full justify-center text-2xlr">
+          <p className="flex w-full justify-center text-2xlr pt-6">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
             aliquam, mi at ultricies imperdiet, nisl ipsum vehicula eros, et
             aliquam nisl quam eget nunc. Nulla facilisi. Donec ut quam sed
@@ -177,7 +181,7 @@ export default async function Home(props: {
               sizes="100vw 50vh"
               objectFit="cover"
               alt="Picture of the author"
-              className="w-full h-auto"
+              className="w-full h-auto border-red-400 border-[1px] p-3 rounded-md"
             />
           </div>
           <p className="flex w-full justify-center text-2xlr pt-6">
@@ -205,15 +209,17 @@ export default async function Home(props: {
       </div>
       <div className="flex justify-center items-center w-full p-6">
         <div className="flex flex-col justify-center items-center min-w-96 max-w-lg">
-          <h1 className="flex w-full justify-center text-4xl">O Casal</h1>
-          <div className="flex relative h-96 w-96">
+          <h1 id="o-casal" className="flex w-full justify-center text-4xl">
+            O Casal
+          </h1>
+          <div className="flex relative h-[50vh] w-[60vw] md:w-[80vw] md:h-[80vh]">
             <Image
               fill={true}
               src="/placeholder.webp"
               sizes="100vw 50vh"
               objectFit="cover"
               alt="Picture of the author"
-              className="w-full h-auto"
+              className="w-full h-auto border-red-400 border-[1px] p-3 rounded-md"
             />
           </div>
           <p className="flex w-full justify-center text-2xlr pt-6">
@@ -266,23 +272,28 @@ export default async function Home(props: {
         </div>
       </div>
       <div className="flex flex-row flex-wrap justify-center items-center w-full p-6">
+        <h1 className="flex w-full justify-center text-4xl">
+          Padrinhos e Madrinhas
+        </h1>
         <div className="flex flex-row flex-wrap justify-center items-center w-screen max-w-6xl">
           {specialPersons.map((specialPerson) => (
             <div
               key={specialPerson.name}
               className="flex justify-center flex-wrap p-6 w-3/12 min-w-72"
             >
-              <p>{specialPerson.name}</p>
               <Image
                 src={specialPerson.photo}
                 alt="Picture of the author"
+                className="rounded-tl-full rounded-tr-full  border-black border-[1px] p-1"
                 width={384}
                 height={384}
               />
+              <p className="font-bold text-red-400">{specialPerson.name}</p>
             </div>
           ))}
         </div>
       </div>
+      /*
       <div className="flex justify-center items-center w-full p-6">
         <div className="flex flex-col justify-center items-center min-w-96 max-w-lg">
           <h1 className="flex w-full justify-center text-4xl">O Casal</h1>
@@ -309,22 +320,7 @@ export default async function Home(props: {
           </p>
         </div>
       </div>
-      <div className="flex justify-center items-center w-full p-6">
-        <iframe
-          width="600"
-          height="450"
-          style={{ border: 0 }}
-          loading="lazy"
-          allowFullScreen={true}
-          referrerPolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
-        ></iframe>
-      </div>
-      <Confirmation
-        cookies={cookies().toString()}
-        hasConfirmedOrNotPresence={hasConfirmedPresenceOrNot}
-      />
-      <Presents cookies={cookies().toString()} paymentData={paymentData} />
+          */}
     </main>
   );
 }

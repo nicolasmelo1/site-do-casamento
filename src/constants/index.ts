@@ -1,6 +1,7 @@
 export { default as specialPersons } from "./special-persons";
 export { default as presents } from "./presents";
 export { default as strings } from "./strings";
+export { default as sections } from "./sections";
 
 export const WEDDING_DATE = new Date(2024, 7, 28, 16, 0, 0, 0);
 
@@ -20,3 +21,6 @@ export const CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE = "true";
 export const COOKIES_USERNAME = "username";
 export const COOKIES_CPF_CNPJ = "cpf-cnpj";
 export const COOKIES_PHONE = "phone";
+
+export const NAVIGATION_MENU_QUERY_PARAM = "nav-menu";
+export const NAVIGATION_MENU_QUERY_PARAM_VALUE = "open";

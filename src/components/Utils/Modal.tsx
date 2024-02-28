@@ -12,7 +12,10 @@ export default function Modal(
   });
 
   return (
-    <div className="flex justify-center items-center absolute top-0 right-0 left-0 bottom-0 bg-black bg-opacity-40 z-10 overflow-hidden">
+    <div
+      className="flex justify-center items-center absolute top-0 right-0 left-0 bottom-0 bg-black bg-opacity-40 overflow-hidden"
+      style={{ zIndex: 1000 }}
+    >
       <div ref={clickOutsideRef} className={props.className}>
         {props.children}
       </div>
