@@ -42,7 +42,7 @@ const sections: {
       "A contagem regressiva já começou e estamos muito ansiosos para compartilhar esse dia tão especial para nós com todos vocês.",
     breakpoints: {
       afterContainer: (
-        <div className="flex flex-col z-10">
+        <div className="flex flex-col" style={{ zIndex: 10 }}>
           <div className="flex justify-center items-center w-full">
             <div
               className="flex w-full bg-attachment bg-fixed relative h-96 bg-no-repeat bg-cover"
@@ -135,10 +135,9 @@ const sections: {
     ),
   },
   {
-    label: "Confime sua presença",
+    label: "Confime sua presença no evento do ano!",
     slug: "confime-sua-presenca",
     isSticky: false,
-    zIndex: 7,
     content: ({ cookies, hasConfirmedOrNotPresence }) => (
       <Confirmation
         cookies={cookies}

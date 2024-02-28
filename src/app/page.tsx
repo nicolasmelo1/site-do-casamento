@@ -132,6 +132,14 @@ export default async function Home(props: {
         paymentData={paymentData}
         cookies={cookies().toString()}
       />
+      <footer
+        className="flex justify-center items-center w-full p-6"
+        style={{ zIndex: 100 }}
+      >
+        Feito com ❤️ por <span className="font-bold ml-1 mr-1">Nicolas</span> e
+        <span className="font-bold ml-1 mr-1">Viviane</span> (principalmente ele
+        😂)
+      </footer>
       {/*
       <div className="flex justify-center items-center w-full p-6">
         <div className="flex flex-col justify-center items-center min-w-96 max-w-lg">

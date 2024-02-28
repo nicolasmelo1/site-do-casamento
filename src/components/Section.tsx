@@ -1,7 +1,6 @@
 "use client";
 
 import { Fragment } from "react";
-import { useRouter } from "next/navigation";
 
 import sections from "../constants/sections";
 
@@ -12,8 +11,6 @@ export default function Section(props: {
   hasConfirmedOrNotPresence: boolean | undefined;
   paymentData: Awaited<ReturnType<typeof getPendingPayment>>;
 }) {
-  const router = useRouter();
-
   return sections.map((section, i) => {
     return (
       <Fragment key={section.slug}>
@@ -23,16 +20,17 @@ export default function Section(props: {
         <div
           key={section.slug}
           className={`flex justify-center items-start w-full p-6 bg-white${
-            section.isSticky ? " sticky top-0  overflow-auto min-h-screen" : ""
+            section.isSticky ? " sticky top-0 overflow-auto min-h-screen" : ""
           }`}
           style={{
             zIndex: typeof section.zIndex === "number" ? section.zIndex : i + 1,
           }}
-          onScroll={(e) => {
-            router.push(`/#${section.slug}`);
-          }}
         >
-          <div className="flex flex-col justify-center items-center min-w-96 max-w-lg">
+          <div
+            className={`flex flex-col justify-center items-center ${
+              typeof section.content === "string" ? " min-w-96 max-w-lg" : ""
+            }`}
+          >
             {section?.breakpoints?.beforeTitle !== undefined
               ? section.breakpoints.beforeTitle
               : null}
