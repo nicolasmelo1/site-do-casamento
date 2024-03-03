@@ -44,6 +44,7 @@ export default function useValidation<
 
   return {
     setHasTriedToSubmit,
+    hasTriedToSubmit,
     validation: validationData,
   };
 }

@@ -122,6 +122,7 @@ const sections: {
     label: "Endereço",
     slug: "endereco",
     isSticky: false,
+    zIndex: 3,
     content: (
       <iframe
         width="600"
@@ -138,6 +139,7 @@ const sections: {
     label: "Confime sua presença no evento do ano!",
     slug: "confime-sua-presenca",
     isSticky: false,
+    zIndex: 3,
     content: ({ cookies, hasConfirmedOrNotPresence }) => (
       <Confirmation
         cookies={cookies}
@@ -149,6 +151,7 @@ const sections: {
     label: "Presentes",
     slug: "presentes",
     isSticky: false,
+    zIndex: 3,
     content: ({ cookies, paymentData }) => (
       <Presents cookies={cookies} paymentData={paymentData} />
     ),

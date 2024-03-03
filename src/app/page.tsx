@@ -40,6 +40,7 @@ async function hasConfirmedOrNotPresence(searchParams: {
   const cpfCnpj = cookiesInitialized.get(COOKIES_CPF_CNPJ);
   const phone = cookiesInitialized.get(COOKIES_PHONE);
 
+  console.log(cpfCnpj?.value, phone?.value);
   const guestData = await getGuest(
     cpfCnpj?.value as string,
     phone?.value as string
@@ -52,6 +53,7 @@ async function hasConfirmedOrNotPresence(searchParams: {
     diffInMonthsFromToday >= 0 &&
     searchParams?.going !== CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE;
 
+  console.log(shouldRedirectToConfirmationPage);
   if (shouldRedirectToConfirmationPage) {
     const newUrlSearchParams = new URLSearchParams([
       [
@@ -67,6 +69,7 @@ async function hasConfirmedOrNotPresence(searchParams: {
       cpfCnpj?.value.replace(/^"/g, "").replace(/"$/g, "") as string,
       phone?.value.replace(/^"/g, "").replace(/"$/g, "") as string
     );
+    console.log(guestData);
     return guestData?.isGoing;
   } else return undefined;
 }
