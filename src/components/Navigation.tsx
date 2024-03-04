@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import {
   NAVIGATION_MENU_QUERY_PARAM,
   NAVIGATION_MENU_QUERY_PARAM_VALUE,
+  strings,
 } from "../constants";
 
 export default function Navigation(props: {
@@ -19,8 +20,10 @@ export default function Navigation(props: {
 
   return (
     <Fragment>
-      <nav className="md:hidden flex items-start justify-between p-6 none">
-        <h1>Nicolas & Viviane</h1>
+      <nav className="lg:hidden flex items-start justify-between p-6 none">
+        <h1 className="font-thankYou text-red-400 text-2xl whitespace-nowrap">
+          {strings.title}
+        </h1>
         <div className="flex flex-row">
           {props.sections.map((section) => (
             <button
@@ -37,8 +40,8 @@ export default function Navigation(props: {
           ))}
         </div>
       </nav>
-      <nav className="md:flex hidden flex-row justify-between items-center p-6">
-        <h1>Nicolas & Viviane</h1>
+      <nav className="lg:flex hidden flex-row justify-between items-center p-6">
+        <h1 className="font-thankYou text-red-400 text-2xl">{strings.title}</h1>
         <button
           aria-label="Menu"
           className="flex w-6 h-4 justify-between flex-col"
@@ -67,17 +70,21 @@ export default function Navigation(props: {
           isMenuOpen ? `h-[50vh]` : "h-0"
         }`}
       >
-        {props.sections.map((section) => (
-          <button
-            key={section.slug}
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              router.push(`/#${section.slug}`);
-            }}
-          >
-            {section.label}
-          </button>
+        {props.sections.map((section, i) => (
+          <Fragment key={section.slug}>
+            <button
+              type="button"
+              className={`pt-2 pb-2${
+                i < props.sections.length ? " border-t-2 border-gray-200" : ""
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(`/#${section.slug}`);
+              }}
+            >
+              {section.label}
+            </button>
+          </Fragment>
         ))}
       </div>
     </Fragment>

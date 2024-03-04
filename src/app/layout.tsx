@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const thankYouFont = localFont({
+  src: "./fonts/thankYou.ttf",
+  variable: "--font-thank-you",
+});
+const mansteinFont = localFont({
+  src: "./fonts/manstein.ttf",
+  variable: "--font-manstein",
+});
 
 export const metadata: Metadata = {
   title: "Nicolas Melo & Viviane Gennari (Melo)",
@@ -15,10 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
-      <body
-        className={inter.className + " flex overflow-hidden w-screen h-screen"}
-      >
+    <html
+      lang="pt-BR"
+      className={`${thankYouFont.variable} ${mansteinFont.variable}`}
+    >
+      <body className={`flex overflow-hidden w-screen h-screen`}>
         {children}
       </body>
     </html>

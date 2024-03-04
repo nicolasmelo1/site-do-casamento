@@ -21,6 +21,10 @@ export default function Confirmation(props: {
   const router = useRouter();
   const [wantToChangeConfirmation, setWantToChangeConfirmation] =
     useState<boolean>(false);
+
+  const [hasConfirmedOrNotPresence, setHasConfirmedOrNotPresence] = useState<
+    boolean | undefined
+  >(props.hasConfirmedOrNotPresence);
   const [isNotGoingTimes, setIsNotGoingTimes] = useState<number | undefined>(
     undefined
   );
@@ -51,22 +55,22 @@ export default function Confirmation(props: {
     "confirmationHasTriedSubmit"
   );
 
-  function onClose() {
-    router.push(`/`);
-    setIsNotGoingTimes(undefined);
-  }
-
   function onConfirmOrNotPresence(isGoing = true) {
-    confirmPresence(name, cpfCnpj, phone, isGoing).then(() => {
-      onClose();
+    setHasConfirmedOrNotPresence(isGoing);
+    confirmPresence(name, cpfCnpj, phone, isGoing).then((newGuestId) => {
+      const doesNotExistsNewGuestId = newGuestId === undefined;
+      if (doesNotExistsNewGuestId) return;
+
+      setWantToChangeConfirmation(false);
+      setIsNotGoingTimes(undefined);
     });
   }
   return (
     <Fragment>
-      {props.hasConfirmedOrNotPresence === undefined ||
+      {hasConfirmedOrNotPresence === undefined ||
       wantToChangeConfirmation === true ? (
         <Fragment>
-          <div className="flex flex-col justify-start items-start w-full">
+          <div className="flex flex-col justify-start items-start w-full m-6">
             <div className="flex flex-col justify-start items-start w-full">
               <label htmlFor="name" className="text-red-400 font-semibold">
                 {strings.confirmationNameLabel}
@@ -122,19 +126,19 @@ export default function Confirmation(props: {
           </div>
           <div className="flex md:flex-col md:w-full flex-row justify-between items-center w-full mt-3">
             <button
-              className={`md:mt-3 cursor-pointer bg-red-300 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl hover:bg-red-200 mr-3  ${
+              className={`md:mt-3 cursor-pointer border-[2px] border-red-400 text-red-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl hover:bg-red-200 mr-3${
                 typeof isNotGoingTimes === "number" && isNotGoingTimes < 4
-                  ? "absolute " +
+                  ? " absolute " +
                     (isNotGoingTimes === 1
-                      ? "top-0"
+                      ? " top-0"
                       : isNotGoingTimes === 2
-                      ? "top-[50vh] left-5"
+                      ? " top-[50vh] left-5"
                       : isNotGoingTimes === 3
-                      ? "top-[30vh] right-2"
+                      ? " top-[30vh] right-2"
                       : isNotGoingTimes === 4
-                      ? "top-44 right-32"
+                      ? " top-44 right-32"
                       : "")
-                  : "md:w-full w-1/2 h-full md:mt-3"
+                  : " md:w-full w-1/2 h-full md:mt-3"
               }`}
               style={
                 typeof isNotGoingTimes === "number" && isNotGoingTimes < 4
@@ -161,13 +165,13 @@ export default function Confirmation(props: {
             >
               {typeof isNotGoingTimes === "number" && isNotGoingTimes < 5
                 ? isNotGoingTimes === 1
-                  ? "Vai sim"
+                  ? strings.isNotGoingButtonLabel1
                   : isNotGoingTimes === 2
-                  ? "Para, é obvio que vc vai"
+                  ? strings.isNotGoingButtonLabel2
                   : isNotGoingTimes === 3
-                  ? "É sério, para de clicar"
-                  : "Vc não vai mesmo 😥"
-                : "Não vou"}
+                  ? strings.isNotGoingButtonLabel3
+                  : strings.isNotGoingButtonLabel4
+                : strings.isNotGoingButtonLabel}
             </button>
             <button
               type="submit"
@@ -189,157 +193,15 @@ export default function Confirmation(props: {
         <div className="flex flex-row justify-center items-center w-full h-full mt-12 mb-12">
           <button
             type="button"
-            className="flex flex-row justify-center font-semibold text-white items-center max-w-96 h-full bg-red-400 p-3 rounded-2xl hover:bg-red-300"
+            className="flex flex-row justify-center font-semibold text-red-400 items-center max-w-96 h-full p-3 rounded-2xl border-red-400 border-[2px]  hover:bg-red-200"
             onClick={() => setWantToChangeConfirmation(true)}
           >
-            {props.hasConfirmedOrNotPresence
-              ? "Você já vonfirmou presença, deseja alterar?"
-              : "Você falou que não vai, espero que mude de ideia!"}
+            {hasConfirmedOrNotPresence
+              ? strings.confirmationIsGoingButtonLabel
+              : strings.confirmationIsNotGoingButtonLabel}
           </button>
         </div>
       )}
-
-      {/*<div className="flex flex-row justify-center items-center w-full h-full mt-12 mb-12">
-        <button
-          type="button"
-          className="flex flex-row justify-center font-semibold text-white items-center max-w-96 h-full bg-red-400 p-3 rounded-2xl hover:bg-red-300"
-          onClick={() => {
-            const newSearchParams = new URLSearchParams([
-              [
-                CONFIRMATION_CONFIRMATION_QUERY_PARAM,
-                CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
-              ],
-            ]);
-            router.push(`?${newSearchParams.toString()}`);
-          }}
-        >
-          {props.hasConfirmedOrNotPresence === undefined
-            ? strings.confirmationConfirmButtonLabel
-            : props.hasConfirmedOrNotPresence === true
-            ? strings.confirmationConfirmButtonWhenConfirmedLabel
-            : strings.confirmationConfirmButtonWhenNotConfirmedLabel}
-        </button>
-          </div>*/}
-      {/*searchParams.has(CONFIRMATION_CONFIRMATION_QUERY_PARAM) ?(
-        <Modal
-          className="flex flex-col justify-between w-6/12 min-w-96 max-w-4xl min-h-96 h-screen md:max-h-[60vh] max-h-[50vh] bg-white p-6 rounded-2xl"
-          onClose={onClose}
-      >
-          <h2 className="text-black font-bold text-2xl text-start">
-            {strings.confirmationTitle}
-          </h2>
-          <div>
-            <div className="flex flex-col justify-start items-start w-full">
-              <label htmlFor="name" className="text-red-400 font-semibold">
-                {strings.confirmationNameLabel}
-              </label>
-              <input
-                className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border-2 border-gray-200 rounded-md"
-                id="name"
-                autoComplete="off"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {typeof validation.name === "string" ? (
-                <p className="text-sm text-red-300">{validation.name}</p>
-              ) : null}
-            </div>
-            <div className="flex flex-col justify-start items-start w-full mt-3">
-              <label htmlFor="cpfCnpj" className="text-red-400 font-semibold">
-                {strings.confirmationCpfCnpjLabel}
-              </label>
-              <input
-                className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border-2 border-gray-200 rounded-md"
-                id="cpfCnpj"
-                type="text"
-                value={formatterOfCpfCnpj(cpfCnpj)}
-                onChange={(e) => setCpfCnpj(e.target.value.replace(/\D/g, ""))}
-              />
-              {typeof validation.cpfCnpj === "string" && cpfCnpj.length > 0 ? (
-                <p className="text-sm text-red-300">{validation.cpfCnpj}</p>
-              ) : null}
-            </div>
-            <div className="flex flex-col justify-start items-start w-full mt-3">
-              <label htmlFor="phone" className="text-red-400 font-semibold">
-                {strings.confirmationPhoneLabel}
-              </label>
-              <input
-                className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border-2 border-gray-200 rounded-md"
-                id="phone"
-                type="text"
-                value={formatterOfPhone(phone)}
-                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-              />
-              {typeof validation.phone === "string" ? (
-                <p className="text-sm text-red-300">{validation.phone}</p>
-              ) : null}
-            </div>
-          </div>
-          <div className="flex md:flex-col md:w-full flex-row justify-between items-center w-full">
-            <Link
-              className="md:w-full cursor-pointer text-red-400 text-bold pt-2 pb-2 pr-4 pl-4 rounded-xl font-semibold border-red-400 border-2 w-1/3 text-center hover:bg-red-100 h-full justify-center items-center"
-              href={`/`}
-            >
-              {strings.checkoutAccountPaymentGoBackButton}
-            </Link>
-            <div className="md:w-full flex flex-row w-1/2 items-center justify-end">
-              <button
-                className={`md:mt-3 cursor-pointer bg-red-300 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl hover:bg-red-200 mr-3  ${
-                  typeof isNotGoingTimes === "number" && isNotGoingTimes < 4
-                    ? "absolute " +
-                      (isNotGoingTimes === 2
-                        ? "top-1 left-5"
-                        : isNotGoingTimes === 3
-                        ? "bottom-3 right-2"
-                        : isNotGoingTimes === 4
-                        ? "top-44 right-32"
-                        : "")
-                    : "md:w-full w-1/2 h-full md:mt-3"
-                }`}
-                type="submit"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const shouldTiltButton =
-                    (typeof isNotGoingTimes === "number" &&
-                      isNotGoingTimes < 4) ||
-                    isNotGoingTimes === undefined;
-                  if (shouldTiltButton)
-                    setIsNotGoingTimes((prev) => (prev ? prev + 1 : 1));
-                  else {
-                    setHasTriedToSubmit(true);
-                    onConfirmOrNotPresence(false);
-                  }
-                }}
-              >
-                {typeof isNotGoingTimes === "number" && isNotGoingTimes < 5
-                  ? isNotGoingTimes === 1
-                    ? "Vai sim"
-                    : isNotGoingTimes === 2
-                    ? "Para, é obvio que vc vai"
-                    : isNotGoingTimes === 3
-                    ? "É sério, para de clicar"
-                    : "Vc não vai mesmo 😥"
-                  : "Não vou"}
-              </button>
-              <button
-                type="submit"
-                className={`md:w-full md:mt-3 cursor-pointer bg-red-400 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/2 h-full hover:bg-red-300 ${
-                  validation.isValidToSubmit() === false ? "bg-opacity-50" : ""
-                }`}
-                disabled={validation.isValidToSubmit() === false}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setHasTriedToSubmit(true);
-                  onConfirmOrNotPresence(true);
-                }}
-              >
-                {strings.checkoutAccountPaymentConfirmButton}
-              </button>
-            </div>
-          </div>
-        </Modal>
-              ) : null*/}
     </Fragment>
   );
 }

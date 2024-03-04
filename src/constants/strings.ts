@@ -1,4 +1,5 @@
 const strings = {
+  title: "Nicolas e Viviane",
   nameValidationNonExistingError: "Vc tem que falar o seu nome pra gente",
   nameValidationFullNameError: "É o nome completo, foi mal :/",
   cpfCnpjValidationNonExistingError:
@@ -34,6 +35,14 @@ const strings = {
   checkoutPaymentCardPixTitle: "Pix",
   checkoutPaymentCancelButton: "Cancelar o pagamento",
   checkoutPaymentPayLaterButton: "Pagar depois",
+  confirmationIsGoingButtonLabel:
+    "Você já confirmou presença, não pode ir por algum motivo?",
+  confirmationIsNotGoingButtonLabel: "Você falou que não vai. Mudou de ideia?",
+  isNotGoingButtonLabel1: "Vai sim",
+  isNotGoingButtonLabel2: "Para, é obvio que vc vai",
+  isNotGoingButtonLabel3: "É sério, para de clicar",
+  isNotGoingButtonLabel4: "Vc não vai mesmo 😥",
+  isNotGoingButtonLabel: "Não vou",
   confirmationTitle: "Confirme sua presença no evento do ano!",
   confirmationNameLabel: "Qual o seu nome?",
   confirmationCpfCnpjLabel: "CPF ou CNPJ (Só o número)",

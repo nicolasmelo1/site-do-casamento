@@ -55,5 +55,11 @@ export async function confirmPresence(
   phone: string | undefined,
   isGoing: boolean | undefined = true
 ) {
-  return createOrUpdateGuest(name, cpfCnpj, phone, isGoing);
+  const existName = typeof name === "string" && name.length > 0;
+  const existCpfCnpj = typeof cpfCnpj === "string" && cpfCnpj.length > 0;
+  const existPhone = typeof phone === "string" && phone.length > 0;
+  if (existName && existCpfCnpj && existPhone)
+    return createOrUpdateGuest(name, cpfCnpj, phone, isGoing);
+
+  return;
 }

@@ -36,9 +36,9 @@ export default function Section(props: {
               : null}
             <h1
               id={section.slug}
-              className={`flex w-full justify-center text-4xl  ${
+              className={`flex w-full justify-center text-4xl font font-manstein${
                 section?.breakpoints?.betweenContentAndTitle !== undefined
-                  ? "pb-6"
+                  ? " pb-6"
                   : ""
               }`}
             >

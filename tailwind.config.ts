@@ -13,6 +13,10 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        manstein: ["var(--font-manstein)"],
+        thankYou: ["var(--font-thank-you)"],
+      },
     },
     screens: {
       "2xl": { max: "1535px" },

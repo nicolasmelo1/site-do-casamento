@@ -103,16 +103,18 @@ const sections: {
         {specialPersons.map((specialPerson) => (
           <div
             key={specialPerson.name}
-            className="flex justify-center flex-wrap p-6 w-3/12 min-w-72"
+            className="flex justify-center flex-col flex-wrap p-6 w-3/12 min-w-72"
           >
             <Image
               src={specialPerson.photo}
               alt="Picture of the author"
-              className="rounded-tl-full rounded-tr-full  border-black border-[1px] p-1"
+              className="rounded-tl-full rounded-tr-full border-black border-[1px] p-1"
               width={384}
               height={384}
             />
-            <p className="font-bold text-red-400">{specialPerson.name}</p>
+            <p className="font-bold text-red-400 w-full text-center">
+              {specialPerson.name}
+            </p>
           </div>
         ))}
       </div>
