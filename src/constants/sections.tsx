@@ -45,15 +45,27 @@ const sections: {
         <div className="flex flex-col" style={{ zIndex: 10 }}>
           <div className="flex justify-center items-center w-full">
             <div
-              className="flex w-full bg-attachment bg-fixed relative h-96 bg-no-repeat bg-cover"
-              style={{ backgroundImage: `url(/placeholder.webp)` }}
+              className="flex w-full relative"
+              style={{
+                height: "50vh",
+                backgroundAttachment: "fixed",
+                backgroundImage: `url(/placeholder.webp)`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
             />
           </div>
           <div className="flex h-4 bg-white relative" />
           <div className="flex justify-center items-center w-full">
             <div
-              className="flex w-full bg-attachment bg-fixed relative h-96 bg-no-repeat bg-cover"
-              style={{ backgroundImage: `url(/placeholder.webp)` }}
+              className="flex w-full relative"
+              style={{
+                height: "50vh",
+                backgroundAttachment: "fixed",
+                backgroundImage: `url(/placeholder.webp)`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
             />
           </div>
         </div>
@@ -81,15 +93,18 @@ const sections: {
       " A partir dai, o resto é história. Namoraram por 7 anos, noivaram e agora vocês estão lendo essa singela história nesse site feito para o casamento deles.",
     breakpoints: {
       betweenContentAndTitle: (
-        <div className="flex relative h-96 w-96">
-          <Image
-            fill={true}
-            src="/placeholder.webp"
-            sizes="100vw 50vh"
-            objectFit="cover"
-            alt="Picture of the author"
-            className="w-full h-auto border-red-400 border-[1px] p-3 rounded-md"
-          />
+        <div className="flex min-w-96 h-96 p-3 border-red-400 border-2 rounded-md">
+          <div className="flex relative w-full h-full">
+            <Image
+              fill={true}
+              src="/placeholder.webp"
+              sizes="100vw 50vh"
+              style={{}}
+              objectFit="cover"
+              alt="Picture of the author"
+              className="w-full h-auto"
+            />
+          </div>
         </div>
       ),
     },
@@ -103,16 +118,32 @@ const sections: {
         {specialPersons.map((specialPerson) => (
           <div
             key={specialPerson.name}
-            className="flex justify-center flex-col flex-wrap p-6 w-3/12 min-w-72"
+            className="flex justify-center flex-col flex-wrap mt-2"
           >
-            <Image
-              src={specialPerson.photo}
-              alt="Picture of the author"
-              className="rounded-tl-full rounded-tr-full border-black border-[1px] p-1"
-              width={384}
-              height={384}
-            />
-            <p className="font-bold text-red-400 w-full text-center">
+            <div
+              className="p-6 relative"
+              style={{
+                marginLeft: "1vw",
+                marginRight: "1vw",
+                width: "22vw",
+                height: "22vw",
+              }}
+            >
+              <Image
+                src={specialPerson.photo}
+                alt="Picture of the author"
+                className="w-full h-auto rounded-tl-full rounded-tr-full border-red-400 p-1"
+                style={{
+                  borderWidth: "2px",
+                  borderRadius: "50%",
+                  padding: "0.50rem",
+                }}
+                fill={true}
+                objectFit="cover"
+                sizes="20vw 20vw"
+              />
+            </div>
+            <p className="font-bold text-red-400 w-full mt-2 text-center ">
               {specialPerson.name}
             </p>
           </div>
@@ -130,7 +161,7 @@ const sections: {
         width="600"
         height="450"
         style={{ border: 0 }}
-        loading="lazy"
+        title="Villa Vezzane, Mairiporã SP"
         allowFullScreen={true}
         referrerPolicy="no-referrer-when-downgrade"
         src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
@@ -138,8 +169,8 @@ const sections: {
     ),
   },
   {
-    label: "Confime sua presença no evento do ano!",
-    slug: "confime-sua-presenca",
+    label: "Confirme sua presença no evento do ano!",
+    slug: "confirme-sua-presenca",
     isSticky: false,
     zIndex: 3,
     content: ({ cookies, hasConfirmedOrNotPresence }) => (
