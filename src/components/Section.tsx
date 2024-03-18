@@ -19,7 +19,9 @@ export default function Section(props: {
           : null}
         <div
           key={section.slug}
-          className={`flex justify-center items-start w-full p-6 bg-white${
+          className={`flex justify-center items-start w-full ${
+            section.doNotShowHeader ? "" : "p-6"
+          } bg-white${
             section.isSticky ? " sticky top-0 overflow-auto min-h-screen" : ""
           }`}
           style={{
@@ -40,7 +42,7 @@ export default function Section(props: {
                 section?.breakpoints?.betweenContentAndTitle !== undefined
                   ? " pb-6"
                   : ""
-              }`}
+              }${section.doNotShowHeader ? " hidden" : ""}`}
             >
               {section.label}
             </h1>

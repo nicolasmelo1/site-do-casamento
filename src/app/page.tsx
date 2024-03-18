@@ -127,7 +127,7 @@ export default async function Home(props: {
   return (
     <main className="flex flex-col overflow-scroll w-full">
       <Navigation sections={sections} />
-      <div className="flex flex-col justify-center items-center">
+      {/*<div className="flex flex-col justify-center items-center">
         <div className="flex w-full relative h-96">
           <Image
             fill={true}
@@ -138,7 +138,7 @@ export default async function Home(props: {
             className="w-full h-auto"
           />
         </div>
-      </div>
+  </div>*/}
       <Section
         hasConfirmedOrNotPresence={hasConfirmedPresenceOrNot}
         paymentData={paymentData}

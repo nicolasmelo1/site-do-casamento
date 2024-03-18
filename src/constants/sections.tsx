@@ -7,6 +7,8 @@ import specialPersons from "./special-persons";
 import type { getPendingPayment } from "../server/asaas/payments";
 import Confirmation from "../components/Confirmation";
 import Presents from "../components/Presents";
+import { Fragment } from "react";
+import Countdown from "../components/Countdown";
 
 const sections: {
   label: string;
@@ -19,6 +21,7 @@ const sections: {
         hasConfirmedOrNotPresence: boolean | undefined;
         paymentData: Awaited<ReturnType<typeof getPendingPayment>>;
       }) => JSX.Element);
+  doNotShowHeader?: boolean;
   isSticky?: boolean;
   zIndex?: number;
   breakpoints?: {
@@ -30,16 +33,77 @@ const sections: {
   };
 }[] = [
   {
-    label: "O Grande dia ta ai!",
+    label: "Home",
+    slug: "home",
+    doNotShowHeader: true,
+    isSticky: false,
+    content: (
+      <div className="flex justify-center items-center w-full">
+        <div
+          className="flex w-full relative"
+          style={{
+            height: "100vh",
+            width: "100vw",
+            backgroundAttachment: "fixed",
+            backgroundImage: `url(/nos-3.jpeg)`,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+          }}
+        >
+          <div
+            className="flex flex-col justify-center items-center w-full h-full bg-black bg-opacity-50"
+            style={{ zIndex: 10 }}
+          >
+            <h1
+              className="font-bold font-thankYou text-white"
+              style={{
+                fontSize: "3rem",
+              }}
+            >
+              Viviane e Nicolas
+            </h1>
+            <h2
+              className="text-white font-thankYou"
+              style={{
+                fontSize: "1.5rem",
+              }}
+            >
+              28/07/2024
+            </h2>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    label: "Contagem Regressiva",
     slug: "o-casamento",
     isSticky: true,
-    content:
-      "Queridos amigos e familiares, estamos muito felizes por vocês estarem aqui.\nSe vocês estão aqui é porque vocês provavelmente já sabem, mas: ESTAMOS NOS CASANDO! (morar junto não é casar)\n" +
-      "Nosso casamento vai ser no dia 28 de Julho de 2024 em Mairiporã, São Paulo. A cerimônia vai começar às 16:00 e a festa vai até o último convidado ir embora. (Não é mas o noivo paga kkkkk)\n" +
-      "Aqui nesse site vamos deixar todas as informações sobre o casamento, como chegar, onde se hospedar caso precise e outras informações úteis.\n" +
-      "Também vamos deixar aqui a lista de presentes, caso vocês queiram nos presentear. Não é obrigatório, mas é. Da um presentinho ai pô!\n" +
-      "No finalzinho do site tem um formulário para confirmar a presença, por favor, preencha caso você for para que possamos deixar tudo organizadinho ❤\n" +
-      "A contagem regressiva já começou e estamos muito ansiosos para compartilhar esse dia tão especial para nós com todos vocês.",
+    content: () => (
+      <Fragment>
+        <Countdown />
+        <div
+          className={`mt-12 flex flex-col justify-center items-center min-w-96 max-w-lg`}
+        >
+          {"Queridos amigos e familiares, estamos muito felizes por vocês estarem aqui.\nSe vocês estão aqui é porque vocês provavelmente já sabem, mas: ESTAMOS NOS CASANDO! (morar junto não é casar)\n" +
+            "Nosso casamento vai ser no dia 28 de Julho de 2024 em Mairiporã, São Paulo. A cerimônia vai começar às 16:00 e a festa vai até o último convidado ir embora. (Não é mas o noivo paga kkkkk)\n" +
+            "Aqui nesse site vamos deixar todas as informações sobre o casamento, como chegar, onde se hospedar caso precise e outras informações úteis.\n" +
+            "Também vamos deixar aqui a lista de presentes, caso vocês queiram nos presentear. Não é obrigatório, mas é. Da um presentinho ai pô!\n" +
+            "No finalzinho do site tem um formulário para confirmar a presença, por favor, preencha caso você for para que possamos deixar tudo organizadinho ❤\n" +
+            "A contagem regressiva já começou e estamos muito ansiosos para compartilhar esse dia tão especial para nós com todos vocês."
+              .split("\n")
+              .map((paragraph) => (
+                <p
+                  key={paragraph}
+                  className="flex w-full justify-center text-2xlr pt-6"
+                >
+                  {paragraph}
+                </p>
+              ))}
+        </div>
+      </Fragment>
+    ),
     breakpoints: {
       afterContainer: (
         <div className="flex flex-col" style={{ zIndex: 10 }}>
@@ -51,6 +115,7 @@ const sections: {
                 backgroundAttachment: "fixed",
                 backgroundImage: `url(/nos-1.jpeg)`,
                 backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
             />
@@ -64,6 +129,7 @@ const sections: {
                 backgroundAttachment: "fixed",
                 backgroundImage: `url(/nos-2.png)`,
                 backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
             />
@@ -113,9 +179,9 @@ const sections: {
           style={{ zIndex: 10 }}
         >
           <div
-            className="flex p-3 border-red-400 border-2 rounded-md"
+            className="flex p-3 border-red-400 border-2 rounded-md min-w-96 min-h-96"
             style={{
-              minWidth: "50vw",
+              width: "50vw",
               height: "50vw",
             }}
           >
@@ -181,7 +247,7 @@ const sections: {
     label: "Endereço",
     slug: "endereco",
     isSticky: false,
-    zIndex: 3,
+    zIndex: 4,
     content: (
       <iframe
         width="600"
@@ -198,7 +264,7 @@ const sections: {
     label: "Confirme sua presença no evento do ano!",
     slug: "confirme-sua-presenca",
     isSticky: false,
-    zIndex: 3,
+    zIndex: 4,
     content: ({ cookies, hasConfirmedOrNotPresence }) => (
       <Confirmation
         cookies={cookies}
@@ -210,7 +276,7 @@ const sections: {
     label: "Presentes",
     slug: "presentes",
     isSticky: false,
-    zIndex: 3,
+    zIndex: 4,
     content: ({ cookies, paymentData }) => (
       <Presents cookies={cookies} paymentData={paymentData} />
     ),
