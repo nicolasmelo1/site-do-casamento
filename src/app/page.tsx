@@ -77,7 +77,9 @@ async function hasConfirmedOrNotPresence(searchParams: {
       cpfCnpj?.value.replace(/^"/g, "").replace(/"$/g, "") as string,
       phone?.value.replace(/^"/g, "").replace(/"$/g, "") as string
     );
-    return guestData?.isGoing;
+    return typeof guestData?.isGoing === "boolean"
+      ? guestData?.isGoing
+      : undefined;
   } else return undefined;
 }
 
@@ -129,7 +131,7 @@ export default async function Home(props: {
         <div className="flex w-full relative h-96">
           <Image
             fill={true}
-            src="/placeholder.webp"
+            src="/primeira-foto-2.png"
             sizes="100vw 50vh"
             objectFit="cover"
             alt="Picture of the author"

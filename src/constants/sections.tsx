@@ -49,7 +49,7 @@ const sections: {
               style={{
                 height: "50vh",
                 backgroundAttachment: "fixed",
-                backgroundImage: `url(/placeholder.webp)`,
+                backgroundImage: `url(/nos-1.jpeg)`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
               }}
@@ -62,7 +62,7 @@ const sections: {
               style={{
                 height: "50vh",
                 backgroundAttachment: "fixed",
-                backgroundImage: `url(/placeholder.webp)`,
+                backgroundImage: `url(/nos-2.png)`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
               }}
@@ -97,13 +97,39 @@ const sections: {
           <div className="flex relative w-full h-full">
             <Image
               fill={true}
-              src="/placeholder.webp"
+              src="/uniao.png"
               sizes="100vw 50vh"
               style={{}}
               objectFit="cover"
               alt="Picture of the author"
               className="w-full h-auto"
             />
+          </div>
+        </div>
+      ),
+      afterContainer: (
+        <div
+          className="flex justify-center items-start w-full p-6 bg-white"
+          style={{ zIndex: 10 }}
+        >
+          <div
+            className="flex p-3 border-red-400 border-2 rounded-md"
+            style={{
+              minWidth: "50vw",
+              height: "50vw",
+            }}
+          >
+            <div className="flex relative w-full h-full">
+              <Image
+                fill={true}
+                src="/nos-3.jpeg"
+                sizes="100vw 50vh"
+                style={{}}
+                objectFit="cover"
+                alt="Picture of the author"
+                className="w-full h-auto"
+              />
+            </div>
           </div>
         </div>
       ),

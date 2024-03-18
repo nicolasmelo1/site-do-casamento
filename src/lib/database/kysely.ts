@@ -18,7 +18,7 @@ interface Guests {
   email?: string;
   phone?: string;
   instagramUserId?: string;
-  isGoing: boolean;
+  isGoing?: boolean;
   numberOfPeople?: number;
   // You can specify a different type for each operation (select, insert and
   // update) using the `ColumnType<SelectType, InsertType, UpdateType>`
