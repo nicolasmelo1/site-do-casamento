@@ -7,7 +7,7 @@ import { useDebounce } from "../hooks";
 export default function Carousel(props: {
   images: { src: string; alt: string }[];
 }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement | undefined>(undefined);
   const [width, setWidth] = useState<number>(0);
   const isOnServer = typeof window === "undefined";
   const debounce = useDebounce(20);
@@ -69,7 +69,10 @@ export default function Carousel(props: {
       </button>
       <div
         className="flex flex-row overflow-x-scroll scroll-smooth"
-        ref={scrollRef}
+        ref={(ref) => {
+          (scrollRef as any).current = ref;
+          if (ref?.offsetWidth) setWidth(ref?.offsetWidth);
+        }}
         onScroll={(e) => {
           e.preventDefault();
           let currentTarget = e.currentTarget;

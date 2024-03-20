@@ -180,26 +180,28 @@ const sections: {
           className="flex justify-center items-center w-full bg-white"
           style={{ zIndex: 20 }}
         >
-          <Carousel
-            images={[
-              {
-                src: "/nos-3.jpeg",
-                alt: "Nós dois juntos no RJ",
-              },
-              {
-                src: "/nos-3.jpeg",
-                alt: "Nós dois juntos no RJ",
-              },
-              {
-                src: "/nos-3.jpeg",
-                alt: "Nós dois juntos no RJ",
-              },
-              {
-                src: "/nos-3.jpeg",
-                alt: "Nós dois juntos no RJ",
-              },
-            ]}
-          />
+          <div className="flex flex-row" style={{ maxWidth: 800 }}>
+            <Carousel
+              images={[
+                {
+                  src: "/nos-3.jpeg",
+                  alt: "Nós dois juntos no RJ",
+                },
+                {
+                  src: "/nos-3.jpeg",
+                  alt: "Nós dois juntos no RJ",
+                },
+                {
+                  src: "/nos-3.jpeg",
+                  alt: "Nós dois juntos no RJ",
+                },
+                {
+                  src: "/nos-3.jpeg",
+                  alt: "Nós dois juntos no RJ",
+                },
+              ]}
+            />
+          </div>
         </div>
       ) /*(
         <div
