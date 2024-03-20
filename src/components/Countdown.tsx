@@ -7,24 +7,6 @@ import { WEDDING_DATE } from "../constants";
 
 export default function Countdown() {
   const [now, setNow] = useState(new Date());
-  const [dimension, setDimension] = useState<
-    "days" | "hours" | "minutes" | "seconds"
-  >("days");
-
-  function onSwitchDimension() {
-    setDimension((dimension) => {
-      switch (dimension) {
-        case "days":
-          return "hours";
-        case "hours":
-          return "minutes";
-        case "minutes":
-          return "seconds";
-        case "seconds":
-          return "days";
-      }
-    });
-  }
 
   useEffect(() => {
     const timeout = setLayoutTimeout(() => {
@@ -38,48 +20,62 @@ export default function Countdown() {
     };
   }, [now]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      onSwitchDimension();
-    }, 10000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [dimension]);
-
   return (
-    <button
-      type="button"
-      className="flex flex-row justify-center items-center w-full cursor-pointer mt-6"
-      onClick={(e) => {
-        e.preventDefault();
-        onSwitchDimension();
-      }}
-    >
-      <div className="flex flex-col justify-center items-center w-52 bg-red-400 rounded-md p-6">
-        <p className="text-white text-2xl">
-          {`${Math.floor(
-            (WEDDING_DATE.getTime() - now.getTime()) /
-              (dimension === "days"
-                ? 1000 * 60 * 60 * 24
-                : dimension === "hours"
-                ? 1000 * 60 * 60
-                : dimension === "minutes"
-                ? 1000 * 60
-                : 1000)
-          )}`}
-        </p>
-        <p className="text-white text-sm">
-          {dimension === "days"
-            ? "Dias"
-            : dimension === "hours"
-            ? "Horas"
-            : dimension === "minutes"
-            ? "Minutos"
-            : "Segundos"}
-        </p>
+    <div className="flex flex-row justify-center items-center w-full cursor-pointer mt-6 md:mt-2">
+      <div className="flex flex-row justify-center items-center md:w-full flex-wrap">
+        <div className="flex flex-col justify-center items-center w-36 bg-red-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
+          <p className="text-white text-2xl">
+            {`${Math.floor(
+              (WEDDING_DATE.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+            )}`}
+          </p>
+          <p className="text-white text-sm">
+            {Math.floor(
+              (WEDDING_DATE.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+            ) === 1
+              ? "Dia"
+              : "Dias"}
+          </p>
+        </div>
+        <div className="flex flex-col justify-center items-center w-36 bg-red-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
+          <p className="text-white text-2xl">
+            {`${Math.floor(
+              (WEDDING_DATE.getTime() - now.getTime()) / (1000 * 60 * 60)
+            )}`}
+          </p>
+          <p className="text-white text-sm">
+            {Math.floor(
+              (WEDDING_DATE.getTime() - now.getTime()) / (1000 * 60 * 60)
+            ) === 1
+              ? "Minuto"
+              : "Minutos"}
+          </p>
+        </div>
+        <div className="flex flex-col justify-center items-center w-36 bg-red-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
+          <p className="text-white text-2xl">
+            {`${Math.floor(
+              (WEDDING_DATE.getTime() - now.getTime()) / (1000 * 60)
+            )}`}
+          </p>
+          <p className="text-white text-sm">
+            {Math.floor(
+              (WEDDING_DATE.getTime() - now.getTime()) / (1000 * 60)
+            ) === 1
+              ? "Hora"
+              : "Horas"}
+          </p>
+        </div>
+        <div className="flex flex-col justify-center items-center w-36 bg-red-400 rounded-md p-3 md:m-2">
+          <p className="text-white text-2xl">
+            {`${Math.floor((WEDDING_DATE.getTime() - now.getTime()) / 1000)}`}
+          </p>
+          <p className="text-white text-sm">
+            {Math.floor((WEDDING_DATE.getTime() - now.getTime()) / 1000) === 1
+              ? "Segundo"
+              : "Segundos"}
+          </p>
+        </div>
       </div>
-    </button>
+    </div>
   );
 }

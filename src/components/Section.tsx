@@ -20,7 +20,7 @@ export default function Section(props: {
         <div
           key={section.slug}
           className={`flex justify-center items-start w-full ${
-            section.doNotShowHeader ? "" : "p-6"
+            section.doNotShowHeader ? "" : "p-6 md:pt-3 md:pb-3 md:pl-3 md:pr-3"
           } bg-white${
             section.isSticky ? " sticky top-0 overflow-auto min-h-screen" : ""
           }`}

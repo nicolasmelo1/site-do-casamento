@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-
+import { Fragment, useEffect, useState } from "react";
 import specialPersons from "./special-persons";
 
 import type { getPendingPayment } from "../server/asaas/payments";
 import Confirmation from "../components/Confirmation";
 import Presents from "../components/Presents";
-import { Fragment } from "react";
 import Countdown from "../components/Countdown";
+import Carousel from "../components/Carousel";
 
 const sections: {
   label: string;
@@ -56,7 +56,7 @@ const sections: {
             style={{ zIndex: 10 }}
           >
             <h1
-              className="font-bold font-thankYou text-white"
+              className="font-bold font-thankYou text-white text-center"
               style={{
                 fontSize: "3rem",
               }}
@@ -84,23 +84,25 @@ const sections: {
       <Fragment>
         <Countdown />
         <div
-          className={`mt-12 flex flex-col justify-center items-center min-w-96 max-w-lg`}
+          className={`flex flex-col justify-center items-center min-w-96 max-w-lg`}
         >
-          {"Queridos amigos e familiares, estamos muito felizes por vocês estarem aqui.\nSe vocês estão aqui é porque vocês provavelmente já sabem, mas: ESTAMOS NOS CASANDO! (morar junto não é casar)\n" +
+          {(
+            "Queridos amigos e familiares, estamos muito felizes por vocês estarem aqui.\nSe vocês estão aqui é porque vocês provavelmente já sabem, mas: ESTAMOS NOS CASANDO! (morar junto não é casar)\n" +
             "Nosso casamento vai ser no dia 28 de Julho de 2024 em Mairiporã, São Paulo. A cerimônia vai começar às 16:00 e a festa vai até o último convidado ir embora. (Não é mas o noivo paga kkkkk)\n" +
             "Aqui nesse site vamos deixar todas as informações sobre o casamento, como chegar, onde se hospedar caso precise e outras informações úteis.\n" +
             "Também vamos deixar aqui a lista de presentes, caso vocês queiram nos presentear. Não é obrigatório, mas é. Da um presentinho ai pô!\n" +
             "No finalzinho do site tem um formulário para confirmar a presença, por favor, preencha caso você for para que possamos deixar tudo organizadinho ❤\n" +
             "A contagem regressiva já começou e estamos muito ansiosos para compartilhar esse dia tão especial para nós com todos vocês."
-              .split("\n")
-              .map((paragraph) => (
-                <p
-                  key={paragraph}
-                  className="flex w-full justify-center text-2xlr pt-6"
-                >
-                  {paragraph}
-                </p>
-              ))}
+          )
+            .split("\n")
+            .map((paragraph) => (
+              <p
+                key={paragraph}
+                className="flex w-full justify-center text-2xlr mt-6 md:mt-3"
+              >
+                {paragraph}
+              </p>
+            ))}
         </div>
       </Fragment>
     ),
@@ -139,8 +141,8 @@ const sections: {
     },
   },
   {
-    label: "União",
-    slug: "o-casal",
+    label: "Nossa história",
+    slug: "nossa-historia",
     isSticky: false,
     content:
       "É bem engraçado como as coisas acontecem na vida, na hora parecem tão aleatórias e pequenas e as pequenas coisas mudam completamente o rumo da nossa vida.\n" +
@@ -175,6 +177,32 @@ const sections: {
       ),
       afterContainer: (
         <div
+          className="flex justify-center items-center w-full bg-white"
+          style={{ zIndex: 20 }}
+        >
+          <Carousel
+            images={[
+              {
+                src: "/nos-3.jpeg",
+                alt: "Nós dois juntos no RJ",
+              },
+              {
+                src: "/nos-3.jpeg",
+                alt: "Nós dois juntos no RJ",
+              },
+              {
+                src: "/nos-3.jpeg",
+                alt: "Nós dois juntos no RJ",
+              },
+              {
+                src: "/nos-3.jpeg",
+                alt: "Nós dois juntos no RJ",
+              },
+            ]}
+          />
+        </div>
+      ) /*(
+        <div
           className="flex justify-center items-start w-full p-6 bg-white"
           style={{ zIndex: 10 }}
         >
@@ -198,7 +226,7 @@ const sections: {
             </div>
           </div>
         </div>
-      ),
+      )*/,
     },
   },
   {
@@ -248,17 +276,41 @@ const sections: {
     slug: "endereco",
     isSticky: false,
     zIndex: 4,
-    content: (
-      <iframe
-        width="600"
-        height="450"
-        style={{ border: 0 }}
-        title="Villa Vezzane, Mairiporã SP"
-        allowFullScreen={true}
-        referrerPolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
-      />
-    ),
+    content: function Address() {
+      const [width, setWidth] = useState<number>(0);
+      const isOnServer = typeof window === "undefined";
+
+      useEffect(() => {
+        const handleResize = () => {
+          setWidth(document.body.offsetWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+      }, []);
+
+      useEffect(() => {
+        console.log("aqi", document.body.offsetWidth);
+        setWidth(document.body.offsetWidth);
+      }, [isOnServer]);
+
+      return (
+        <iframe
+          style={{
+            border: 0,
+            marginTop: 24,
+            width: width > 600 ? 600 : width - 10,
+            height: width > 600 ? 600 : width - 10,
+          }}
+          title="Villa Vezzane, Mairiporã SP"
+          allowFullScreen={true}
+          referrerPolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
+        />
+      );
+    },
   },
   {
     label: "Confirme sua presença no evento do ano!",

@@ -145,7 +145,7 @@ export default async function Home(props: {
         cookies={cookies().toString()}
       />
       <footer
-        className="flex justify-center items-center w-full p-6"
+        className="flex justify-center items-center w-full p-6 bg-white flex-wrap"
         style={{ zIndex: 100 }}
       >
         Feito com ❤️ por <span className="font-bold ml-1 mr-1">Nicolas</span> e
