@@ -20,9 +20,11 @@ export default function Section(props: {
         <div
           key={section.slug}
           className={`flex justify-center items-start w-full ${
-            section.doNotShowHeader ? "" : "p-6 md:pt-3 md:pb-3 md:pl-3 md:pr-3"
+            section.doNotShowHeader ? "" : "p-6 lg:pt-3 lg:pb-3 lg:pl-3 lg:pr-3"
           } bg-white${
-            section.isSticky ? " sticky top-0 overflow-auto min-h-screen" : ""
+            section.isSticky
+              ? " sticky top-0 overflow-scroll scroll-smooth min-h-screen"
+              : ""
           }`}
           style={{
             zIndex: typeof section.zIndex === "number" ? section.zIndex : i + 1,
@@ -38,7 +40,7 @@ export default function Section(props: {
               : null}
             <h1
               id={section.slug}
-              className={`flex w-full justify-center text-4xl font font-manstein${
+              className={`flex w-full justify-center text-4xl font font-italianno${
                 section?.breakpoints?.betweenContentAndTitle !== undefined
                   ? " pb-6"
                   : ""

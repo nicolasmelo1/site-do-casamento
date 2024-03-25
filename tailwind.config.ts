@@ -15,7 +15,9 @@ const config: Config = {
       },
       fontFamily: {
         manstein: ["var(--font-manstein)"],
+        italianno: ["var(--font-italianno)"],
         thankYou: ["var(--font-thank-you)"],
+        quicksand: ["var(--font-quicksand)"],
       },
     },
     screens: {

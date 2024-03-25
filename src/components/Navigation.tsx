@@ -20,7 +20,7 @@ export default function Navigation(props: {
 
   return (
     <Fragment>
-      <nav className="lg:hidden flex items-start justify-between p-6 none">
+      <nav className="2xl:hidden flex items-start justify-between p-6 none">
         <h1 className="font-thankYou text-red-400 text-2xl whitespace-nowrap">
           {strings.title}
         </h1>
@@ -40,7 +40,7 @@ export default function Navigation(props: {
           ))}
         </div>
       </nav>
-      <nav className="lg:flex hidden flex-row justify-between items-center p-6">
+      <nav className="2xl:flex hidden flex-row justify-between items-center p-6">
         <h1 className="font-thankYou text-red-400 text-2xl">{strings.title}</h1>
         <button
           aria-label="Menu"
@@ -66,7 +66,7 @@ export default function Navigation(props: {
         </button>
       </nav>
       <div
-        className={`flex w-full flex-col transition-[height] duration-300 ease-in-out ${
+        className={`2xl:flex hidden w-full flex-col transition-[height] duration-300 ease-in-out ${
           isMenuOpen ? `h-[50vh]` : "h-0"
         }`}
       >

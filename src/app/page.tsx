@@ -125,7 +125,7 @@ export default async function Home(props: {
   ]);
 
   return (
-    <main className="flex flex-col overflow-scroll w-full">
+    <main className="flex flex-col overflow-scroll scroll-smooth w-full">
       <Navigation sections={sections} />
       {/*<div className="flex flex-col justify-center items-center">
         <div className="flex w-full relative h-96">
