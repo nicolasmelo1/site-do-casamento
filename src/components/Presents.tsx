@@ -23,14 +23,16 @@ export default function Presents(props: {
     [] as number[]
   );
 
-  const presentsArray = presents.concat([
-    {
-      description: "Teste",
-      imageUrl: "/images/placeholder.png",
-      title: "Teste",
-      value: 1,
-    },
-  ]);
+  const presentsArray = props.isDevMode
+    ? presents.concat([
+        {
+          description: "Teste",
+          imageUrl: "/placeholder.webp",
+          title: "Teste",
+          value: 1,
+        },
+      ])
+    : presents;
   return (
     <Fragment>
       <div className="flex flex-row flex-wrap justify-center items-center">
