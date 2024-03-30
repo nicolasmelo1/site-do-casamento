@@ -134,6 +134,7 @@ export default async function Home(props: {
     <main className="flex flex-col overflow-scroll scroll-smooth w-full">
       <Navigation sections={sections} />
       <Section
+        isDevMode={isDevelopment}
         hasConfirmedOrNotPresence={hasConfirmedPresenceOrNot}
         paymentData={paymentData}
         cookies={cookies().toString()}
