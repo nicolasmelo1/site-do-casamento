@@ -18,6 +18,7 @@ const sections: {
     | JSX.Element
     | ((props: {
         cookies: string;
+        isDevMode: boolean;
         hasConfirmedOrNotPresence: boolean | undefined;
         paymentData: Awaited<ReturnType<typeof getPendingPayment>>;
       }) => JSX.Element);
@@ -331,8 +332,12 @@ const sections: {
     slug: "presentes",
     isSticky: false,
     zIndex: 4,
-    content: ({ cookies, paymentData }) => (
-      <Presents cookies={cookies} paymentData={paymentData} />
+    content: ({ cookies, paymentData, isDevMode }) => (
+      <Presents
+        cookies={cookies}
+        paymentData={paymentData}
+        isDevMode={isDevMode}
+      />
     ),
   },
 ];

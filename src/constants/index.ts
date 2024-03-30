@@ -5,6 +5,9 @@ export { default as sections } from "./sections";
 
 export const WEDDING_DATE = new Date(2024, 6, 28, 15, 30, 0, 0);
 
+export const DEV_MODE_QUERY_PARAM = "dev";
+export const DEV_MODE_QUERY_PARAM_VALUE = "true";
+
 export const CHECKOUT_QUERY_PARAM = "checkout";
 export const CHECKOUT_CONFIRMATION_QUERY_PARAM = "confirm";
 export const CHECKOUT_CONFIRMATION_QUERY_PARAM_VALUE = "true";

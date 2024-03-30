@@ -116,29 +116,23 @@ async function getPaymentData(searchParams: { payment?: string }) {
   return paymentData;
 }
 
+async function isDevMode(searchParams: { dev?: string }) {
+  return typeof searchParams?.dev === "string" && searchParams?.dev === "true";
+}
+
 export default async function Home(props: {
-  searchParams: { payment?: string; going?: string };
+  searchParams: { payment?: string; going?: string; dev?: string };
 }) {
-  const [paymentData, hasConfirmedPresenceOrNot] = await Promise.all([
-    getPaymentData(props.searchParams),
-    hasConfirmedOrNotPresence(props.searchParams),
-  ]);
+  const [paymentData, hasConfirmedPresenceOrNot, isDevelopment] =
+    await Promise.all([
+      getPaymentData(props.searchParams),
+      hasConfirmedOrNotPresence(props.searchParams),
+      isDevMode(props.searchParams),
+    ]);
 
   return (
     <main className="flex flex-col overflow-scroll scroll-smooth w-full">
       <Navigation sections={sections} />
-      {/*<div className="flex flex-col justify-center items-center">
-        <div className="flex w-full relative h-96">
-          <Image
-            fill={true}
-            src="/primeira-foto-2.png"
-            sizes="100vw 50vh"
-            objectFit="cover"
-            alt="Picture of the author"
-            className="w-full h-auto"
-          />
-        </div>
-  </div>*/}
       <Section
         hasConfirmedOrNotPresence={hasConfirmedPresenceOrNot}
         paymentData={paymentData}

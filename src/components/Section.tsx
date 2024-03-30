@@ -9,6 +9,7 @@ import type { getPendingPayment } from "../server/asaas/payments";
 export default function Section(props: {
   cookies: string;
   hasConfirmedOrNotPresence: boolean | undefined;
+  isDevMode: boolean;
   paymentData: Awaited<ReturnType<typeof getPendingPayment>>;
 }) {
   return sections.map((section, i) => {
