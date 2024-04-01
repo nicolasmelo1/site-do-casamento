@@ -20,9 +20,21 @@ const specialPersons = [
     name: "Lukas",
   },
   {
+    photo: "/godparents-and-bridesmaids/pedro.jpeg",
+    name: "Pedro",
+  },
+  {
     photo: "/godparents-and-bridesmaids/caio.jpeg",
     name: "Caio",
   },
+  { photo: "/godparents-and-bridesmaids/julia.jpeg", name: "Julia" },
+  { photo: "/godparents-and-bridesmaids/victoria.jpeg", name: "Victoria" },
+  {
+    photo: "/godparents-and-bridesmaids/bruna.jpeg",
+    name: "Bruna",
+  },
+  { photo: "/godparents-and-bridesmaids/paolo.jpeg", name: "Paolo" },
+  { photo: "/godparents-and-bridesmaids/joao-vitor.jpeg", name: "João Vitor" },
 ];
 
 export default specialPersons;

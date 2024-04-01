@@ -5,12 +5,13 @@ import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import specialPersons from "./special-persons";
 
-import type { getPendingPayment } from "../server/asaas/payments";
 import Confirmation from "../components/Confirmation";
 import Presents from "../components/Presents";
 import Carousel from "../components/Carousel";
 import { WEDDING_DATE } from "./constants";
 import SectionHeader from "../components/SectionHeader";
+
+import type { getPendingPayment } from "../server/asaas/payments";
 
 const LazyCountdown = dynamic(() => import("../components/Countdown"), {
   ssr: false,
@@ -195,26 +196,11 @@ const sections: {
             key={specialPerson.name}
             className="flex justify-center flex-col flex-wrap mt-2"
           >
-            <div
-              className="p-6 relative"
-              style={{
-                marginLeft: "1vw",
-                marginRight: "1vw",
-                width: "22vw",
-                maxWidth: "128px",
-                height: "22vw",
-                maxHeight: "128px",
-              }}
-            >
+            <div className="p-6 relative ml-[1vw] mr-[1vw] w-[22vw] max-w-96 h-[22vw] max-h-96 min-w-32 min-h-32 rounded-full">
               <Image
                 src={specialPerson.photo}
                 alt="Picture of the author"
-                className="w-full h-auto rounded-tl-full rounded-tr-full border-gray-400 p-1"
-                style={{
-                  borderWidth: "2px",
-                  borderRadius: "50%",
-                  padding: "0.50rem",
-                }}
+                className="w-full h-auto rounded-full p-1"
                 fill={true}
                 objectFit="cover"
                 sizes="20vw 20vw"

@@ -16,7 +16,7 @@ export default async function processPayment(
     customerId,
     paymentType,
     amount,
-    "Teste",
+    "Chucupresente pro chuco casamento",
     redirectUrl
   );
   console.log("aqui3", paymentData);
