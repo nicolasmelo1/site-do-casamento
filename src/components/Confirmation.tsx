@@ -1,9 +1,10 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
+  CONFIRMATION_CONFIRMATION_QUERY_PARAM,
   COOKIES_CPF_CNPJ,
   COOKIES_PHONE,
   COOKIES_USERNAME,
@@ -65,6 +66,21 @@ export default function Confirmation(props: {
       setIsNotGoingTimes(undefined);
     });
   }
+
+  useEffect(() => {
+    const hasDocument = typeof document !== "undefined";
+    if (hasDocument && document.location.search) {
+      const searchParams = new URLSearchParams(document.location.search);
+      const isGoing = searchParams.get(CONFIRMATION_CONFIRMATION_QUERY_PARAM);
+      if (isGoing === "true") {
+        const elementToScrollTo = document.getElementById(
+          "confirme-sua-presenca"
+        );
+        if (elementToScrollTo) elementToScrollTo.scrollIntoView();
+      }
+    }
+  }, []);
+
   return (
     <Fragment>
       {hasConfirmedOrNotPresence === undefined ||

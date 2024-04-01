@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Fragment, useMemo, useState } from "react";
 
@@ -13,15 +14,16 @@ import {
   COOKIES_BILLING_CUSTOMER_ID,
   getPresents,
 } from "../../constants";
-import Summary from "./Summary";
-import Account from "./Account";
-import Payment from "./Payment";
 import { cancelPayment, handlePayment } from "../../app/actions";
 import { useClickOutsideOfElement, useCookieStorageState } from "../../hooks";
 import cookiesBuilder from "../../utils/cookies";
 import { Modal } from "../Utils";
 
 import type { getPendingPayment } from "../../server/asaas/payments";
+
+const LazyAccount = dynamic(() => import("./Account"), { ssr: false });
+const LazyPayment = dynamic(() => import("./Payment"), { ssr: false });
+const LazySummary = dynamic(() => import("./Summary"), { ssr: false });
 
 export default function Checkout(props: {
   cookies: string;
@@ -54,7 +56,9 @@ export default function Checkout(props: {
   const payment = searchParams.get(CHECKOUT_PAYMENT_QUERY_PARAM);
 
   const checkoutSplit = checkout.split(",");
-  const checkoutSplitNumbers = checkoutSplit.map(Number);
+  const checkoutSplitNumbers = checkoutSplit
+    .map(Number)
+    .filter((index) => getPresents(props.isDevMode)[index] !== undefined);
   const isValidCheckout =
     checkoutSplit.length > 0 &&
     checkoutSplit.every(
@@ -154,26 +158,26 @@ export default function Checkout(props: {
 
   return isValidCheckout || isValidConfirm || isValidPayment ? (
     <Modal
-      className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[55vh] bg-white p-6 rounded-2xl"
+      className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[80vh] max-h-[60vh] bg-white p-6 rounded-2xl"
       onClose={onDismiss}
     >
       <Fragment>
         {isValidPayment && paymentData ? (
-          <Payment
+          <LazyPayment
             isNewPayment={isNewPayment}
             paymentData={paymentData}
             onDismiss={onDismiss}
             onCancel={onCancelPayment}
           />
         ) : isValidConfirm ? (
-          <Account
+          <LazyAccount
             cookies={props.cookies}
             checkout={checkout}
             onPay={onPay}
             isDevMode={props.isDevMode}
           />
         ) : isValidCheckout ? (
-          <Summary
+          <LazySummary
             isDevMode={props.isDevMode}
             cookies={props.cookies}
             checkout={checkoutSplitNumbers}

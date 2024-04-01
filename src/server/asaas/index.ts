@@ -8,8 +8,10 @@ export default async function processPayment(
   amount: number,
   redirectUrl?: string
 ) {
+  console.log("aqui1", name, cpfCnpj, paymentType, amount, redirectUrl);
   const customerId = await customerFlow(name, cpfCnpj);
 
+  console.log("aqui", customerId);
   const paymentData = await paymentFlow(
     customerId,
     paymentType,
@@ -17,5 +19,7 @@ export default async function processPayment(
     "Teste",
     redirectUrl
   );
+  console.log("aqui3", paymentData);
+
   return paymentData;
 }

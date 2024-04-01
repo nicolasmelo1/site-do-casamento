@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import {
@@ -57,7 +57,7 @@ async function hasConfirmedOrNotPresence(searchParams: {
   const diffInMonthsFromToday = monthDiff(today, WEDDING_DATE);
   const shouldRedirectToConfirmationPage =
     typeof guestData?.isGoing !== "boolean" &&
-    diffInMonthsFromToday <= 3 &&
+    diffInMonthsFromToday < 3 &&
     diffInMonthsFromToday >= 0 &&
     searchParams?.going !== CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE;
 
@@ -122,6 +122,10 @@ async function isDevMode(searchParams: { dev?: string }) {
 export default async function Home(props: {
   searchParams: { payment?: string; going?: string; dev?: string };
 }) {
+  const headersList = headers();
+  const domain = headersList.get("host") || "";
+  const fullUrl = headersList.get("referer") || "";
+
   const [paymentData, hasConfirmedPresenceOrNot, isDevelopment] =
     await Promise.all([
       getPaymentData(props.searchParams),
@@ -129,6 +133,7 @@ export default async function Home(props: {
       isDevMode(props.searchParams),
     ]);
 
+  console.log(paymentData, hasConfirmedPresenceOrNot, isDevelopment);
   return (
     <main className="flex flex-col overflow-scroll scroll-smooth w-full">
       <Navigation sections={sections} />
@@ -138,10 +143,7 @@ export default async function Home(props: {
         paymentData={paymentData}
         cookies={cookies().toString()}
       />
-      <footer
-        className="flex justify-center items-center w-full p-6 bg-white flex-wrap"
-        style={{ zIndex: 100 }}
-      >
+      <footer className="flex justify-center items-center w-full p-6 bg-white flex-wrap">
         Feito com ❤️ por <span className="font-bold ml-1 mr-1">Nicolas</span> e
         <span className="font-bold ml-1 mr-1">Viviane</span> (principalmente ele
         e ela mandando 😂)

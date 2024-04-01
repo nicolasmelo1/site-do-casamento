@@ -40,7 +40,9 @@ export default function Account(props: {
   >(props.cookies, "checkoutPaymentType", undefined);
   const [message, setMessage] = useState("");
 
-  const params = new URLSearchParams(document.location.search);
+  const params = new URLSearchParams(
+    typeof document !== "undefined" ? document.location.search : []
+  );
   const urlToGoBack = new URLSearchParams(
     [[CHECKOUT_QUERY_PARAM, props.checkout]].concat(
       params.has(DEV_MODE_QUERY_PARAM) ? [[DEV_MODE_QUERY_PARAM, "true"]] : []
@@ -110,7 +112,7 @@ export default function Account(props: {
                 value={paymentType}
                 onChange={(e) => setPaymentType(e.target.value as any)}
               >
-                <option value="" disabled>
+                <option value="" disabled={true} selected={true} hidden={true}>
                   {strings.checkoutAccountPaymentTypePlaceholderLabel}
                 </option>
                 <option value="PIX">
@@ -155,7 +157,13 @@ export default function Account(props: {
                 setHasTriedToSubmit(true);
                 if (validation.isValidToSubmit() === false) return;
 
-                props.onPay(name, cpfCnpj, paymentType as any, message);
+                props.onPay(
+                  name,
+                  cpfCnpj,
+                  paymentType as any,
+                  message,
+                  props.isDevMode
+                );
               }}
             >
               {strings.checkoutAccountPaymentConfirmButton}

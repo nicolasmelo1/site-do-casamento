@@ -106,7 +106,7 @@ export default function getPresents(isDevMode?: boolean) {
           description: "Teste",
           imageUrl: "/placeholder.webp",
           title: "Teste",
-          value: 1,
+          value: 5,
         },
       ])
     : presents;

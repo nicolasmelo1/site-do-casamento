@@ -184,6 +184,7 @@ export async function paymentFlow(
 ) {
   const existingPendingPayment = await pendingPaymentsForCustomer(customer);
 
+  console.log(existingPendingPayment, "existingPendingPayment");
   if (existingPendingPayment)
     return getDefaultValueFromPayment(existingPendingPayment, true);
 
@@ -195,5 +196,6 @@ export async function paymentFlow(
     redirectUrl
   );
 
+  console.log("payment", payment);
   return getDefaultValueFromPayment(payment);
 }

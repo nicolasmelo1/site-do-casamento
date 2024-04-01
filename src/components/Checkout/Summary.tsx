@@ -40,7 +40,7 @@ export default function Summary(props: {
                       />
                     </div>
                     <div>
-                      <h1 className="text-3xl text-gray-800 pl-3">
+                      <h1 className="text-3xl md:text-base text-gray-800 pl-3">
                         {getPresents(props.isDevMode)[presentIndex].title}
                       </h1>
                       <p className="text-gray-500 pl-3">

@@ -10,6 +10,7 @@ export default function Payment(props: {
   isNewPayment: boolean;
   paymentData: Awaited<ReturnType<typeof getPendingPayment>>;
 }) {
+  console.log(props.paymentData, props.isNewPayment);
   return (
     <Fragment>
       <div className="flex flex-col justify-between items-center h-full">
@@ -63,7 +64,7 @@ export default function Payment(props: {
           props.paymentData?.paymentId.length > 0 ? (
             <button
               type="button"
-              className="md:w-full cursor-pointer text-white text-bold pt-2 pb-2 pr-4 pl-4 rounded-xl font-semibold border-white border-2 w-1/3 text-center hover:bg-gray-300"
+              className="md:w-full cursor-pointer text-gray-800 text-bold pt-2 pb-2 pr-4 pl-4 rounded-xl font-semibold border-gray-800 border-2 w-1/3 text-center hover:bg-gray-300"
               onClick={(e) => {
                 e.preventDefault();
                 props.onCancel();
@@ -74,7 +75,7 @@ export default function Payment(props: {
           ) : null}
           <button
             type="button"
-            className="md:w-full md:mt-3 cursor-pointer bg-white text-gray-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/3 h-full hover:bg-gray-100"
+            className="md:w-full md:mt-3 cursor-pointer bg-gray-800 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/3 h-full hover:bg-gray-500"
             onClick={(e) => {
               e.preventDefault();
               props.onDismiss();
