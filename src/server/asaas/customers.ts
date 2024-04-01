@@ -28,12 +28,13 @@ async function tryToFindCustomer(name: string, cpfCnpj: string) {
     `/v3/customers?${cpfCnpjSearchParams.toString()}`,
     "GET"
   );
-  console.log("responseForCPfCnpj", await responseForCPfCnpj.text());
+  console.log("responseForCPfCnpj");
 
   const [isValidFromCpfCnpj, customerIdFromCpfCnpj] =
     await filterCustomerForResponse(responseForCPfCnpj, "cpfCnpj", cpfCnpj);
   if (isValidFromCpfCnpj) return customerIdFromCpfCnpj;
 
+  console.log("aquiiii");
   const responseForName = await callAsaasApi(
     `/v3/customers?${nameSearchParams.toString()}`,
     "GET",
@@ -42,8 +43,6 @@ async function tryToFindCustomer(name: string, cpfCnpj: string) {
       cpfCnpj,
     }
   );
-
-  console.log("responseForName", await responseForName.text());
 
   const [isValidFromName, customerIdFromName] = await filterCustomerForResponse(
     responseForName,
