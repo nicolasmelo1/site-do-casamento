@@ -152,8 +152,6 @@ export default function Checkout(props: {
     setPaymentData(undefined);
   }
 
-  console.log("isDev", props.isDevMode);
-
   return isValidCheckout || isValidConfirm || isValidPayment ? (
     <Modal
       className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[55vh] bg-white p-6 rounded-2xl"

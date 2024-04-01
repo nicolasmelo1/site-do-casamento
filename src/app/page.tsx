@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -130,7 +129,6 @@ export default async function Home(props: {
       isDevMode(props.searchParams),
     ]);
 
-  console.log("isDevelopment", isDevelopment);
   return (
     <main className="flex flex-col overflow-scroll scroll-smooth w-full">
       <Navigation sections={sections} />
@@ -146,7 +144,7 @@ export default async function Home(props: {
       >
         Feito com ❤️ por <span className="font-bold ml-1 mr-1">Nicolas</span> e
         <span className="font-bold ml-1 mr-1">Viviane</span> (principalmente ele
-        😂)
+        e ela mandando 😂)
       </footer>
     </main>
   );

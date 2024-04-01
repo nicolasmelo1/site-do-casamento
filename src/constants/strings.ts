@@ -44,8 +44,8 @@ const strings = {
   isNotGoingButtonLabel4: "Vc não vai mesmo 😥",
   isNotGoingButtonLabel: "Não vou",
   confirmationTitle: "Confirme sua presença no evento do ano!",
-  confirmationNameLabel: "Qual o seu nome?",
-  confirmationCpfCnpjLabel: "CPF ou CNPJ (Só o número)",
+  confirmationNameLabel: "Nome",
+  confirmationCpfCnpjLabel: "CPF (Só o número)",
   confirmationPhoneLabel: "Número de celular (Só o número com DDD)",
   confirmationConfirmButtonLabel: "Confirmar presença",
   confirmationConfirmButtonWhenConfirmedLabel:

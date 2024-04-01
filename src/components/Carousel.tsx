@@ -10,15 +10,10 @@ export default function Carousel(props: {
   const scrollRef = useRef<HTMLDivElement | undefined>(undefined);
   const [width, setWidth] = useState<number>(0);
   const isOnServer = typeof window === "undefined";
-  const debounce = useDebounce(20);
+  const debounce = useDebounce(30);
 
   function onScroll(addOrSubtract: "add" | "subtract") {
     const index = Math.round((scrollRef.current?.scrollLeft || 0) / width);
-    console.log(
-      (scrollRef.current?.scrollLeft || 0) / width,
-      index,
-      props.images.length - 1
-    );
     if (addOrSubtract === "add" && index < props.images.length - 1) {
       scrollRef.current!.scrollLeft = width * (index + 1);
     } else if (addOrSubtract === "subtract" && index > 0) {
@@ -42,11 +37,11 @@ export default function Carousel(props: {
   }, [isOnServer]);
 
   return (
-    <section className="flex h-96 items-center w-full lg:w-[90vw] relative bg-blue-700">
+    <section className="flex h-96 items-center w-full lg:w-[90vw] relative bg-transparent">
       <button
         type={"button"}
         title={"Previous"}
-        className="flex items-center justify-center w-12 h-12 bg-transparent rounded-full absolute left-6 top-1/2 transform -translate-y-1/2 z-20"
+        className="flex items-center justify-center pl-2 pr-2 absolute left-0 top-0 bottom-0 z-20"
         onClick={(e) => {
           e.preventDefault();
           onScroll("subtract");
@@ -114,7 +109,7 @@ export default function Carousel(props: {
       <button
         type={"button"}
         title={"Next"}
-        className="flex items-center justify-center w-12 h-12 bg-transparent rounded-full absolute right-6 top-1/2 transform -translate-y-1/2"
+        className="flex items-center justify-center pl-2 pr-2 absolute right-0 top-0 bottom-0 z-20"
         onClick={(e) => {
           e.preventDefault();
           onScroll("add");

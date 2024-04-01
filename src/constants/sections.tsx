@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import specialPersons from "./special-persons";
@@ -7,9 +8,13 @@ import specialPersons from "./special-persons";
 import type { getPendingPayment } from "../server/asaas/payments";
 import Confirmation from "../components/Confirmation";
 import Presents from "../components/Presents";
-import Countdown from "../components/Countdown";
 import Carousel from "../components/Carousel";
 import { WEDDING_DATE } from "./constants";
+import SectionHeader from "../components/SectionHeader";
+
+const LazyCountdown = dynamic(() => import("../components/Countdown"), {
+  ssr: false,
+});
 
 const sections: {
   label: string;
@@ -40,55 +45,38 @@ const sections: {
     doNotShowHeader: true,
     isSticky: false,
     content: (
-      <div className="flex justify-center items-center w-full">
+      <div className="flex w-full">
         <div
-          className="flex w-full relative"
+          className="flex  relative"
           style={{
             height: "100vh",
             width: "100vw",
-            backgroundAttachment: "fixed",
-            backgroundImage: `url(/nos-3.jpeg)`,
+            backgroundImage: `url(/capa.jpeg)`,
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "bottom",
+            backgroundPosition: "center",
             backgroundSize: "cover",
           }}
         >
-          <div
-            className="flex flex-col justify-center items-center w-full h-full bg-black bg-opacity-50"
-            style={{ zIndex: 10 }}
-          >
-            {/*<h1
-              className="font-bold font-thankYou text-white text-center"
-              style={{
-                fontSize: "3rem",
-              }}
-            >
-              Viviane e Nicolas
-            </h1>*/}
-            <div
-              style={{
-                width: 324,
-                height: 324,
-                position: "relative",
-              }}
-            >
-              <Image
-                fill={true}
-                src="/complete-logo.svg"
-                objectFit="cover"
-                alt="Logo do nosso casamento"
-              />
+          <div className="flex flex-1 flex-col justify-between items-center w-[100vw] h-[100vh] bg-black bg-opacity-50 md:pb-12">
+            <div className="flex flex-col justify-center md:justify-between items-center w-full h-full">
+              <div className="flex flex-col justify-center items-center w-72 h-72 md:w-64 md:h-64 bg-transparent relative">
+                <Image
+                  fill={true}
+                  src="/complete-logo.svg"
+                  alt="Logo do nosso casamento"
+                />
+              </div>
+              <h2
+                className="text-white font-thankYou"
+                style={{
+                  fontSize: "1.5rem",
+                }}
+              >
+                {new Intl.DateTimeFormat("pt-BR", { dateStyle: "full" }).format(
+                  WEDDING_DATE
+                )}
+              </h2>
             </div>
-            <h2
-              className="text-white font-thankYou"
-              style={{
-                fontSize: "1.5rem",
-              }}
-            >
-              {new Intl.DateTimeFormat("pt-BR", { dateStyle: "full" }).format(
-                WEDDING_DATE
-              )}
-            </h2>
           </div>
         </div>
       </div>
@@ -98,9 +86,12 @@ const sections: {
     label: "Contagem Regressiva",
     slug: "o-casamento",
     isSticky: false,
+    breakpoints: {
+      beforeTitle: <SectionHeader />,
+    },
     content: () => (
       <Fragment>
-        <Countdown />
+        <LazyCountdown />
         <div
           className={`flex flex-col justify-center items-center min-w-96 max-w-lg`}
         >
@@ -145,15 +136,13 @@ const sections: {
       "Durante algum tempo, os dois ficaram sem se falar. Mas o destino, ou o acaso, ou o que quer que seja, fez com que os dois se reencontrassem novamente e começassem a se falar por causa de uma mensagem mandada errôneamente no falecido aplicativo Snapchat." +
       " A partir dai, o resto é história. Namoraram por 7 anos, noivaram e agora vocês estão lendo essa singela história nesse site feito para o casamento deles.",
     breakpoints: {
+      beforeTitle: <SectionHeader />,
       betweenContentAndTitle: (
-        <div className="flex min-w-96 h-96 p-3 rounded-md">
+        <div className="flex w-[20vw] h-[30vw] min-w-64 min-h-96 p-3 rounded-md">
           <div className="flex relative w-full h-full">
             <Image
               fill={true}
-              src="/uniao.png"
-              sizes="100vw 50vh"
-              style={{}}
-              objectFit="cover"
+              src="/primeira-foto.jpeg"
               alt="Picture of the author"
               className="w-full h-auto"
             />
@@ -169,51 +158,30 @@ const sections: {
             <Carousel
               images={[
                 {
-                  src: "/nos-3.jpeg",
+                  src: "/carousel/argentina.jpeg",
+                  alt: "Nós dois juntos na Argentina",
+                },
+                {
+                  src: "/carousel/rildi.jpeg",
                   alt: "Nós dois juntos no RJ",
                 },
                 {
-                  src: "/nos-3.jpeg",
-                  alt: "Nós dois juntos no RJ",
+                  src: "/carousel/argentina-3.jpeg",
+                  alt: "Nós dois juntos na Argentina outra vez",
                 },
                 {
-                  src: "/nos-3.jpeg",
-                  alt: "Nós dois juntos no RJ",
+                  src: "/carousel/argentina-4.jpeg",
+                  alt: "Nós dois juntos na Argentina de novo",
                 },
                 {
-                  src: "/nos-3.jpeg",
-                  alt: "Nós dois juntos no RJ",
+                  src: "/carousel/argentina-2.jpeg",
+                  alt: "A gente ama a argentina",
                 },
               ]}
             />
           </div>
         </div>
-      ) /*(
-        <div
-          className="flex justify-center items-start w-full p-6 bg-white"
-          style={{ zIndex: 10 }}
-        >
-          <div
-            className="flex p-3 border-gray-400 border-2 rounded-md min-w-96 min-h-96"
-            style={{
-              width: "50vw",
-              height: "50vw",
-            }}
-          >
-            <div className="flex relative w-full h-full">
-              <Image
-                fill={true}
-                src="/nos-3.jpeg"
-                sizes="100vw 50vh"
-                style={{}}
-                objectFit="cover"
-                alt="Picture of the author"
-                className="w-full h-auto"
-              />
-            </div>
-          </div>
-        </div>
-      )*/,
+      ),
     },
   },
   {
@@ -259,6 +227,9 @@ const sections: {
         ))}
       </div>
     ),
+    breakpoints: {
+      beforeTitle: <SectionHeader />,
+    },
   },
   {
     label: "Endereço",
@@ -300,9 +271,12 @@ const sections: {
         />
       );
     },
+    breakpoints: {
+      beforeTitle: <SectionHeader />,
+    },
   },
   {
-    label: "Confirme sua presença no evento do ano!",
+    label: "Confirme sua presença",
     slug: "confirme-sua-presenca",
     isSticky: false,
     zIndex: 4,
@@ -312,6 +286,9 @@ const sections: {
         hasConfirmedOrNotPresence={hasConfirmedOrNotPresence}
       />
     ),
+    breakpoints: {
+      beforeTitle: <SectionHeader />,
+    },
   },
   {
     label: "Presentes",
@@ -325,6 +302,9 @@ const sections: {
         isDevMode={isDevMode}
       />
     ),
+    breakpoints: {
+      beforeTitle: <SectionHeader />,
+    },
   },
 ];
 

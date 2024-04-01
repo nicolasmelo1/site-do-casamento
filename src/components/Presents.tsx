@@ -29,7 +29,7 @@ export default function Presents(props: {
         {getPresents(props.isDevMode).map((present, index) => (
           <button
             className="flex flex-col justify-between items-center p-2 m-2 border-2 border-gray-400 rounded-3xl 
-            w-48 h-64 hover:bg-gray-50 hover:shadow-gray-400 hover:shadow-inner select-none"
+            w-48 h-64 md:w-36 hover:bg-gray-50 hover:shadow-gray-400 hover:shadow-inner select-none"
             title={present.title}
             type={"button"}
             key={index}
@@ -57,7 +57,6 @@ export default function Presents(props: {
                 className="object-cover rounded-3xl"
               />
             </div>
-            {/*<h4 className="text-2xl text-gray-600">{present.title}</h4>*/}
             <p className="text-xs mt-1 text-gray-500">{present.title}</p>
             <p className="text-md text-gray-700">
               {displayValueInCurrency(present.value)}

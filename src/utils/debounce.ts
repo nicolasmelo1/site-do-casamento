@@ -1,3 +1,5 @@
+import { clearLayoutTimeout, setLayoutTimeout } from "./layout-timeout";
+
 /**
  * This function adds the functionality of delaying a
  * function execution based on a certain timeout.
@@ -10,9 +12,9 @@
 export default function debounce<
   TFunctionToDelay extends (...args: any) => any
 >(timeout = 300) {
-  let timer: NodeJS.Timeout | number;
+  let timer: ReturnType<typeof setLayoutTimeout> | undefined;
   return (functionToDelay: TFunctionToDelay) => {
-    clearTimeout(timer);
-    timer = setTimeout(functionToDelay, timeout);
+    clearLayoutTimeout(timer);
+    timer = setLayoutTimeout(functionToDelay, timeout);
   };
 }
