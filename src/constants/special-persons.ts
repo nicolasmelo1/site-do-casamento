@@ -16,6 +16,10 @@ const specialPersons = [
     name: "Estevão & Mari",
   },
   {
+    photo: "/godparents-and-bridesmaids/lucas-pati.jpeg",
+    name: "Lucas & Patricia",
+  },
+  {
     photo: "/godparents-and-bridesmaids/hetero-enrustido.jpeg",
     name: "Lukas",
   },
