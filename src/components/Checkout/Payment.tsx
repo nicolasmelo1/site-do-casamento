@@ -38,7 +38,7 @@ export default function Payment(props: {
                   : ""}
               </p>
               <span className="flex flex-row mt-3">
-                <p className="text-gray-200 mr-2">
+                <p className="text-gray-500 mr-2">
                   {strings.checkoutPaymentCardValueLabel}
                 </p>
                 <p className="font-bold">
@@ -46,7 +46,7 @@ export default function Payment(props: {
                 </p>
               </span>
               <span className="flex flex-row mt-1">
-                <p className="text-gray-200 mr-2">
+                <p className="text-gray-500 mr-2">
                   {strings.checkoutPaymentCardDueDateLabel}
                 </p>
                 <p className="font-bold">
