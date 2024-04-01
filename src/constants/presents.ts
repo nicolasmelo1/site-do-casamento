@@ -99,4 +99,15 @@ const presents = [
   },
 ];
 
-export default presents;
+export default function getPresents(isDevMode?: boolean) {
+  return isDevMode
+    ? presents.concat([
+        {
+          description: "Teste",
+          imageUrl: "/placeholder.webp",
+          title: "Teste",
+          value: 1,
+        },
+      ])
+    : presents;
+}

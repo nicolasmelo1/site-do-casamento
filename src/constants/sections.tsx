@@ -9,6 +9,7 @@ import Confirmation from "../components/Confirmation";
 import Presents from "../components/Presents";
 import Countdown from "../components/Countdown";
 import Carousel from "../components/Carousel";
+import { WEDDING_DATE } from "./constants";
 
 const sections: {
   label: string;
@@ -48,7 +49,7 @@ const sections: {
             backgroundAttachment: "fixed",
             backgroundImage: `url(/nos-3.jpeg)`,
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
+            backgroundPosition: "bottom",
             backgroundSize: "cover",
           }}
         >
@@ -56,21 +57,37 @@ const sections: {
             className="flex flex-col justify-center items-center w-full h-full bg-black bg-opacity-50"
             style={{ zIndex: 10 }}
           >
-            <h1
+            {/*<h1
               className="font-bold font-thankYou text-white text-center"
               style={{
                 fontSize: "3rem",
               }}
             >
               Viviane e Nicolas
-            </h1>
+            </h1>*/}
+            <div
+              style={{
+                width: 324,
+                height: 324,
+                position: "relative",
+              }}
+            >
+              <Image
+                fill={true}
+                src="/complete-logo.svg"
+                objectFit="cover"
+                alt="Logo do nosso casamento"
+              />
+            </div>
             <h2
               className="text-white font-thankYou"
               style={{
                 fontSize: "1.5rem",
               }}
             >
-              28/07/2024
+              {new Intl.DateTimeFormat("pt-BR", { dateStyle: "full" }).format(
+                WEDDING_DATE
+              )}
             </h2>
           </div>
         </div>
@@ -80,7 +97,7 @@ const sections: {
   {
     label: "Contagem Regressiva",
     slug: "o-casamento",
-    isSticky: true,
+    isSticky: false,
     content: () => (
       <Fragment>
         <Countdown />
@@ -107,39 +124,6 @@ const sections: {
         </div>
       </Fragment>
     ),
-    breakpoints: {
-      afterContainer: (
-        <div className="flex flex-col" style={{ zIndex: 10 }}>
-          <div className="flex justify-center items-center w-full">
-            <div
-              className="flex w-full relative"
-              style={{
-                height: "50vh",
-                backgroundAttachment: "fixed",
-                backgroundImage: `url(/nos-1.jpeg)`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-            />
-          </div>
-          <div className="flex h-4 bg-white relative" />
-          <div className="flex justify-center items-center w-full">
-            <div
-              className="flex w-full relative"
-              style={{
-                height: "50vh",
-                backgroundAttachment: "fixed",
-                backgroundImage: `url(/nos-2.png)`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-            />
-          </div>
-        </div>
-      ),
-    },
   },
   {
     label: "Nossa história",
@@ -162,7 +146,7 @@ const sections: {
       " A partir dai, o resto é história. Namoraram por 7 anos, noivaram e agora vocês estão lendo essa singela história nesse site feito para o casamento deles.",
     breakpoints: {
       betweenContentAndTitle: (
-        <div className="flex min-w-96 h-96 p-3 border-red-400 border-2 rounded-md">
+        <div className="flex min-w-96 h-96 p-3 rounded-md">
           <div className="flex relative w-full h-full">
             <Image
               fill={true}
@@ -210,7 +194,7 @@ const sections: {
           style={{ zIndex: 10 }}
         >
           <div
-            className="flex p-3 border-red-400 border-2 rounded-md min-w-96 min-h-96"
+            className="flex p-3 border-gray-400 border-2 rounded-md min-w-96 min-h-96"
             style={{
               width: "50vw",
               height: "50vw",
@@ -235,7 +219,7 @@ const sections: {
   {
     label: "Padrinhos e Madrinhas",
     slug: "padrinhos-e-madrinhas",
-    isSticky: true,
+    isSticky: false,
     content: (
       <div className="flex flex-row flex-wrap justify-center items-center w-screen max-w-6xl">
         {specialPersons.map((specialPerson) => (
@@ -249,13 +233,15 @@ const sections: {
                 marginLeft: "1vw",
                 marginRight: "1vw",
                 width: "22vw",
+                maxWidth: "128px",
                 height: "22vw",
+                maxHeight: "128px",
               }}
             >
               <Image
                 src={specialPerson.photo}
                 alt="Picture of the author"
-                className="w-full h-auto rounded-tl-full rounded-tr-full border-red-400 p-1"
+                className="w-full h-auto rounded-tl-full rounded-tr-full border-gray-400 p-1"
                 style={{
                   borderWidth: "2px",
                   borderRadius: "50%",
@@ -266,7 +252,7 @@ const sections: {
                 sizes="20vw 20vw"
               />
             </div>
-            <p className="font-bold text-red-400 w-full mt-2 text-center ">
+            <p className="font-bold text-gray-400 w-full mt-2 text-center ">
               {specialPerson.name}
             </p>
           </div>

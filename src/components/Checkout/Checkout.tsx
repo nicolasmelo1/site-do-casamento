@@ -11,7 +11,7 @@ import {
   CHECKOUT_REMOVE_PAYMENT,
   COOKIES_BILLING_CURRENT_PAYMENT_ID,
   COOKIES_BILLING_CUSTOMER_ID,
-  presents,
+  getPresents,
 } from "../../constants";
 import Summary from "./Summary";
 import Account from "./Account";
@@ -25,6 +25,7 @@ import type { getPendingPayment } from "../../server/asaas/payments";
 
 export default function Checkout(props: {
   cookies: string;
+  isDevMode: boolean;
   onRemovePresent: (index: number) => void;
   paymentData: Awaited<ReturnType<typeof getPendingPayment>>;
 }) {
@@ -64,13 +65,13 @@ export default function Checkout(props: {
   const isValidPayment = typeof payment === "string" && payment.length > 0;
 
   function onGoToAccount() {
-    const newSearchParams = new URLSearchParams([
-      [CHECKOUT_QUERY_PARAM, checkout],
-      [
-        CHECKOUT_CONFIRMATION_QUERY_PARAM,
-        CHECKOUT_CONFIRMATION_QUERY_PARAM_VALUE,
-      ],
-    ]);
+    console.log("aquiiiii");
+    const newSearchParams = new URLSearchParams(document.location.search);
+    newSearchParams.set(
+      CHECKOUT_CONFIRMATION_QUERY_PARAM,
+      CHECKOUT_CONFIRMATION_QUERY_PARAM_VALUE
+    );
+    newSearchParams.set(CHECKOUT_QUERY_PARAM, checkout);
     router.push(`?${newSearchParams.toString()}`);
   }
 
@@ -81,9 +82,9 @@ export default function Checkout(props: {
     props.onRemovePresent(presentIndex);
     if (newCheckout?.length === 0) return router.push("/");
 
-    const newSearchParams = new URLSearchParams([
-      [CHECKOUT_QUERY_PARAM, newCheckout?.join(",")],
-    ]);
+    const newSearchParams = new URLSearchParams(document.location.search);
+    newSearchParams.set(CHECKOUT_QUERY_PARAM, newCheckout?.join(","));
+
     router.push(`?${newSearchParams.toString()}`);
   }
 
@@ -111,11 +112,12 @@ export default function Checkout(props: {
     name: string,
     cpfCnpj: string,
     paymentType: "PIX" | "CREDIT_CARD",
-    message?: string
+    message?: string,
+    isDevMode?: boolean
   ) {
     const sumOfCheckout = checkoutSplitNumbers.reduce(
       (accumulator, checkoutIndex) =>
-        accumulator + presents[checkoutIndex].value,
+        accumulator + getPresents(isDevMode)[checkoutIndex].value,
       0
     );
     handlePayment(name, cpfCnpj, paymentType, message, sumOfCheckout).then(
@@ -150,9 +152,11 @@ export default function Checkout(props: {
     setPaymentData(undefined);
   }
 
+  console.log("isDev", props.isDevMode);
+
   return isValidCheckout || isValidConfirm || isValidPayment ? (
     <Modal
-      className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[55vh] bg-red-400 p-6 rounded-2xl"
+      className="flex flex-col justify-between w-6/12 min-w-96 max-w-2xl min-h-96 h-screen md:max-h-[60vh] max-h-[55vh] bg-white p-6 rounded-2xl"
       onClose={onDismiss}
     >
       <Fragment>
@@ -164,9 +168,15 @@ export default function Checkout(props: {
             onCancel={onCancelPayment}
           />
         ) : isValidConfirm ? (
-          <Account cookies={props.cookies} checkout={checkout} onPay={onPay} />
+          <Account
+            cookies={props.cookies}
+            checkout={checkout}
+            onPay={onPay}
+            isDevMode={props.isDevMode}
+          />
         ) : isValidCheckout ? (
           <Summary
+            isDevMode={props.isDevMode}
             cookies={props.cookies}
             checkout={checkoutSplitNumbers}
             onRemovePresent={onRemovePresent}

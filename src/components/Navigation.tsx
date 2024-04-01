@@ -21,7 +21,7 @@ export default function Navigation(props: {
   return (
     <Fragment>
       <nav className="2xl:hidden flex items-start justify-between p-6 none">
-        <h1 className="font-thankYou text-red-400 text-2xl whitespace-nowrap">
+        <h1 className="font-thankYou text-gray-400 text-2xl whitespace-nowrap">
           {strings.title}
         </h1>
         <div className="flex flex-row">
@@ -29,7 +29,7 @@ export default function Navigation(props: {
             <button
               key={section.slug}
               type="button"
-              className="pl-3 pr-3 hover:text-red-400"
+              className="pl-3 pr-3 hover:text-gray-400"
               onClick={(e) => {
                 e.preventDefault();
                 router.push(`/#${section.slug}`);
@@ -41,7 +41,9 @@ export default function Navigation(props: {
         </div>
       </nav>
       <nav className="2xl:flex hidden flex-row justify-between items-center p-6">
-        <h1 className="font-thankYou text-red-400 text-2xl">{strings.title}</h1>
+        <h1 className="font-thankYou text-gray-400 text-2xl">
+          {strings.title}
+        </h1>
         <button
           aria-label="Menu"
           className="flex w-6 h-4 justify-between flex-col"
@@ -60,9 +62,9 @@ export default function Navigation(props: {
             }
           }}
         >
-          <div className="bg-red-400 h-[2px] w-full" />
-          <div className="bg-red-400 h-[2px] w-full" />
-          <div className="bg-red-400 h-[2px] w-full" />
+          <div className="bg-gray-400 h-[2px] w-full" />
+          <div className="bg-gray-400 h-[2px] w-full" />
+          <div className="bg-gray-400 h-[2px] w-full" />
         </button>
       </nav>
       <div

@@ -1,9 +1,8 @@
 export { default as specialPersons } from "./special-persons";
-export { default as presents } from "./presents";
+export { default as getPresents } from "./presents";
 export { default as strings } from "./strings";
 export { default as sections } from "./sections";
-
-export const WEDDING_DATE = new Date(2024, 6, 28, 15, 30, 0, 0);
+export { WEDDING_DATE } from "./constants";
 
 export const DEV_MODE_QUERY_PARAM = "dev";
 export const DEV_MODE_QUERY_PARAM_VALUE = "true";

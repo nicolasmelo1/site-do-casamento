@@ -72,7 +72,7 @@ export default function Confirmation(props: {
         <Fragment>
           <div className="flex flex-col justify-start items-start w-full m-6">
             <div className="flex flex-col justify-start items-start w-full">
-              <label htmlFor="name" className="text-red-400 font-semibold">
+              <label htmlFor="name" className="text-gray-400 font-semibold">
                 {strings.confirmationNameLabel}
               </label>
               <input
@@ -86,11 +86,11 @@ export default function Confirmation(props: {
               {typeof validation.name === "string" &&
               name.length > 0 &&
               hasTriedToSubmit === true ? (
-                <p className="text-sm text-red-300">{validation.name}</p>
+                <p className="text-sm text-gray-300">{validation.name}</p>
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full mt-3">
-              <label htmlFor="cpfCnpj" className="text-red-400 font-semibold">
+              <label htmlFor="cpfCnpj" className="text-gray-400 font-semibold">
                 {strings.confirmationCpfCnpjLabel}
               </label>
               <input
@@ -103,11 +103,11 @@ export default function Confirmation(props: {
               {typeof validation.cpfCnpj === "string" &&
               cpfCnpj.length > 0 &&
               hasTriedToSubmit === true ? (
-                <p className="text-sm text-red-300">{validation.cpfCnpj}</p>
+                <p className="text-sm text-gray-300">{validation.cpfCnpj}</p>
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full mt-3">
-              <label htmlFor="phone" className="text-red-400 font-semibold">
+              <label htmlFor="phone" className="text-gray-400 font-semibold">
                 {strings.confirmationPhoneLabel}
               </label>
               <input
@@ -120,13 +120,13 @@ export default function Confirmation(props: {
               {typeof validation.phone === "string" &&
               phone.length > 0 &&
               hasTriedToSubmit === true ? (
-                <p className="text-sm text-red-300">{validation.phone}</p>
+                <p className="text-sm text-gray-300">{validation.phone}</p>
               ) : null}
             </div>
           </div>
           <div className="flex md:flex-col md:w-full flex-row justify-between items-center w-full mt-3">
             <button
-              className={`md:mt-3 cursor-pointer border-[2px] border-red-400 text-red-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl hover:bg-red-200 mr-3${
+              className={`md:mt-3 cursor-pointer border-[2px] border-gray-400 text-gray-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl hover:bg-gray-200 mr-3${
                 typeof isNotGoingTimes === "number" && isNotGoingTimes < 4
                   ? " absolute " +
                     (isNotGoingTimes === 1
@@ -175,7 +175,7 @@ export default function Confirmation(props: {
             </button>
             <button
               type="submit"
-              className={`md:w-full md:mt-3 cursor-pointer bg-red-400 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/2 h-full hover:bg-red-300 ${
+              className={`md:w-full md:mt-3 cursor-pointer bg-gray-400 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/2 h-full hover:bg-gray-300 ${
                 validation.isValidToSubmit() === false ? "bg-opacity-50" : ""
               }`}
               disabled={validation.isValidToSubmit() === false}
@@ -193,7 +193,7 @@ export default function Confirmation(props: {
         <div className="flex flex-row justify-center items-center w-full h-full mt-12 mb-12">
           <button
             type="button"
-            className="flex flex-row justify-center font-semibold text-red-400 items-center max-w-96 h-full p-3 rounded-2xl border-red-400 border-[2px]  hover:bg-red-200"
+            className="flex flex-row justify-center font-semibold text-gray-400 items-center max-w-96 h-full p-3 rounded-2xl border-gray-400 border-[2px]  hover:bg-gray-200"
             onClick={() => setWantToChangeConfirmation(true)}
           >
             {hasConfirmedOrNotPresence

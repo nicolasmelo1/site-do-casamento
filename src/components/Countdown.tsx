@@ -61,7 +61,7 @@ export default function Countdown() {
   return (
     <div className="flex flex-row justify-center items-center w-full cursor-pointer mt-6 md:mt-2">
       <div className="flex flex-row justify-center items-center md:w-full flex-wrap">
-        <div className="flex flex-col justify-center items-center w-24 h-24 bg-red-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
+        <div className="flex flex-col justify-center items-center w-24 h-24 bg-gray-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
           {Math.round(differenceInDays) <= 0 ? (
             <p className="text-white text-sm text-center">{`É hoje!`}</p>
           ) : (
@@ -75,7 +75,7 @@ export default function Countdown() {
             </Fragment>
           )}
         </div>
-        <div className="flex flex-col justify-center items-center w-24 h-24 bg-red-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
+        <div className="flex flex-col justify-center items-center w-24 h-24 bg-gray-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
           {Math.round(differenceInHours) <= 0 ? (
             <p className="text-white text-sm text-center">{`Se não saiu de casa, ta atrasado!`}</p>
           ) : (
@@ -89,7 +89,7 @@ export default function Countdown() {
             </Fragment>
           )}
         </div>
-        <div className="flex flex-col justify-center items-center w-24 h-24 bg-red-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
+        <div className="flex flex-col justify-center items-center w-24 h-24 bg-gray-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
           {Math.round(differenceInMinutes) <= 0 ? (
             <p className="text-white text-sm text-center">{`É agora agora!!`}</p>
           ) : (
@@ -103,7 +103,7 @@ export default function Countdown() {
             </Fragment>
           )}
         </div>
-        <div className="flex flex-col justify-center items-center w-24 h-24 bg-red-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
+        <div className="flex flex-col justify-center items-center w-24 h-24 bg-gray-400 rounded-md p-3 mr-3 md:mr-2 md:m-2">
           {Math.round(differenceInSeconds) <= 0 ? (
             <p className="text-white text-sm text-center">{`Chegou o momento!`}</p>
           ) : (

@@ -25,7 +25,7 @@ export default function Payment(props: {
         {props.paymentData ? (
           <a
             href={props.paymentData.invoiceUrl}
-            className="flex flex-row w-full justify-between items-center pt-2 pb-2 pr-6 pl-6 border-red-300 border-2 rounded-md md:flex-col"
+            className="flex flex-row w-full justify-between items-center pt-2 pb-2 pr-6 pl-6 border-gray-300 border-2 rounded-md md:flex-col"
             target="_blank"
           >
             <div className="flex flex-col">
@@ -37,7 +37,7 @@ export default function Payment(props: {
                   : ""}
               </p>
               <span className="flex flex-row mt-3">
-                <p className="text-red-200 mr-2">
+                <p className="text-gray-200 mr-2">
                   {strings.checkoutPaymentCardValueLabel}
                 </p>
                 <p className="font-bold">
@@ -45,7 +45,7 @@ export default function Payment(props: {
                 </p>
               </span>
               <span className="flex flex-row mt-1">
-                <p className="text-red-200 mr-2">
+                <p className="text-gray-200 mr-2">
                   {strings.checkoutPaymentCardDueDateLabel}
                 </p>
                 <p className="font-bold">
@@ -63,7 +63,7 @@ export default function Payment(props: {
           props.paymentData?.paymentId.length > 0 ? (
             <button
               type="button"
-              className="md:w-full cursor-pointer text-white text-bold pt-2 pb-2 pr-4 pl-4 rounded-xl font-semibold border-white border-2 w-1/3 text-center hover:bg-red-300"
+              className="md:w-full cursor-pointer text-white text-bold pt-2 pb-2 pr-4 pl-4 rounded-xl font-semibold border-white border-2 w-1/3 text-center hover:bg-gray-300"
               onClick={(e) => {
                 e.preventDefault();
                 props.onCancel();
@@ -74,7 +74,7 @@ export default function Payment(props: {
           ) : null}
           <button
             type="button"
-            className="md:w-full md:mt-3 cursor-pointer bg-white text-red-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/3 h-full hover:bg-red-100"
+            className="md:w-full md:mt-3 cursor-pointer bg-white text-gray-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/3 h-full hover:bg-gray-100"
             onClick={(e) => {
               e.preventDefault();
               props.onDismiss();

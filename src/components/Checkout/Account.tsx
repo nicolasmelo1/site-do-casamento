@@ -7,6 +7,7 @@ import {
   CHECKOUT_QUERY_PARAM,
   COOKIES_CPF_CNPJ,
   COOKIES_USERNAME,
+  DEV_MODE_QUERY_PARAM,
 } from "../../constants";
 import { useCookieStorageState, useValidation } from "../../hooks";
 import { strings } from "../../constants";
@@ -15,11 +16,13 @@ import { formatterOfCpfCnpj } from "../../utils/cpf-cnpj";
 export default function Account(props: {
   cookies: string;
   checkout: string;
+  isDevMode: boolean;
   onPay: (
     name: string,
     cpfCnpj: string,
     paymentType: "CREDIT_CARD" | "PIX",
-    message?: string
+    message?: string,
+    isDevMode?: boolean
   ) => void;
 }) {
   const [name, setName] = useCookieStorageState(
@@ -37,9 +40,12 @@ export default function Account(props: {
   >(props.cookies, "checkoutPaymentType", undefined);
   const [message, setMessage] = useState("");
 
-  const urlToGoBack = new URLSearchParams([
-    [CHECKOUT_QUERY_PARAM, props.checkout],
-  ]);
+  const params = new URLSearchParams(document.location.search);
+  const urlToGoBack = new URLSearchParams(
+    [[CHECKOUT_QUERY_PARAM, props.checkout]].concat(
+      params.has(DEV_MODE_QUERY_PARAM) ? [[DEV_MODE_QUERY_PARAM, "true"]] : []
+    )
+  );
 
   const { setHasTriedToSubmit, validation } = useValidation(
     props.cookies,
@@ -60,9 +66,9 @@ export default function Account(props: {
           </div>
           <div className="flex flex-col w-full pb-3 pt-3">
             <div className="flex flex-col justify-start items-start w-full">
-              <label htmlFor="name" className="text-gray-100 font-semibold">
+              <label htmlFor="name" className="text-gray-800 font-semibold">
                 {strings.checkoutAccountNameLabel}
-                <span className="text-red-800">*</span>
+                <span className="text-gray-800">*</span>
               </label>
               <input
                 className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md"
@@ -76,9 +82,9 @@ export default function Account(props: {
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full pt-6">
-              <label htmlFor="cpfCnpj" className="text-gray-100 font-semibold">
+              <label htmlFor="cpfCnpj" className="text-gray-800 font-semibold">
                 {strings.checkoutAccountCpfCnpjLabel}
-                <span className="text-red-800">*</span>
+                <span className="text-gray-800">*</span>
               </label>
               <input
                 className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md"
@@ -94,12 +100,12 @@ export default function Account(props: {
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full pt-6">
-              <label htmlFor="type" className="text-gray-100 font-semibold">
+              <label htmlFor="type" className="text-gray-800 font-semibold">
                 {strings.checkoutAccountPaymentTypeLabel}
-                <span className="text-red-800">*</span>
+                <span className="text-gray-800">*</span>
               </label>
               <select
-                className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md"
+                className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md border-gray-300"
                 id="type"
                 value={paymentType}
                 onChange={(e) => setPaymentType(e.target.value as any)}
@@ -116,11 +122,11 @@ export default function Account(props: {
               </select>
             </div>
             <div className="flex flex-col justify-start items-start w-full pt-6">
-              <label htmlFor="message" className="text-gray-100 font-semibold">
+              <label htmlFor="message" className="text-gray-800 font-semibold">
                 {strings.checkoutAccountMessageLabel}
               </label>
               <textarea
-                className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md resize-none"
+                className="w-full pt-2 pb-2 sm:pt-3 sm:pb-3 pl-3 pr-3 border rounded-md resize-none border-gray-300"
                 id="message"
                 rows={3}
                 value={message}
@@ -130,7 +136,7 @@ export default function Account(props: {
           </div>
           <div className="flex md:flex-col md:w-full flex-row justify-between items-center w-full">
             <Link
-              className="md:w-full cursor-pointer text-white text-bold pt-2 pb-2 pr-4 pl-4 rounded-xl font-semibold border-white border-2 w-1/3 text-center hover:bg-red-300 h-full"
+              className="md:w-full cursor-pointer text-gray-800 text-bold pt-2 pb-2 pr-4 pl-4 rounded-xl font-semibold border-gray-800 border-2 w-1/3 text-center hover:bg-gray-300"
               href={`?${urlToGoBack.toString()}`}
               onClick={() => {
                 setHasTriedToSubmit(false);
@@ -140,7 +146,7 @@ export default function Account(props: {
             </Link>
             <button
               type="submit"
-              className={`md:w-full md:mt-3 cursor-pointer bg-white text-red-400 font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/3 h-full hover:bg-red-100 ${
+              className={`md:w-full md:mt-3 cursor-pointer bg-gray-800 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/3 h-full hover:bg-gray-500 ${
                 validation.isValidToSubmit() === false ? "bg-opacity-50" : ""
               }`}
               disabled={validation.isValidToSubmit() === false}

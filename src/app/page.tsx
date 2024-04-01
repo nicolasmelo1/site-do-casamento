@@ -130,6 +130,7 @@ export default async function Home(props: {
       isDevMode(props.searchParams),
     ]);
 
+  console.log("isDevelopment", isDevelopment);
   return (
     <main className="flex flex-col overflow-scroll scroll-smooth w-full">
       <Navigation sections={sections} />

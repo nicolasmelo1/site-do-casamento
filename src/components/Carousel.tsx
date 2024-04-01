@@ -42,11 +42,11 @@ export default function Carousel(props: {
   }, [isOnServer]);
 
   return (
-    <section className="flex h-96 items-center w-full relative">
+    <section className="flex h-96 items-center w-full lg:w-[90vw] relative bg-blue-700">
       <button
         type={"button"}
         title={"Previous"}
-        className="flex items-center justify-center w-12 h-12 bg-transparent rounded-full absolute left-6 top-1/2 transform -translate-y-1/2 border-2 border-gray-300 z-20"
+        className="flex items-center justify-center w-12 h-12 bg-transparent rounded-full absolute left-6 top-1/2 transform -translate-y-1/2 z-20"
         onClick={(e) => {
           e.preventDefault();
           onScroll("subtract");
@@ -68,7 +68,7 @@ export default function Carousel(props: {
         </svg>
       </button>
       <div
-        className="flex flex-row overflow-x-scroll scroll-smooth"
+        className="flex flex-row overflow-x-scroll scroll-smooth scrollbar-hide"
         ref={(ref) => {
           (scrollRef as any).current = ref;
           if (ref?.offsetWidth) setWidth(ref?.offsetWidth);
@@ -114,7 +114,7 @@ export default function Carousel(props: {
       <button
         type={"button"}
         title={"Next"}
-        className="flex items-center justify-center w-12 h-12 bg-transparent rounded-full absolute right-6 top-1/2 transform -translate-y-1/2 border-2 border-gray-300"
+        className="flex items-center justify-center w-12 h-12 bg-transparent rounded-full absolute right-6 top-1/2 transform -translate-y-1/2"
         onClick={(e) => {
           e.preventDefault();
           onScroll("add");
