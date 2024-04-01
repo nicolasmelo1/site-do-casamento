@@ -1,23 +1,27 @@
 const specialPersons = [
   {
-    photo: "/placeholder.webp",
-    name: "John Doe",
+    photo: "/godparents-and-bridesmaids/alan-lu.jpeg",
+    name: "Lu & Alan",
   },
   {
-    photo: "/placeholder.webp",
-    name: "Satoshi Nakamoto",
+    photo: "/godparents-and-bridesmaids/edson-andrea.jpeg",
+    name: "Edson & Andrea",
   },
   {
-    photo: "/placeholder.webp",
-    name: "Vitalik Buterin",
+    photo: "/godparents-and-bridesmaids/thais-bruno.jpeg",
+    name: "Thais & Bruno",
   },
   {
-    photo: "/placeholder.webp",
-    name: "Sergey Nazarov",
+    photo: "/godparents-and-bridesmaids/estevao-mari.jpeg",
+    name: "Estevão & Mari",
   },
   {
-    photo: "/placeholder.webp",
-    name: "Charles Hoskinson",
+    photo: "/godparents-and-bridesmaids/hetero-enrustido.jpeg",
+    name: "Lukas",
+  },
+  {
+    photo: "/godparents-and-bridesmaids/caio.jpeg",
+    name: "Caio",
   },
 ];
 
