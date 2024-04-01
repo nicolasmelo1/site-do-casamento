@@ -196,13 +196,13 @@ const sections: {
             key={specialPerson.name}
             className="flex justify-center flex-col flex-wrap mt-2"
           >
-            <div className="p-6 relative ml-[1vw] mr-[1vw] w-[22vw] max-w-96 h-[22vw] max-h-96 min-w-32 min-h-32 rounded-full">
+            <div className="p-6 relative ml-[1vw] mr-[1vw] w-[22vw] max-w-60 h-[22vw] max-h-60 min-w-32 min-h-32 rounded-full bg-black">
               <Image
                 src={specialPerson.photo}
                 alt="Picture of the author"
-                className="w-full h-auto rounded-full p-1"
+                className="w-full h-auto rounded-full"
                 fill={true}
-                objectFit="cover"
+                objectFit="contain"
                 sizes="20vw 20vw"
               />
             </div>
