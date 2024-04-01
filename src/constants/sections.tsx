@@ -73,9 +73,12 @@ const sections: {
                   fontSize: "1.5rem",
                 }}
               >
-                {new Intl.DateTimeFormat("pt-BR", { dateStyle: "full" }).format(
-                  WEDDING_DATE
-                )}
+                {new Intl.DateTimeFormat("pt-BR", { dateStyle: "full" })
+                  .format(WEDDING_DATE)[0]
+                  .toUpperCase() +
+                  new Intl.DateTimeFormat("pt-BR", { dateStyle: "full" })
+                    .format(WEDDING_DATE)
+                    .slice(1)}
               </h2>
             </div>
           </div>
