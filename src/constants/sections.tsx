@@ -100,13 +100,19 @@ const sections: {
           className={`flex flex-col justify-center items-center min-w-96 max-w-lg`}
         >
           {(
-            "Queridos amigos e familiares, estamos muito felizes por vocês estarem aqui.\nSe vocês estão aqui é porque vocês provavelmente já sabem, mas: ESTAMOS NOS CASANDO! (morar junto não é casar)\n" +
+            "Criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento\n" +
+            "Estamos muito felizes e contamos com a presença de todos no nosso grande dia!\n" +
+            "Se você foi convidado, saiba que fazemos questão da sua presença para brindarmos juntos!\n\n" +
+            "Caso tenham alguma dúvida sobre horário e localização, fizemos um resumo em Cerimônia & Recepção para facilitar.\n\n" +
+            "Para nos presentear, escolha qualquer item da Lista de Presentes. Fiquem à vontade!\n\n" +
+            "Aguardamos vocês no nosso grande dia!"
+          )
+            /* "Queridos amigos e familiares, estamos muito felizes por vocês estarem aqui.\nSe vocês estão aqui é porque vocês provavelmente já sabem, mas: ESTAMOS NOS CASANDO! (morar junto não é casar)\n" +
             "Nosso casamento vai ser no dia 28 de Julho de 2024 em Mairiporã, São Paulo. A cerimônia vai começar às 16:00 e a festa vai até o último convidado ir embora. (Não é mas o noivo paga kkkkk)\n" +
             "Aqui nesse site vamos deixar todas as informações sobre o casamento, como chegar, onde se hospedar caso precise e outras informações úteis.\n" +
             "Também vamos deixar aqui a lista de presentes, caso vocês queiram nos presentear. Não é obrigatório, mas é. Da um presentinho ai pô!\n" +
             "No finalzinho do site tem um formulário para confirmar a presença, por favor, preencha caso você for para que possamos deixar tudo organizadinho ❤\n" +
-            "A contagem regressiva já começou e estamos muito ansiosos para compartilhar esse dia tão especial para nós com todos vocês."
-          )
+            "A contagem regressiva já começou e estamos muito ansiosos para compartilhar esse dia tão especial para nós com todos vocês."*/
             .split("\n")
             .map((paragraph) => (
               <p
