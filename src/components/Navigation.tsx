@@ -81,7 +81,11 @@ export default function Navigation(props: {
               }`}
               onClick={(e) => {
                 e.preventDefault();
-                router.push(`/#${section.slug}`);
+                // First close the modal then scroll to the section
+                router.push("/");
+                setTimeout(() => {
+                  router.push(`/#${section.slug}`);
+                }, 300);
               }}
             >
               {section.label}

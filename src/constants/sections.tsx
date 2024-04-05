@@ -100,11 +100,11 @@ const sections: {
           className={`flex flex-col justify-center items-center min-w-96 max-w-lg`}
         >
           {(
-            "Criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento\n" +
+            "Criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento.\n" +
             "Estamos muito felizes e contamos com a presença de todos no nosso grande dia!\n" +
-            "Se você foi convidado, saiba que fazemos questão da sua presença para brindarmos juntos!\n\n" +
-            "Caso tenham alguma dúvida sobre horário e localização, fizemos um resumo em Cerimônia & Recepção para facilitar.\n\n" +
-            "Para nos presentear, escolha qualquer item da Lista de Presentes. Fiquem à vontade!\n\n" +
+            "Se você foi convidado, saiba que fazemos questão da sua presença para brindarmos juntos!\n" +
+            "Caso tenham alguma dúvida sobre horário e localização, fizemos um resumo em Cerimônia & Recepção para facilitar.\n" +
+            "Para nos presentear, escolha qualquer item da Lista de Presentes. Fiquem à vontade!\n" +
             "Aguardamos vocês no nosso grande dia!"
           )
             /* "Queridos amigos e familiares, estamos muito felizes por vocês estarem aqui.\nSe vocês estão aqui é porque vocês provavelmente já sabem, mas: ESTAMOS NOS CASANDO! (morar junto não é casar)\n" +
@@ -117,7 +117,7 @@ const sections: {
             .map((paragraph) => (
               <p
                 key={paragraph}
-                className="flex w-full justify-center text-2xlr mt-6 md:mt-3"
+                className="flex w-full justify-center text-justify text-2xlr mt-6 md:mt-3"
               >
                 {paragraph}
               </p>

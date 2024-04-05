@@ -56,7 +56,7 @@ export default function Section(props: {
               ? section.content.split("\n").map((paragraph) => (
                   <p
                     key={paragraph}
-                    className="flex w-full justify-center text-2xlr pt-6"
+                    className="flex w-full justify-center text-justify text-2xlr pt-6"
                   >
                     {paragraph}
                   </p>
