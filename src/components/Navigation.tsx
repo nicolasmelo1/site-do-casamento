@@ -85,7 +85,7 @@ export default function Navigation(props: {
                 router.push("/");
                 setTimeout(() => {
                   router.push(`/#${section.slug}`);
-                }, 300);
+                }, 500);
               }}
             >
               {section.label}
