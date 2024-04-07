@@ -98,8 +98,8 @@ const sections: {
         <LazyCountdown />
         <div className={`flex flex-col justify-center items-center w-80`}>
           {(
-            "Queridos familiares e amigos criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento.\n" +
-            "Estamos muito felizes e contamos com a presença de todos no nosso grande dia e sonhado dia!\n" +
+            "Queridos familiares e amigos, criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento.\n" +
+            "Estamos muito felizes e contamos com a presença de todos no nosso grande e sonhado dia!\n" +
             "Se você foi convidado, saiba que fazemos questão da sua presença para brindarmos juntos!\n" +
             "Caso tenham alguma dúvida sobre horário e localização, fizemos um resumo em Cerimônia & Recepção para facilitar.\n" +
             "Para nos presentear, escolha qualquer item da Lista de Presentes. Fiquem à vontade!\n" +
