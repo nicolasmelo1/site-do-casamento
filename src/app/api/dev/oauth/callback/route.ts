@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 
-export default function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const url = new URL(request.url || "");
 
   const newUrlToCall = new URL("http://localhost:3000");
