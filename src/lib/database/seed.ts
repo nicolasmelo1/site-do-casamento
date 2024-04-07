@@ -71,8 +71,17 @@ async function createGuestsTableTableOrModify() {
     console.log("columns", columns);
     const columnNames = columns.map((column) => column.column_name);
     const missingColumns = Object.keys(guestsColumnNames).filter(
-      (columnName) => !columnNames.includes(columnName)
+      (columnName) => {
+        console.log(
+          "columnName",
+          columnName,
+          "exists",
+          !columnNames.includes(columnName)
+        );
+        return !columnNames.includes(columnName);
+      }
     );
+    console.log("missingColumns", missingColumns);
     if (missingColumns.length === 0) return;
 
     let alterGuestsTableStatement: any = db.schema.alterTable("guests");
