@@ -60,7 +60,7 @@ async function createGuestsTableTableOrModify() {
   if (exists && exists.length > 0) {
     const columns = await db
       .selectFrom("information_schema.columns" as any)
-      .select("column_name")
+      .select("column_name as columnName")
       .where((eb) =>
         eb.and([
           eb("table_name", "=", "guests"),
@@ -68,8 +68,7 @@ async function createGuestsTableTableOrModify() {
         ])
       )
       .execute();
-    console.log("columns", columns);
-    const columnNames = columns.map((column) => column.column_name);
+    const columnNames = columns.map((column) => column.columnName);
     const missingColumns = Object.keys(guestsColumnNames).filter(
       (columnName) => {
         console.log(
