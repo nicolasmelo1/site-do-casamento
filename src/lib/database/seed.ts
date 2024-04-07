@@ -1,6 +1,50 @@
 import { db, sql } from "./kysely";
 
+import type { ColumnBuilderCallback } from "kysely";
+
 const cache = new Map<string, boolean>();
+
+const guestsColumnNames: Record<
+  string,
+  {
+    type: Parameters<
+      ReturnType<(typeof db)["schema"]["createTable"]>["addColumn"]
+    >[1];
+    callback?: ColumnBuilderCallback;
+  }
+> = {
+  id: {
+    type: "serial",
+    callback: (cb) => cb.primaryKey(),
+  },
+  name: {
+    type: "varchar(500)",
+    callback: (cb) => cb.notNull(),
+  },
+  email: {
+    type: "varchar(255)",
+  },
+  phone: {
+    type: "varchar(255)",
+  },
+  image: {
+    type: "varchar(255)",
+  },
+  instagram_user_id: {
+    type: "varchar(255)",
+  },
+  is_going: {
+    type: "boolean",
+    callback: (cb) => cb.defaultTo(null),
+  },
+  number_of_people: {
+    type: "bigint",
+  },
+  created_at: {
+    type: sql`timestamp with time zone`,
+    callback: (cb) => cb.defaultTo(sql`current_timestamp`),
+  },
+};
 
 async function createGuestsTableTableOrModify() {
   if (cache.get("guests")) return;
@@ -13,24 +57,45 @@ async function createGuestsTableTableOrModify() {
     )
     .execute();
 
-  if (exists && exists.length > 0) return;
+  if (exists && exists.length > 0) {
+    const columns = await db
+      .selectFrom("information_schema.columns" as any)
+      .select("column_name")
+      .where((eb) =>
+        eb.and([
+          eb("table_name", "=", "guests"),
+          eb("table_schema", "=", "public"),
+        ])
+      )
+      .execute();
+    const columnNames = columns.map((column) => column.column_name);
+    const missingColumns = Object.keys(guestsColumnNames).filter(
+      (columnName) => !columnNames.includes(columnName)
+    );
+    if (missingColumns.length === 0) return;
 
-  await db.schema
-    .createTable("guests")
-    .ifNotExists()
-    .addColumn("id", "serial", (cb) => cb.primaryKey())
-    .addColumn("name", "varchar(500)", (cb) => cb.notNull())
-    .addColumn("cpf_cnpj", "varchar(20)")
-    .addColumn("email", "varchar(255)")
-    .addColumn("phone", "varchar(255)")
-    .addColumn("image", "varchar(255)")
-    .addColumn("instagram_user_id", "varchar(255)")
-    .addColumn("is_going", "boolean", (cb) => cb.defaultTo(null))
-    .addColumn("number_of_people", "bigint")
-    .addColumn("created_at", sql`timestamp with time zone`, (cb) =>
-      cb.defaultTo(sql`current_timestamp`)
-    )
-    .execute();
+    let alterGuestsTableStatement: any = db.schema.alterTable("guests");
+    for (const missingColumn of missingColumns) {
+      const column = guestsColumnNames[missingColumn];
+      alterGuestsTableStatement = alterGuestsTableStatement.addColumn(
+        missingColumn,
+        column.type,
+        column.callback
+      );
+    }
+    await (alterGuestsTableStatement as any).execute();
+    return;
+  }
+
+  let createGuestTableStatement = db.schema.createTable("guests").ifNotExists();
+  for (const [columnName, column] of Object.entries(guestsColumnNames)) {
+    createGuestTableStatement = createGuestTableStatement.addColumn(
+      columnName,
+      column.type,
+      column.callback
+    );
+  }
+  await createGuestTableStatement.execute();
 }
 
 async function createGuestsPresentsTableOrModify() {
