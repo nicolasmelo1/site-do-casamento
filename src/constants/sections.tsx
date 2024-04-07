@@ -100,19 +100,13 @@ const sections: {
           className={`flex flex-col justify-center items-center min-w-96 max-w-lg`}
         >
           {(
-            "Criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento.\n" +
-            "Estamos muito felizes e contamos com a presença de todos no nosso grande dia!\n" +
+            "Queridos familiares e amigos criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento.\n" +
+            "Estamos muito felizes e contamos com a presença de todos no nosso grande dia e sonhado dia!\n" +
             "Se você foi convidado, saiba que fazemos questão da sua presença para brindarmos juntos!\n" +
             "Caso tenham alguma dúvida sobre horário e localização, fizemos um resumo em Cerimônia & Recepção para facilitar.\n" +
             "Para nos presentear, escolha qualquer item da Lista de Presentes. Fiquem à vontade!\n" +
             "Aguardamos vocês no nosso grande dia!"
           )
-            /* "Queridos amigos e familiares, estamos muito felizes por vocês estarem aqui.\nSe vocês estão aqui é porque vocês provavelmente já sabem, mas: ESTAMOS NOS CASANDO! (morar junto não é casar)\n" +
-            "Nosso casamento vai ser no dia 28 de Julho de 2024 em Mairiporã, São Paulo. A cerimônia vai começar às 16:00 e a festa vai até o último convidado ir embora. (Não é mas o noivo paga kkkkk)\n" +
-            "Aqui nesse site vamos deixar todas as informações sobre o casamento, como chegar, onde se hospedar caso precise e outras informações úteis.\n" +
-            "Também vamos deixar aqui a lista de presentes, caso vocês queiram nos presentear. Não é obrigatório, mas é. Da um presentinho ai pô!\n" +
-            "No finalzinho do site tem um formulário para confirmar a presença, por favor, preencha caso você for para que possamos deixar tudo organizadinho ❤\n" +
-            "A contagem regressiva já começou e estamos muito ansiosos para compartilhar esse dia tão especial para nós com todos vocês."*/
             .split("\n")
             .map((paragraph) => (
               <p
@@ -130,21 +124,37 @@ const sections: {
     label: "Nossa história",
     slug: "nossa-historia",
     isSticky: false,
-    content:
-      "É bem engraçado como as coisas acontecem na vida, na hora parecem tão aleatórias e pequenas e as pequenas coisas mudam completamente o rumo da nossa vida.\n" +
-      "Essa história começa com um menino e com uma menina. O menino e a menina se conheceram a partir de um grupo de amigos que estavam lá no Shopping Center 3 da Paulista. " +
-      "O amigo do menino falou: \n - Vem aqui, ta eu, um amigo e dois amigos que você não conhece.\n" +
-      "O menino sai de casa, sem esperar muito o que encontrar aquele dia. Chegando lá, ele encontra seus amigos e para sua surpresa, encontra duas pessoas novas que não tinha visto antes. " +
-      "O amigo do menino apresenta a menina para o menino e os dois se conhecem. Um dia normal, como qualquer outro, mas que mudou a vida dos dois para sempre.\n" +
-      "Olhando para trás o menino percebe que tudo foi como tinha que ser. Aquele mesmo dia em que se encontraram, o menino ganhou uma camisa em uma promoção que estava acontecendo no Shopping. Sem pensar duas vezes, " +
-      "o menino ofereceu sua camisa para a menina. Ainda no mesmo dia, ambos iriam se encontrar em uma festa que aconteceria mais tarde. A menina, com fome, pediu ao menino para que levasse algo para ela. " +
-      "Sem pensar duas vezes o menino comprou uma caixa do Habibs contendo algumas esfihas para a menina. E conversaram e conversaram durante longos momentos durante a festa.\n" +
-      "Houveram outras festas, outros encontros. Sem explicação a vontade da menina de estar com o menino era muito grande. E o menino, sem explicação, sentia o mesmo. " +
-      "Eles se encontravam, conversavam, riam, se divertiam. Eles se gostavam. Eles se amavam... Só não sabiam ainda.\n" +
-      "Não houveram ocasiões onde os dois se beijaram. Eles só queriam estar juntos, rir, compartilhar os momentos juntos. Quando finalmente aconteceu, por incrivel que pareça, foi bem questionável" +
-      " (mas deixa que a noiva conta essa história).\n" +
-      "Durante algum tempo, os dois ficaram sem se falar. Mas o destino, ou o acaso, ou o que quer que seja, fez com que os dois se reencontrassem novamente e começassem a se falar por causa de uma mensagem mandada errôneamente no falecido aplicativo Snapchat." +
-      " A partir dai, o resto é história. Namoraram por 7 anos, noivaram e agora vocês estão lendo essa singela história nesse site feito para o casamento deles.",
+    content: () => (
+      <Fragment>
+        <div
+          className={`flex flex-col justify-center items-center min-w-96 max-w-lg italic`}
+        >
+          <p className="text-center">
+            {`"E a vida, tão generosa comigo\nveio de amigo a amigo\nme apresentar a você"`}
+          </p>
+        </div>
+        <div
+          className={`flex flex-col justify-center items-center min-w-96 max-w-lg`}
+        >
+          {(
+            `É engraçado como as coisas acontecem na vida, na hora parecem aleatórias e pequenas, mas coisas pequenas e (não tão aleatórias assim), podem mudar completamente o rumo da nossa vida e trazer um novo significado para tudo o que antes nem existia.\n` +
+            `E assim é a nossa história, despretensiosa, leve e uma linda surpresa da vida!` +
+            `Se lá em 2015 nos contassem que iríamos nos casar, muito provavelmente não acreditaríamos, mas essa é a graça da vida, ela sempre nos surpreende.\n` +
+            `Ainda bem que o Nicolas de 2015 insistiu para a "amiga do amigo" aceitar sair com ele, e ainda bem que a "amiga do amigo" aceitou rsrs. Já são quase 9 anos de muito amor, companheirismo, parceria e trabalho em equipe para que, dia após dia, a construção da nossa história seja cada vez mais sólida.\n` +
+            `Estamos muito ansiosos para o nosso grande, sonhado, planejado e amado dia que irá concretizar a nossa união e dar início a nossa nova família!`
+          )
+            .split("\n")
+            .map((paragraph) => (
+              <p
+                key={paragraph}
+                className="flex w-full justify-center text-justify text-2xlr mt-6 md:mt-3"
+              >
+                {paragraph}
+              </p>
+            ))}
+        </div>
+      </Fragment>
+    ),
     breakpoints: {
       beforeTitle: <SectionHeader />,
       betweenContentAndTitle: (

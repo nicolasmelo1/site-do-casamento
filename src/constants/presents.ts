@@ -12,6 +12,12 @@ const presents = [
     value: 120,
   },
   {
+    title: "Café da manhã pós cerimônia",
+    description: "Vamos estar com fominha",
+    imageUrl: "/presents/cafe-da-manha.jpeg",
+    value: 145,
+  },
+  {
     title: "Curso de hetero com o cunhado",
     description: "Ta aprendendo, mas não chegou lá ainda.",
     imageUrl: "/presents/pereirao.jpeg",
@@ -28,6 +34,12 @@ const presents = [
     description: "Gastou mais do que podia",
     imageUrl: "/presents/viagem-pra-disno.png",
     value: 243,
+  },
+  {
+    title: "Cavalgada do noivo",
+    description: "Pra ele se sentir o cowboy",
+    imageUrl: "/presents/cavalgada.jpeg",
+    value: 250,
   },
   {
     title: "Maracugina para a noiva",
@@ -51,8 +63,14 @@ const presents = [
   {
     title: "Auto escola para habilitados p/ o noivo",
     description: "Precisa urgentemente",
-    imageUrl: "/presents/auto-escola-habilitados.jpeg",
+    imageUrl: "/presents/aula-p-habilitados.jpeg",
     value: 365,
+  },
+  {
+    title: "Jogo de Cama King",
+    description: "Precisa urgentemente",
+    imageUrl: "/presents/cama-king.jpeg",
+    value: 398,
   },
   {
     title: "Personal da noiva",
@@ -61,15 +79,21 @@ const presents = [
     value: 423,
   },
   {
+    title: "Ajudar a pagar os custos da tartaruguinha",
+    description: "Não agora, mas no futuro",
+    imageUrl: "/presents/tartaruguinha.jpeg",
+    value: 456,
+  },
+  {
     title: "Passagem só de ida da sogra",
     description: "Qualquer lugar, só de ida",
-    imageUrl: "/presents/passagem-aerea.jpg",
+    imageUrl: "/presents/naget.png",
     value: 503,
   },
   {
     title: "Uma compra do mês",
     description: "Pô, só uma",
-    imageUrl: "/presents/assai-mercado.jpeg",
+    imageUrl: "/presents/compra-do-mes.jpeg",
     value: 644,
   },
   {
