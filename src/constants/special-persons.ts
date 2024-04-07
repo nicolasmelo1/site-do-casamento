@@ -4,7 +4,7 @@ const specialPersons = [
     name: "Lu & Alan",
   },
   {
-    photo: "/godparents-and-bridesmaids/edson-andrea.jpeg",
+    photo: "/godparents-and-bridesmaids/edson-andrea.jpg",
     name: "Edson & Andrea",
   },
   {
@@ -29,7 +29,7 @@ const specialPersons = [
   },
   { photo: "/godparents-and-bridesmaids/julia.jpeg", name: "Julia" },
   {
-    photo: "/godparents-and-bridesmaids/bruna.jpeg",
+    photo: "/godparents-and-bridesmaids/bruna.jpg",
     name: "Bruna",
   },
   { photo: "/godparents-and-bridesmaids/paolo.jpeg", name: "Paolo" },
