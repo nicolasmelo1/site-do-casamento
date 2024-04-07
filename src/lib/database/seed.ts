@@ -68,6 +68,7 @@ async function createGuestsTableTableOrModify() {
         ])
       )
       .execute();
+    console.log("columns", columns);
     const columnNames = columns.map((column) => column.column_name);
     const missingColumns = Object.keys(guestsColumnNames).filter(
       (columnName) => !columnNames.includes(columnName)
