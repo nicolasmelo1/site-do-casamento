@@ -12,6 +12,7 @@ import { WEDDING_DATE } from "./constants";
 import SectionHeader from "../components/SectionHeader";
 
 import type { getPendingPayment } from "../server/asaas/payments";
+import { capitalize } from "../utils";
 
 const LazyCountdown = dynamic(() => import("../components/Countdown"), {
   ssr: false,
@@ -73,12 +74,11 @@ const sections: {
                   fontSize: "1.5rem",
                 }}
               >
-                {new Intl.DateTimeFormat("pt-BR", { dateStyle: "full" })
-                  .format(WEDDING_DATE)[0]
-                  .toUpperCase() +
-                  new Intl.DateTimeFormat("pt-BR", { dateStyle: "full" })
-                    .format(WEDDING_DATE)
-                    .slice(1)}
+                {capitalize(
+                  new Intl.DateTimeFormat("pt-BR", {
+                    dateStyle: "full",
+                  }).format(WEDDING_DATE)
+                )}
               </h2>
             </div>
           </div>
@@ -96,9 +96,7 @@ const sections: {
     content: () => (
       <Fragment>
         <LazyCountdown />
-        <div
-          className={`flex flex-col justify-center items-center min-w-96 max-w-lg`}
-        >
+        <div className={`flex flex-col justify-center items-center w-80`}>
           {(
             "Queridos familiares e amigos criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento.\n" +
             "Estamos muito felizes e contamos com a presença de todos no nosso grande dia e sonhado dia!\n" +
@@ -127,18 +125,16 @@ const sections: {
     content: () => (
       <Fragment>
         <div
-          className={`flex flex-col justify-center items-center min-w-96 max-w-lg italic`}
+          className={`flex flex-col justify-center items-center w-80 max-w-lg italic`}
         >
           <p className="text-center">
             {`"E a vida, tão generosa comigo\nveio de amigo a amigo\nme apresentar a você"`}
           </p>
         </div>
-        <div
-          className={`flex flex-col justify-center items-center min-w-96 max-w-lg`}
-        >
+        <div className={`flex flex-col justify-center items-center w-80`}>
           {(
             `É engraçado como as coisas acontecem na vida, na hora parecem aleatórias e pequenas, mas coisas pequenas e (não tão aleatórias assim), podem mudar completamente o rumo da nossa vida e trazer um novo significado para tudo o que antes nem existia.\n` +
-            `E assim é a nossa história, despretensiosa, leve e uma linda surpresa da vida!` +
+            `E assim é a nossa história, despretensiosa, leve e uma linda surpresa da vida! ` +
             `Se lá em 2015 nos contassem que iríamos nos casar, muito provavelmente não acreditaríamos, mas essa é a graça da vida, ela sempre nos surpreende.\n` +
             `Ainda bem que o Nicolas de 2015 insistiu para a "amiga do amigo" aceitar sair com ele, e ainda bem que a "amiga do amigo" aceitou rsrs. Já são quase 9 anos de muito amor, companheirismo, parceria e trabalho em equipe para que, dia após dia, a construção da nossa história seja cada vez mais sólida.\n` +
             `Estamos muito ansiosos para o nosso grande, sonhado, planejado e amado dia que irá concretizar a nossa união e dar início a nossa nova família!`
@@ -237,7 +233,7 @@ const sections: {
     },
   },
   {
-    label: "Endereço",
+    label: "Cerimônia & Recepção",
     slug: "endereco",
     isSticky: false,
     zIndex: 4,
@@ -262,20 +258,71 @@ const sections: {
       }, [isOnServer]);
 
       return (
-        <iframe
-          style={{
-            border: 0,
-            marginTop: 24,
-            width: width > 600 ? 600 : width - 10,
-            height: width > 600 ? 600 : width - 10,
-          }}
-          title="Villa Vezzane, Mairiporã SP"
-          allowFullScreen={true}
-          referrerPolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
-        />
+        <Fragment>
+          <div>
+            <p className="w-full">
+              {capitalize(
+                new Intl.DateTimeFormat("pt-BR", {
+                  day: "numeric",
+                  dayPeriod: "long",
+                  hour: "numeric",
+                  minute: "numeric",
+                  weekday: "long",
+                  month: "long",
+                }).format(WEDDING_DATE)
+              )}
+            </p>
+          </div>
+          <iframe
+            style={{
+              border: 0,
+              marginTop: 24,
+              width: width > 384 ? 384 : width - 10,
+              height: width > 384 ? 384 : width - 10,
+            }}
+            title="Villa Vezzane, Mairiporã SP"
+            allowFullScreen={true}
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANcu9m5u73d9IwIHVBTctJDN6aTkxloPo&q=Villa+Vezzane,Mairiporã+SP"
+          />
+          <div className="mt-3 w-96 h-96 relative rounded-sm overflow-hidden">
+            <Image
+              src="/local.jpeg"
+              alt="Local do casamento"
+              className="w-full h-auto"
+              fill={true}
+            />
+          </div>
+        </Fragment>
       );
     },
+    breakpoints: {
+      beforeTitle: <SectionHeader />,
+    },
+  },
+  {
+    label: "Dress Code",
+    slug: "dress-code",
+    isSticky: false,
+    content: () => (
+      <Fragment>
+        <div className={`flex flex-col justify-center items-center w-80`}>
+          <p>
+            {
+              "Queridos convidados, fiquem a vontade para usarem roupas no traje esporte fino. O importante é você se sentir bem e confortável para aproveitar a festa com a gente!"
+            }
+          </p>
+        </div>
+        <div className="mt-3 w-96 h-64 relative rounded-sm overflow-hidden">
+          <Image
+            src="/dress-code.png"
+            alt="Dress Code"
+            className="w-full h-auto"
+            fill={true}
+          />
+        </div>
+      </Fragment>
+    ),
     breakpoints: {
       beforeTitle: <SectionHeader />,
     },
