@@ -20,27 +20,7 @@ export default function Navigation(props: {
 
   return (
     <Fragment>
-      <nav className="2xl:hidden flex items-start justify-between p-6 none">
-        <h1 className="font-thankYou text-gray-400 text-2xl whitespace-nowrap">
-          {strings.title}
-        </h1>
-        <div className="flex flex-row">
-          {props.sections.map((section) => (
-            <button
-              key={section.slug}
-              type="button"
-              className="pl-3 pr-3 hover:text-gray-400"
-              onClick={(e) => {
-                e.preventDefault();
-                router.push(`/#${section.slug}`);
-              }}
-            >
-              {section.label}
-            </button>
-          ))}
-        </div>
-      </nav>
-      <nav className="2xl:flex hidden flex-row justify-between items-center p-6">
+      <nav className="flex flex-row justify-between items-center p-6">
         <h1 className="font-thankYou text-gray-400 text-2xl">
           {strings.title}
         </h1>
@@ -68,7 +48,7 @@ export default function Navigation(props: {
         </button>
       </nav>
       <div
-        className={`2xl:flex hidden w-full flex-col transition-[height] duration-300 ease-in-out ${
+        className={`flex w-full flex-col transition-[height] duration-300 ease-in-out ${
           isMenuOpen ? `h-[50vh]` : "h-0"
         }`}
       >
