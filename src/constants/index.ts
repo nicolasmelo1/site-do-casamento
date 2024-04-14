@@ -1,4 +1,4 @@
-export { default as specialPersons } from "./special-persons";
+export { specialPersons, moreSpecialPersons } from "./special-persons";
 export { default as getPresents } from "./presents";
 export { default as strings } from "./strings";
 export { default as sections } from "./sections";
