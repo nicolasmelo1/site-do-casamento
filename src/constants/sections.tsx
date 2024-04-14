@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
-import specialPersons from "./special-persons";
+import { specialPersons, moreSpecialPersons } from "./special-persons";
 
 import Confirmation from "../components/Confirmation";
 import Presents from "../components/Presents";
@@ -198,6 +198,38 @@ const sections: {
           </div>
         </div>
       ),
+    },
+  },
+  {
+    label: "Mães, Pais e Dama de Honra",
+    slug: "mae-pai-dama-de-honra",
+    isSticky: false,
+    content: (
+      <div className="flex flex-row flex-wrap justify-center items-center w-screen max-w-6xl">
+        {moreSpecialPersons.map((moreSpecialPerson) => (
+          <div
+            key={moreSpecialPerson.name}
+            className="flex justify-center flex-col flex-wrap mt-2"
+          >
+            <div className="p-6 relative ml-[1vw] mr-[1vw] w-[22vw] max-w-60 h-[22vw] max-h-60 min-w-32 min-h-32 rounded-full bg-black">
+              <Image
+                src={moreSpecialPerson.photo}
+                alt="Picture of the author"
+                className="w-full h-auto rounded-full"
+                fill={true}
+                objectFit="contain"
+                sizes="20vw 20vw"
+              />
+            </div>
+            <p className="font-bold text-gray-400 w-full mt-2 text-center ">
+              {moreSpecialPerson.name}
+            </p>
+          </div>
+        ))}
+      </div>
+    ),
+    breakpoints: {
+      beforeTitle: <SectionHeader />,
     },
   },
   {

@@ -1,6 +1,6 @@
-const specialPersons = [
+export const specialPersons = [
   {
-    photo: "/godparents-and-bridesmaids/alan-lu.jpeg",
+    photo: "/godparents-and-bridesmaids/lu-alan.jpg",
     name: "Lu & Alan",
   },
   {
@@ -27,7 +27,7 @@ const specialPersons = [
     photo: "/godparents-and-bridesmaids/lukas-pedro.jpg",
     name: "Lukas & Pedro",
   },
-  { photo: "/godparents-and-bridesmaids/julia.jpeg", name: "Julia" },
+  { photo: "/godparents-and-bridesmaids/julia.jpg", name: "Julia" },
   {
     photo: "/godparents-and-bridesmaids/bruna.jpg",
     name: "Bruna",
@@ -36,4 +36,21 @@ const specialPersons = [
   { photo: "/godparents-and-bridesmaids/joao-vitor.jpeg", name: "João Vitor" },
 ];
 
-export default specialPersons;
+export const moreSpecialPersons = [
+  {
+    photo: "/mothers-and-fathers/valter-naget.jpg",
+    name: "Valter & Naget",
+  },
+  {
+    photo: "/mothers-and-fathers/lucio.jpg",
+    name: "Lúcio",
+  },
+  {
+    photo: "/mothers-and-fathers/eliane.jpg",
+    name: "Eliane",
+  },
+  {
+    photo: "/mothers-and-fathers/giovana.jpg",
+    name: "Giovana",
+  },
+];
