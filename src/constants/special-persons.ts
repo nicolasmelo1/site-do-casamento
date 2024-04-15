@@ -43,7 +43,7 @@ export const moreSpecialPersons = [
   },
   {
     photo: "/mothers-and-fathers/lucio.jpg",
-    name: "Lußcio",
+    name: "Lucio",
   },
   {
     photo: "/mothers-and-fathers/eliane.jpg",
