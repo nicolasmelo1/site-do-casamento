@@ -40,17 +40,21 @@ export const moreSpecialPersons = [
   {
     photo: "/mothers-and-fathers/valter-naget.jpg",
     name: "Naget & Valter",
+    subTitle: "Pais do Noivo"
   },
   {
     photo: "/mothers-and-fathers/lucio.jpg",
     name: "Lucio",
+    subTitle: "Pai da Noiva"
   },
   {
     photo: "/mothers-and-fathers/eliane.jpg",
     name: "Eliane",
+    subTitle: "Mãe da Noiva"
   },
   {
     photo: "/mothers-and-fathers/giovana.jpg",
     name: "Giovanna",
+    subTitle: "Daminha"
   },
 ];

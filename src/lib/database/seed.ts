@@ -30,6 +30,9 @@ const guestsColumnNames: Record<
   image: {
     type: "varchar(255)",
   },
+  cpf_cnpj: {
+    type: "varchar(255)",
+  },
   instagram_user_id: {
     type: "varchar(255)",
   },
