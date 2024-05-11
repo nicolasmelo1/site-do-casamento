@@ -68,7 +68,8 @@ async function hasConfirmedOrNotPresence(searchParams: {
         CONFIRMATION_CONFIRMATION_QUERY_PARAM_VALUE,
       ],
     ]);
-    redirect(`?${newUrlSearchParams.toString()}`);
+    //redirect(`?${newUrlSearchParams.toString()}`);
+    return;
   }
 
   if (cpfCnpj?.value || phone?.value) {
