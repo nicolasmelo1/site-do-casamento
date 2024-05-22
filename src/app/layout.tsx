@@ -23,7 +23,8 @@ const quicksand = Quicksand({
 
 export const metadata: Metadata = {
   title: "Nicolas Melo & Viviane Gennari (Melo)",
-  description: "Nosso site de casamento fofuxo",
+  description:
+    "Convidamos você para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP",
 };
 
 export default function RootLayout({
