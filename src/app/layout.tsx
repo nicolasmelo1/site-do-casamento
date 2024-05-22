@@ -21,11 +21,34 @@ const quicksand = Quicksand({
   variable: "--font-quicksand",
 });
 
-export const metadata: Metadata = {
-  title: "Nicolas Melo & Viviane Gennari (Melo)",
-  description:
-    "Convidamos você para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP",
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: {
+    inviteName?: string;
+  };
+}): Promise<Metadata> {
+  console.log("searchParams", searchParams);
+  return {
+    title: "Nicolas Melo & Viviane Gennari (Melo)",
+    description: searchParams?.inviteName
+      ? `${searchParams?.inviteName}. Nós convidamos vocês para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP`
+      : "Convidamos você para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP",
+
+    openGraph: {
+      images: {
+        url:
+          Math.random() > 0.7
+            ? "/nos-1.jpeg"
+            : Math.random() > 0.5
+            ? "/capa.jpeg"
+            : "/nos-2.jpeg",
+        width: 300,
+        height: 300,
+      },
+    },
+  };
+}
 
 export default function RootLayout({
   children,
