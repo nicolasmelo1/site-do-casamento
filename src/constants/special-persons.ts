@@ -12,7 +12,7 @@ export const specialPersons = [
     name: "Thais & Bruno",
   },
   {
-    photo: "/godparents-and-bridesmaids/estevao-mari.jpeg",
+    photo: "/godparents-and-bridesmaids/estevao-e-mari.jpg",
     name: "Estevão & Mari",
   },
   {
@@ -40,17 +40,21 @@ export const moreSpecialPersons = [
   {
     photo: "/mothers-and-fathers/valter-naget.jpg",
     name: "Naget & Valter",
+    role: "Mãe e Pai do Noivo",
   },
   {
     photo: "/mothers-and-fathers/lucio.jpg",
     name: "Lucio",
+    role: "Pai da Noiva",
   },
   {
     photo: "/mothers-and-fathers/eliane.jpg",
     name: "Eliane",
+    role: "Mãe da Noiva",
   },
   {
     photo: "/mothers-and-fathers/giovana.jpg",
     name: "Giovanna",
+    role: "Daminha",
   },
 ];

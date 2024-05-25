@@ -224,6 +224,9 @@ const sections: {
             <p className="font-bold text-gray-400 w-full mt-2 text-center ">
               {moreSpecialPerson.name}
             </p>
+            <small className="text-gray-400 text-center">
+              {moreSpecialPerson.role}
+            </small>
           </div>
         ))}
       </div>
