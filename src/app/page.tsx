@@ -1,4 +1,5 @@
-import { cookies, headers } from "next/headers";
+import { PropsWithChildren } from "react";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import {
@@ -19,6 +20,8 @@ import {
 import { getGuest } from "../server";
 import Navigation from "../components/Navigation";
 import Section from "../components/Section";
+
+import type { Metadata } from "next";
 
 /**
  * Get the difference of two dates in months
@@ -120,13 +123,44 @@ async function isDevMode(searchParams: { dev?: string }) {
   return typeof searchParams?.dev === "string" && searchParams?.dev === "true";
 }
 
+type Props = PropsWithChildren<{
+  searchParams: any;
+}>;
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: {
+    payment?: string;
+    going?: string;
+    dev?: string;
+    inviteName?: string;
+  };
+}): Promise<Metadata> {
+  return {
+    title: "Nicolas Melo & Viviane Gennari (Melo)",
+    description: searchParams?.inviteName
+      ? `${searchParams?.inviteName}. Nós convidamos vocês para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP`
+      : "Convidamos você para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP",
+
+    openGraph: {
+      images: {
+        url:
+          Math.random() > 0.7
+            ? "/nos-1.jpeg"
+            : Math.random() > 0.5
+            ? "/capa.jpeg"
+            : "/nos-2.jpeg",
+        width: 300,
+        height: 300,
+      },
+    },
+  };
+}
+
 export default async function Home(props: {
   searchParams: { payment?: string; going?: string; dev?: string };
 }) {
-  const headersList = headers();
-  const domain = headersList.get("host") || "";
-  const fullUrl = headersList.get("referer") || "";
-
   const [paymentData, hasConfirmedPresenceOrNot, isDevelopment] =
     await Promise.all([
       getPaymentData(props.searchParams),
@@ -134,7 +168,6 @@ export default async function Home(props: {
       isDevMode(props.searchParams),
     ]);
 
-  console.log(paymentData, hasConfirmedPresenceOrNot, isDevelopment);
   return (
     <main className="flex flex-col overflow-scroll scroll-smooth w-full">
       <Navigation sections={sections} />
