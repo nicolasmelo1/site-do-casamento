@@ -148,8 +148,8 @@ export async function generateMetadata({
       : "Convidamos você para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP",
     metadataBase: new URL(
       `${
-        process.env.VERCEL_URL
-          ? process.env.VERCEL_URL
+        process.env.APP_URL
+          ? process.env.APP_URL
           : `http://localhost:${process.env.PORT || 3000}}`
       }`
     ),
