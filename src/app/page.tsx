@@ -150,7 +150,7 @@ export async function generateMetadata({
       `${
         process.env.APP_URL
           ? process.env.APP_URL
-          : `http://localhost:${process.env.PORT || 3000}}`
+          : `http://localhost:${process.env.PORT || 3000}`
       }`
     ),
     openGraph: {
