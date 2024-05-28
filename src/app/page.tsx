@@ -144,16 +144,23 @@ export async function generateMetadata({
       : "Convidamos você para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP",
 
     openGraph: {
-      images: {
-        url:
-          Math.random() > 0.7
-            ? "/nos-1.jpeg"
-            : Math.random() > 0.5
-            ? "/capa.jpeg"
-            : "/nos-2.jpeg",
-        width: 300,
-        height: 300,
-      },
+      images: [
+        {
+          url: `${
+            process.env.VERCEL_URL
+              ? process.env.VERCEL_URL
+              : `http://localhost:${process.env.PORT || 3000}}`
+          }${
+            Math.random() > 0.7
+              ? "/nos-1.jpeg"
+              : Math.random() > 0.5
+              ? "/capa.jpeg"
+              : "/nos-2.jpeg"
+          }`,
+          width: 300,
+          height: 300,
+        },
+      ],
     },
   };
 }
