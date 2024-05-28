@@ -139,10 +139,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   return {
     title: searchParams?.inviteName
-      ? `De Nicolas e Viviane para ${searchParams?.inviteName}`
+      ? `Um convite de Nicolas e Viviane para ${searchParams?.inviteName}`
       : "Nicolas Melo & Viviane Gennari (Melo)",
     description: searchParams?.inviteName
-      ? `${searchParams?.inviteName}. Nós convidamos vocês para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP`
+      ? `${searchParams?.inviteName}, com muito amor nós convidamos você${
+          searchParams?.inviteName.split(" ").length > 1 ? "s" : ""
+        } para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP`
       : "Convidamos você para celebrar conosco o nosso casamento no dia 28/07/2024 as 15:30 no Espaço Villa Vezzane em Mairiporã - SP",
     metadataBase: new URL(
       `${
