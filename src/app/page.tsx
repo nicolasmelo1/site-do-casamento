@@ -47,6 +47,8 @@ function monthDiff(dateFrom: Date, dateTo: Date) {
 async function hasConfirmedOrNotPresence(searchParams: {
   going?: string;
 }): Promise<boolean | undefined> {
+  return true;
+  /** DEPRECATED
   const today = new Date();
   const cookiesInitialized = cookies();
   const cpfCnpj = cookiesInitialized.get(COOKIES_CPF_CNPJ);
@@ -84,6 +86,7 @@ async function hasConfirmedOrNotPresence(searchParams: {
       ? guestData?.isGoing
       : undefined;
   } else return undefined;
+   */
 }
 
 async function getPaymentData(searchParams: { payment?: string }) {
