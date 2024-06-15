@@ -132,7 +132,10 @@ export default function Checkout(props: {
         setPaymentData(paymentData);
         setIsNewPayment(true);
 
-        router.push(paymentData.invoiceUrl);
+        if (typeof paymentData.invoiceUrl === 'string') {
+          router.push(paymentData.invoiceUrl);
+          return;
+        }
 
         const newSearchParamsArray = [];
         for (const [key, value] of Array.from(searchParams.entries())) {
