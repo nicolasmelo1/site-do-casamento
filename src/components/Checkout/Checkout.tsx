@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { Fragment, useMemo, useState } from "react";
 
 import {
@@ -132,8 +132,7 @@ export default function Checkout(props: {
         setPaymentData(paymentData);
         setIsNewPayment(true);
 
-        if (typeof window !== "undefined")
-          window.open(paymentData.invoiceUrl, "_blank");
+        router.push(paymentData.invoiceUrl);
 
         const newSearchParamsArray = [];
         for (const [key, value] of Array.from(searchParams.entries())) {
