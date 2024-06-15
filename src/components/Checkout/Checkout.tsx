@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Fragment, useMemo, useState } from "react";
 
 import {
