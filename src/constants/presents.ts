@@ -100,7 +100,7 @@ const presents = [
     title: `"Ops" do noivo`,
     description: "Mais uma do noivo",
     imageUrl: "/presents/cagadinha.avif",
-    value: 170,
+    value: 210,
   },
   {
     title: "Parcelas dos fotografos",
