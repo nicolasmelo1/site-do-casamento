@@ -59,7 +59,7 @@ const sections: {
             backgroundSize: "cover",
           }}
         >
-          <div className="flex flex-1 flex-col justify-between items-center w-[100vw] h-[100vh] bg-black bg-opacity-30 md:pb-12">
+          <div className="flex flex-1 flex-col justify-between items-center w-[100vw] h-[100vh] bg-black bg-opacity-20 md:pb-12">
             <div className="flex flex-col justify-center md:justify-between items-center w-full h-full">
               <div className="flex flex-col justify-center items-center w-72 h-72 md:w-60 md:h-60 bg-transparent relative">
                 <Image
