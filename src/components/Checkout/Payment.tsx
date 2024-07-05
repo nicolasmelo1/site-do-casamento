@@ -10,7 +10,6 @@ export default function Payment(props: {
   isNewPayment: boolean;
   paymentData: Awaited<ReturnType<typeof getPendingPayment>>;
 }) {
-  console.log(props.paymentData, props.isNewPayment);
   return (
     <Fragment>
       <div className="flex flex-col justify-between items-center h-full">

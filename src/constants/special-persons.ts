@@ -12,7 +12,7 @@ export const specialPersons = [
     name: "Thais & Bruno",
   },
   {
-    photo: "/godparents-and-bridesmaids/estevao-mari.jpeg",
+    photo: "/godparents-and-bridesmaids/estevao-e-mari.jpg",
     name: "Estevão & Mari",
   },
   {
@@ -40,21 +40,37 @@ export const moreSpecialPersons = [
   {
     photo: "/mothers-and-fathers/valter-naget.jpg",
     name: "Naget & Valter",
+<<<<<<< HEAD
     subTitle: "Pais do Noivo"
+=======
+    role: "Mãe e Pai do Noivo",
+>>>>>>> b69714ab3e76d29b40aae871e0db86da444e8349
   },
   {
     photo: "/mothers-and-fathers/lucio.jpg",
     name: "Lucio",
+<<<<<<< HEAD
     subTitle: "Pai da Noiva"
+=======
+    role: "Pai da Noiva",
+>>>>>>> b69714ab3e76d29b40aae871e0db86da444e8349
   },
   {
     photo: "/mothers-and-fathers/eliane.jpg",
     name: "Eliane",
+<<<<<<< HEAD
     subTitle: "Mãe da Noiva"
+=======
+    role: "Mãe da Noiva",
+>>>>>>> b69714ab3e76d29b40aae871e0db86da444e8349
   },
   {
     photo: "/mothers-and-fathers/giovana.jpg",
     name: "Giovanna",
+<<<<<<< HEAD
     subTitle: "Daminha"
+=======
+    role: "Daminha",
+>>>>>>> b69714ab3e76d29b40aae871e0db86da444e8349
   },
 ];

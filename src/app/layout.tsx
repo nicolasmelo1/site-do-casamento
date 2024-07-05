@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
+import { PropsWithChildren } from "react";
 
 const thankYouFont = localFont({
   src: "./fonts/thankYou.ttf",
@@ -21,16 +21,7 @@ const quicksand = Quicksand({
   variable: "--font-quicksand",
 });
 
-export const metadata: Metadata = {
-  title: "Nicolas Melo & Viviane Gennari (Melo)",
-  description: "Nosso site de casamento fofuxo",
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: PropsWithChildren<{}>) {
   return (
     <html
       lang="pt-BR"
