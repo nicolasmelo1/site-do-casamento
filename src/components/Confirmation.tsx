@@ -99,10 +99,8 @@ export default function Confirmation(props: {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              {typeof validation.name === "string" &&
-              name.length > 0 &&
-              hasTriedToSubmit === true ? (
-                <p className="text-sm text-gray-300">{validation.name}</p>
+              {typeof validation.name === "string" ? (
+                <p className="text-sm text-red-500">{validation.name}</p>
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full mt-3">
@@ -116,10 +114,8 @@ export default function Confirmation(props: {
                 value={formatterOfCpfCnpj(cpfCnpj)}
                 onChange={(e) => setCpfCnpj(e.target.value.replace(/\D/g, ""))}
               />
-              {typeof validation.cpfCnpj === "string" &&
-              cpfCnpj.length > 0 &&
-              hasTriedToSubmit === true ? (
-                <p className="text-sm text-gray-300">{validation.cpfCnpj}</p>
+              {typeof validation.cpfCnpj === "string" ? (
+                <p className="text-sm text-red-500">{validation.cpfCnpj}</p>
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full mt-3">
@@ -133,10 +129,8 @@ export default function Confirmation(props: {
                 value={formatterOfPhone(phone)}
                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
               />
-              {typeof validation.phone === "string" &&
-              phone.length > 0 &&
-              hasTriedToSubmit === true ? (
-                <p className="text-sm text-gray-300">{validation.phone}</p>
+              {typeof validation.phone === "string" ? (
+                <p className="text-sm text-red-500">{validation.phone}</p>
               ) : null}
             </div>
           </div>
@@ -191,17 +185,17 @@ export default function Confirmation(props: {
             </button>
             <button
               type="submit"
-              className={`md:w-full md:mt-3 cursor-pointer bg-gray-400 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/2 h-full hover:bg-gray-300 ${
-                validation.isValidToSubmit() === false ? "bg-opacity-50" : ""
+              className={`md:w-full md:mt-3 cursor-pointer bg-gray-400 text-white font-semibold pt-2 pb-2 pr-4 pl-4 rounded-xl w-1/2 h-full ${
+                validation.isValidToSubmit() === false ? "bg-opacity-50" : "hover:bg-gray-300"
               }`}
               disabled={validation.isValidToSubmit() === false}
               onClick={(e) => {
                 e.preventDefault();
-                setHasTriedToSubmit(true);
                 onConfirmOrNotPresence(true);
+                setHasTriedToSubmit(true);
               }}
             >
-              {strings.checkoutAccountPaymentConfirmButton}
+              {validation.isValidToSubmit() ? strings.checkoutAccountPaymentConfirmButton : 'Preencha tudo'}
             </button>
           </div>
         </Fragment>

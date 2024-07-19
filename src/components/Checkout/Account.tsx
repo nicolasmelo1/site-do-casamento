@@ -36,8 +36,8 @@ export default function Account(props: {
     "" as string
   );
   const [paymentType, setPaymentType] = useCookieStorageState<
-    "PIX" | "CREDIT_CARD" | undefined
-  >(props.cookies, "checkoutPaymentType", undefined);
+    "PIX" | "CREDIT_CARD"
+  >(props.cookies, "checkoutPaymentType", "PIX");
   const [message, setMessage] = useState("");
 
   const params = new URLSearchParams(
@@ -80,7 +80,7 @@ export default function Account(props: {
                 onChange={(e) => setName(e.target.value)}
               />
               {typeof validation.name === "string" ? (
-                <p className="text-sm text-red-200">{validation.name}</p>
+                <p className="text-sm text-red-500">{validation.name}</p>
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full pt-6">
@@ -98,7 +98,7 @@ export default function Account(props: {
                 }}
               />
               {typeof validation.cpfCnpj === "string" ? (
-                <p className="text-sm text-red-200">{validation.cpfCnpj}</p>
+                <p className="text-sm text-red-500">{validation.cpfCnpj}</p>
               ) : null}
             </div>
             <div className="flex flex-col justify-start items-start w-full pt-6">
@@ -112,9 +112,6 @@ export default function Account(props: {
                 value={paymentType}
                 onChange={(e) => setPaymentType(e.target.value as any)}
               >
-                <option value="" disabled={true} selected={true} hidden={true}>
-                  {strings.checkoutAccountPaymentTypePlaceholderLabel}
-                </option>
                 <option value="PIX">
                   {strings.checkoutAccountPaymentTypePixOptionLabel}
                 </option>

@@ -69,7 +69,6 @@ export default function Checkout(props: {
   const isValidPayment = typeof payment === "string" && payment.length > 0;
 
   function onGoToAccount() {
-    console.log("aquiiiii");
     const newSearchParams = new URLSearchParams(document.location.search);
     newSearchParams.set(
       CHECKOUT_CONFIRMATION_QUERY_PARAM,
