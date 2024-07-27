@@ -21,6 +21,7 @@ export async function getStories() {
     .limit(1)
     .execute();
 
+  console.log('stories', stories)
   if (stories.length > 0) {
     await db
       .updateTable("stories")
