@@ -7,7 +7,7 @@ export async function GET() {
   
   if (story.length > 0) {
     return Response.json({
-      storyUri: `${INSTAGRAM_STORIES_HOST}/get-story/${story[0].fileName}`
+      storyUri: `${INSTAGRAM_STORIES_HOST}/api/stories/get-story/${story[0].fileName}`
     })
   }
 
