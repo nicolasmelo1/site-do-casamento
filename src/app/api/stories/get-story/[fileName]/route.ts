@@ -1,10 +1,13 @@
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const INSTAGRAM_STORIES_HOST = process.env.INSTAGRAM_STORIES_HOST || 'http://localhost:3001';
 
 export async function GET(request: NextRequest, { params }: { params: { fileName: string }}) {  
-    
-    return Response.redirect(`${INSTAGRAM_STORIES_HOST}/get-stories/${params.fileName}`)
+    const res = await fetch(`${INSTAGRAM_STORIES_HOST}/get-stories/${params.fileName}`);
+    const blob = await res.blob();
+    const headers = new Headers();
+    headers.set("Content-Type", "image/*");
+    return new NextResponse(blob, { status: 200, statusText: "OK", headers });
 }
     
