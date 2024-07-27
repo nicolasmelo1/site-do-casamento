@@ -7,3 +7,4 @@ export async function GET(request: NextRequest, { params }: { params: { fileName
     
     return Response.redirect(`${INSTAGRAM_STORIES_HOST}/get-stories/${params.fileName}`)
 }
+    

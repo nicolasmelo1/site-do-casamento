@@ -21,6 +21,7 @@ export default function Instagram() {
 
     const timeout = setTimeout(() => {
       fetch("/api/stories/read", {
+        cache: 'no-store',
         method: "GET",
         signal
       }).then((res) => res.json())
