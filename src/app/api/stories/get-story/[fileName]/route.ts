@@ -1,5 +1,4 @@
 
-import { getStories } from "../../../../../server/stories";
 import { NextRequest } from "next/server";
 
 const INSTAGRAM_STORIES_HOST = process.env.INSTAGRAM_STORIES_HOST || 'http://localhost:3001';
