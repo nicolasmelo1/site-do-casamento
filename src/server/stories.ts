@@ -13,11 +13,6 @@ export async function saveStory(fileName: string) {
 
 
 export async function getStories() {
-  await db
-      .updateTable("stories")
-      .set({ hasShown: false })
-      .execute();
-      
   const stories = await db
     .selectFrom("stories")
     .selectAll()
