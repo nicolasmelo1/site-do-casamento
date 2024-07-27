@@ -34,10 +34,18 @@ interface GuestsPresents {
   message: string;
 }
 
+interface Stories {
+  id: Generated<number>;
+  fileName: string;
+  hasShown: ColumnType<boolean, never, boolean>;
+  createdAt: ColumnType<Date, string | undefined, never>;
+}
+
 // Keys of this interface are table names.
 export interface Database {
   guests: Guests;
   guests_presents: GuestsPresents;
+  stories: Stories;
 }
 
 function getKyselyInstance() {

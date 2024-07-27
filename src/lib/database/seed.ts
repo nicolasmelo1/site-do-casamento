@@ -132,7 +132,36 @@ async function createGuestsPresentsTableOrModify() {
     .execute();
 }
 
+
+async function createStoriesTableOrModify() {
+  if (cache.get("stories")) return;
+  cache.set("stories", true);
+
+  const exists = await db
+    .selectFrom("pg_tables" as any)
+    .where((eb) =>
+      eb.and([
+        eb("tablename", "=", "stories"),
+        eb("schemaname", "=", "public"),
+      ])
+    )
+    .execute();
+
+  if (exists && exists.length > 0) return;
+
+  await db.schema
+    .createTable("stories")
+    .ifNotExists()
+    .addColumn("id", "serial", (cb) => cb.primaryKey())
+    .addColumn("file_name", "text", (cb) => cb.notNull())
+    .addColumn("has_shown", "boolean", (cb) => cb.defaultTo(false))
+    .addColumn("created_at", sql`timestamp with time zone`, (cb) =>
+      cb.defaultTo(sql`current_timestamp`)
+    )
+    .execute();
+}
 export default async function seed() {
   await createGuestsTableTableOrModify();
   await createGuestsPresentsTableOrModify();
+  await createStoriesTableOrModify();
 }
